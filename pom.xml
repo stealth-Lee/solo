@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ 清理clean：将以前编译得到的旧文件class字节码文件删除
+  ~ 编译compile：将java源程序编译成class字节码文件
+  ~ 测试test：自动测试，自动调用junit程序
+  ~ 报告report：测试程序执行的结果
+  ~ 打包package：动态Web工程打War包，java工程打jar包
+  ~ 安装install：Maven特定的概念将打包得到的文件复制到“仓库”中的指定位置
+  ~ 部署deploy：将动态Web工程生成的war包复制到Servlet容器下，使其可以运行
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!--
+      声明项目描述符遵循哪一个POM模型版本。模型本身的版本很少改变，虽然如此，但它仍然是必不可少的，
+      这是为了当Maven引入了新的特性或者其他模型变更的时候，确保稳定性。
+    -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 组织标识（包名），一般常用公司域名的反序，比如com.alibaba -->
+    <groupId>com.solo</groupId>
+    <!-- 项目名称，项目的具体名称 -->
+    <artifactId>solo-java</artifactId>
+    <!-- 版本号，项目的当前版本 ，一般版本号为 大版本.小版本.小版本序号 -->
+    <version>${revision}</version>
+    <!--
+      ~ 项目的打包类型：pom、jar、war
+      ~ 1.pom工程：用在父级工程或聚合工程中。用来做jar包的版本控制。
+      ~ 2.war工程：将会打包成war，发布在服务器上的工程。如网站或服务。
+      ~ 3.jar工程：将会打包成jar用作jar包使用，packaging默认类型。
+    -->
+    <packaging>pom</packaging>
+    <!--项目的名称, Maven产生的文档用 -->
+    <name>${project.artifactId}</name>
+    <!--项目主页的URL, Maven产生的文档用 -->
+    <url>http://maven.apache.org</url>
+
+    <!--模块（有时称作子项目） 被构建成项目的一部分。列出的每个模块元素是指向该模块的目录的相对路径 -->
+    <modules>
+        <module>solo-nacos</module>
+        <module>solo-gateway</module>
+        <module>solo-common</module>
+        <module>solo-modules</module>
+        <module>solo-modules/solo-system/solo-system-api</module>
+    </modules>
+
+    <!--
+      项目的详细描述, Maven 产生的文档用。 当这个元素能够用HTML格式描述时（例如，CDATA中的文本会被解析器忽略，就可以包含HTML标签），
+      不鼓励使用纯文本描述。如果你需要修改产生的web站点的索引页面，你应该修改你自己的索引页文件，而不是调整这里的文档。
+    -->
+    <description>solo管理系统</description>
+
+    <!-- 属性标签，它可以在pom.xml文件中自定义一些属性，这些属性可以在整个项目中被引用。这些属性可以用于多个方面，如配置文件中的一些路径、版本号、依赖项的版本等等。定义属性后，可以使用${propertyName}的方式在pom.xml文件和其他maven插件中引用 -->
+    <properties>
+        <revision>2023.9.1</revision>
+
+        <spring-boot.version>3.1.2</spring-boot.version>
+        <spring-cloud.version>2022.0.4</spring-cloud.version>
+        <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
+
+        <mysql.version>8.1.0</mysql.version>
+        <hikaricp.version>5.0.1</hikaricp.version>
+
+        <hutool.version>5.8.21</hutool.version>
+
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+    </properties>
+
+    <!--
+      dependencyManagement：继承自该项目的所有子项目的默认依赖信息。这部分的依赖信息不会被立即解析,
+      而是当子项目声明一个依赖（必须描述group ID和 artifact ID信息），如果group ID和artifact ID以外的一些信息没有描述，
+      则通过group ID和artifact ID 匹配到这里的依赖，并使用这里的依赖信息。
+    -->
+    <dependencyManagement>
+        <!--
+          dependencies:该元素描述了项目相关的所有依赖。 这些依赖组成了项目构建过程中的一个个环节。
+          它们自动从项目定义的仓库中下载。要获取更多信息，请看项目依赖机制。
+        -->
+        <dependencies>
+            <!-- SpringBoot依赖 -->
+            <dependency>
+                <!-- 依赖的group ID -->
+                <groupId>org.springframework.boot</groupId>
+                <!-- 依赖的artifact ID -->
+                <artifactId>spring-boot-dependencies</artifactId>
+                <!-- 依赖的版本号。 在Maven 2里, 也可以配置成版本号的范围。 -->
+                <version>${spring-boot.version}</version>
+                <!-- 指明依赖需要引入的类型（jar、war、pom等），默认jar -->
+                <type>pom</type>
+                <!--
+                  ~ scope控制 dependency 元素的使用范围
+                  ~ compile(默认):如果没有指定scope,那么该元素的默认值为compile。被依赖项目需要参与到项目的编译、测试、打包、运行等阶段，打包时通常会包含被依赖项目，是比较强的依赖。
+                  ~ provided: 被依赖项目理论上可以参与到项目的编译、测试、运行等阶段，当时在打包时进行了exclude动作。应用场景：例如我们在开发一个web项目，在编译的时候我们需要依赖servlet-api.jar,但在运行时我们不需要这个jar，因为它已由应用服务器提供，这是我们就需要用provided来修饰这个依赖包。
+                  ~ runtime:顾名思义，表示该依赖项目无需参与到项目的编译，但会参与到测试与运行阶段。应用场景：例如在编译时我们不需要JDBC API的jar，但在运行时才需要JDBC的驱动包。
+                  ~ test:表示该依赖项目仅会参与到项目的测试阶段。应用场景：例如，Junit 测试。
+                  ~ system:与provided类似，但是被依赖项不会从maven仓库查找依赖，而是从本地系统中获取，systemPath元素用于指定依赖在系统中jar的路径
+                  ~ import:它只使用在dependencyManagement中，我们知道maven和java只能单继承，作用是管理依赖包的版本，一般用来保持当前项目的所有依赖版本统一。
+                -->
+                <scope>import</scope>
+            </dependency>
+            <!-- SpringCloud依赖 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- SpringCloud Alibaba依赖 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- mysql -->
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+            <!-- HikariCP数据库连接池 -->
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${hikaricp.version}</version>
+            </dependency>
+
+            <!--hutool all 工具类-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--mapStruct依赖 高性能对象映射-->
+            <!--mapstruct核心-->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <!--mapstruct编译-->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!-- solo orm扩展封装包 -->
+            <dependency>
+                <groupId>com.solo</groupId>
+                <artifactId>solo-common-orm</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!-- solo 通用工具核心包 -->
+            <dependency>
+                <groupId>com.solo</groupId>
+                <artifactId>solo-common-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!-- solo 系统核心模块 -->
+            <dependency>
+                <groupId>com.solo</groupId>
+                <artifactId>solo-system-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!--
+            Lombok是一个Java库，它提供了一些实用的注解，可以帮助我们简化Java代码的编写。Lombok的目标是通过自动生成Java代码来消除Java代码中的样板代码，以提高代码的简洁性和可读性，从而加快Java应用程序的开发速度。
+            Lombok提供的注解可以帮助我们自动生成一些常见的Java代码，如getter、setter、构造函数、toString方法、hashCode和equals方法等。通过使用这些注解，可以使我们的Java代码更加简洁、易读、易维护，从而提高Java应用程序的开发效率。
+        -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--
+            bootstrap 启动器
+            bootstrap.properties比application.properties的优先级要高
+            由于bootstrap.properties是系统级的资源配置文件，是用在程序引导执行时更加早期配置信息读取；
+            而application.properties是用户级的资源配置文件，是用来后续的一些配置所需要的公共参数。
+            但是在SpringCloud 2020.* 版本把bootstrap禁用了，导致在读取文件的时候读取不到而报错，所以我们只要把bootstrap从新导入进来就会生效了。
+         -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+    </dependencies>
+
+    <!-- 构建项目需要的信息 -->
+    <build>
+        <!-- 项目相关的所有资源路径列表，例如和项目相关的属性文件，这些资源被包含在最终的打包文件里 -->
+        <resources>
+            <!--项目相关或测试相关的所有资源路径 -->
+            <resource>
+                <!-- 指定资源文件的位置 -->
+                <directory>src/main/resources</directory>
+                <!--
+                  ~ filetering是一个boolean变量，作用是将资源文件中的占位符替换成对应的值。
+                  ~ filtering为true，开启过滤，替换directory下的文件中的参数(eg. ${name})。会把过滤的文件打到classpath下
+                  ~ filtering为false，不过滤，不会进行占位符替换。会把不需要过滤的文件打到classpath下
+                -->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <!-- 给出构建过程中所用到的插件 -->
+        <plugins>
+            <plugin>
+                <!--
+                  ~ Maven的编译插件（maven-compiler-plugin）是一个默认插件，它是Maven构建过程中的一个重要组成部分，不安装maven- compiler-plugin插件，是无法进行Java代码编译的。
+                  ~ maven-compiler-plugin用于编译Java源代码，默认情况下会绑定到Maven的compile生命周期阶段。当执行mvn compile命令时，该插件会自动执行，并将源代码编译为可执行的字节码。
+                  ~ 由于maven-compiler- plugin是Maven的核心插件之一，因此在绝大多数基于Maven的项目中，它会被自动引入并使用。你无需显式地声明该插件，除非需要对其进行自定义配置。
+                  ~ 默认情况下，maven-compiler- plugin使用Java编译器的版本与项目的Java版本相匹配。但你也可以在插件的配置中进行自定义，例如指定特定的编译器版本、编译选项等
+                -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <!-- 该插件所需要的特殊配置，在父子项目之间可以覆盖或合并 -->
+                <configuration>
+                    <debug>false</debug>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- 对象模型配置文件，用于约束项目（如：jar包管理、构建管理等） -->
+    <profiles>
+        <!-- profile的主要作用就是区分正式环境和测试环境的配置 -->
+        <profile>
+            <!-- 不同环境Profile的唯一id -->
+            <id>dev</id>
+            <properties>
+                <!-- 环境标识，需要与配置文件的名称相对应 -->
+                <profiles.active>dev</profiles.active>
+            </properties>
+            <activation>
+                <!-- 默认环境 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <profiles.active>test</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+</project>

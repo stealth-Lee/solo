@@ -1,0 +1,27 @@
+server:
+  # 应用端口
+  port: 1000
+
+spring:
+  application:
+    # 应用名称
+    name: solo-system
+  profiles:
+    # 环境配置
+    active: @profiles.active@
+  # Nacos 参数配置
+  cloud:
+    nacos:
+      config:
+        # 配置中心地址
+        server-addr: 127.0.0.1:8848
+        # 配置中心文件后缀
+        file-extension: yaml
+      discovery:
+        # 服务发现地址
+        server-addr: 127.0.0.1:8848
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/solo
+    username: root
+    password: 123456
