@@ -11,4 +11,25 @@ import com.solo.system.api.entity.SysDept;
  **/
 public interface SysDeptService extends BasicService<SysDept> {
 
+    /**
+     * 新增部们
+     * @param entity 部门实体
+     * @return 是否成功
+     */
+    public boolean create(SysDept entity);
+
+    /**
+     * 删除部门
+     * @param deptId 部门id
+     * @return 是否成功
+     */
+    public boolean delete(Long deptId);
+
+    /**
+     * 更新部门
+     * @param entity 部门实体
+     * @return 是否成功
+     */
+    public boolean update(SysDept entity);
+
 }

@@ -9,12 +9,9 @@ import com.solo.system.model.dept.req.SysDeptQueryReq;
 import com.solo.system.model.dept.req.SysDeptUpdateReq;
 import com.solo.system.service.SysDeptService;
 import jakarta.annotation.Resource;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static com.solo.common.core.utils.ServiceExceptionUtil.exception;
 
 /**
  * 部门控制器
@@ -35,9 +32,9 @@ public class SysDeptController {
      * @return 响应信息
      */
     @PostMapping
-    public R<Boolean> insert(@RequestBody SysDeptInsertReq req) {
+    public R<Boolean> create(@RequestBody SysDeptInsertReq req) {
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(req);
-        return R.success(sysDeptService.save(sysDept));
+        return R.success(sysDeptService.create(sysDept));
     }
 
     /**
@@ -47,13 +44,7 @@ public class SysDeptController {
      */
     @DeleteMapping("/{deptId}")
     public R<Boolean> delete(@PathVariable Long deptId) {
-        QueryWrapper query = QueryWrapper.create();
-        query.where(SysDept::getParentId).eq(deptId);
-        List<SysDept> result = sysDeptService.list(query);
-        if (!ObjectUtils.isEmpty(result)) {
-            throw exception("该部门下存在子部门，无法删除");
-        }
-        return R.success(sysDeptService.removeById(deptId));
+        return R.success(sysDeptService.delete(deptId));
     }
 
     /**
@@ -64,7 +55,7 @@ public class SysDeptController {
     @PutMapping
     public R<Boolean> update(@RequestBody SysDeptUpdateReq req) {
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(req);
-        return R.success(sysDeptService.updateById(sysDept));
+        return R.success(sysDeptService.update(sysDept));
     }
 
     /**
@@ -85,10 +76,13 @@ public class SysDeptController {
     @GetMapping("/tree")
     public R<List<SysDept>> tree(SysDeptQueryReq req) {
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(req);
-        List<SysDept> list = sysDeptService.list(QueryWrapper.create(sysDept));
+        QueryWrapper queryWrapper = new QueryWrapper();
+//        queryWrapper.select(SysDeptQueryReq::getDeptName, SysDeptQueryReq::setDeptCode)
+//                .from("SysDeptQueryReq::new,SysDeptQueryReq::new")
+//                .where(SysDeptQueryReq::getDeptName).like(req.getDeptName())
+//                .and(SysDeptInsertReq::getDeptCode).eq(req.getDeptCode());
+        List<SysDept> list = sysDeptService.list(queryWrapper);
         return R.success(list);
     }
-
-
 
 }

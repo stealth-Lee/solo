@@ -40,7 +40,6 @@
         <module>solo-gateway</module>
         <module>solo-common</module>
         <module>solo-modules</module>
-        <module>solo-modules/solo-system/solo-system-api</module>
     </modules>
 
     <!--
@@ -59,6 +58,10 @@
 
         <mysql.version>8.1.0</mysql.version>
         <hikaricp.version>5.0.1</hikaricp.version>
+
+        <mybatis-flex.version>1.6.1</mybatis-flex.version>
+
+        <lombok.version>1.18.28</lombok.version>
 
         <hutool.version>5.8.21</hutool.version>
 
@@ -134,12 +137,19 @@
                 <version>${hikaricp.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.mybatis-flex</groupId>
+                <artifactId>mybatis-flex-spring-boot-starter</artifactId>
+                <version>${mybatis-flex.version}</version>
+            </dependency>
+
             <!--hutool all 工具类-->
             <dependency>
                 <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
+                <artifactId>hutool-bom</artifactId>
                 <version>${hutool.version}</version>
                 <type>pom</type>
+                <!-- 注意这里是import -->
                 <scope>import</scope>
             </dependency>
 
@@ -154,6 +164,12 @@
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <!-- 若我们使用的JDK版本高于1.8，当我们在pom里面导入依赖时候，建议使用坐标是：org.mapstruct:mapstruct-jdk8，这可以帮助我们利用一些Java8的新特性 -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-jdk8</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
 
@@ -187,6 +203,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -219,27 +236,46 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <!-- 给出构建过程中所用到的插件 -->
-        <plugins>
-            <plugin>
-                <!--
-                  ~ Maven的编译插件（maven-compiler-plugin）是一个默认插件，它是Maven构建过程中的一个重要组成部分，不安装maven- compiler-plugin插件，是无法进行Java代码编译的。
-                  ~ maven-compiler-plugin用于编译Java源代码，默认情况下会绑定到Maven的compile生命周期阶段。当执行mvn compile命令时，该插件会自动执行，并将源代码编译为可执行的字节码。
-                  ~ 由于maven-compiler- plugin是Maven的核心插件之一，因此在绝大多数基于Maven的项目中，它会被自动引入并使用。你无需显式地声明该插件，除非需要对其进行自定义配置。
-                  ~ 默认情况下，maven-compiler- plugin使用Java编译器的版本与项目的Java版本相匹配。但你也可以在插件的配置中进行自定义，例如指定特定的编译器版本、编译选项等
-                -->
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <!-- 该插件所需要的特殊配置，在父子项目之间可以覆盖或合并 -->
-                <configuration>
-                    <debug>false</debug>
-                    <compilerArgs>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
-        </plugins>
+        <!--子项目可以引用的默认插件信息。该插件配置项直到被引用时才会被解析或绑定到生命周期。给定插件的任何本地配置都会覆盖这里的配置 -->
+        <pluginManagement>
+            <!-- 给出构建过程中所用到的插件 -->
+            <plugins>
+                <!--plugin元素包含描述插件所需要的信息。 -->
+                <plugin>
+                    <!--
+                      ~ Maven的编译插件（maven-compiler-plugin）是一个默认插件，它是Maven构建过程中的一个重要组成部分，不安装maven- compiler-plugin插件，是无法进行Java代码编译的。
+                      ~ maven-compiler-plugin用于编译Java源代码，默认情况下会绑定到Maven的compile生命周期阶段。当执行mvn compile命令时，该插件会自动执行，并将源代码编译为可执行的字节码。
+                      ~ 由于maven-compiler- plugin是Maven的核心插件之一，因此在绝大多数基于Maven的项目中，它会被自动引入并使用。你无需显式地声明该插件，除非需要对其进行自定义配置。
+                      ~ 默认情况下，maven-compiler- plugin使用Java编译器的版本与项目的Java版本相匹配。但你也可以在插件的配置中进行自定义，例如指定特定的编译器版本、编译选项等
+                    -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <!-- 该插件所需要的特殊配置，在父子项目之间可以覆盖或合并 -->
+                    <configuration>
+                        <annotationProcessorPaths>
+                            <!-- maven-compiler-plugin 插件，解决 Lombok + MapStruct 组合, 不加的话，会有一些莫名其妙的bug, 比如mapstruct方法重载时，不会设置属性到新对象中 -->
+                            <!-- https://stackoverflow.com/questions/33483697/re-run-spring-boot-configuration-annotation-processor-to-update-generated-metada -->
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                            <path>
+                                <groupId>com.mybatis-flex</groupId>
+                                <artifactId>mybatis-flex-processor</artifactId>
+                                <version>${mybatis-flex.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <!-- 对象模型配置文件，用于约束项目（如：jar包管理、构建管理等） -->

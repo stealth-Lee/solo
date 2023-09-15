@@ -1,5 +1,6 @@
 package com.solo.system.model.dept.req;
 
+import com.mybatisflex.annotation.Table;
 import lombok.Data;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Data;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Data
+@Table(value = "sys_dept")
 public class SysDeptQueryReq {
 
     /**

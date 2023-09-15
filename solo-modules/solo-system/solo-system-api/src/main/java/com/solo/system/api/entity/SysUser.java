@@ -5,8 +5,7 @@ import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import com.solo.common.orm.base.entity.BasicEntity;
 import lombok.Data;
-import lombok.ToString;
-
+import lombok.EqualsAndHashCode;
 
 /**
  * 用户实体类
@@ -15,7 +14,7 @@ import lombok.ToString;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Data
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Table("sys_user")
 public class SysUser extends BasicEntity {
 
