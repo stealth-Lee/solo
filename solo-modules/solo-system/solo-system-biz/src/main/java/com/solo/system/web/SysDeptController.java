@@ -2,11 +2,15 @@ package com.solo.system.web;
 
 import com.mybatisflex.core.query.QueryWrapper;
 import com.solo.common.core.global.R;
+import com.solo.common.orm.core.query.Wrappers;
 import com.solo.system.api.entity.SysDept;
 import com.solo.system.model.dept.SysDeptConvert;
-import com.solo.system.model.dept.req.SysDeptInsertReq;
-import com.solo.system.model.dept.req.SysDeptQueryReq;
-import com.solo.system.model.dept.req.SysDeptUpdateReq;
+import com.solo.system.model.dept.req.DeptInsertReq;
+import com.solo.system.model.dept.req.DeptQueryReq;
+import com.solo.system.model.dept.req.DeptUpdateReq;
+import com.solo.system.model.dept.resp.DeptGetResp;
+import com.solo.system.model.dept.resp.DeptListResp;
+import com.solo.system.model.dept.resp.DeptListSimpleResp;
 import com.solo.system.service.SysDeptService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +36,7 @@ public class SysDeptController {
      * @return 响应信息
      */
     @PostMapping
-    public R<Boolean> create(@RequestBody SysDeptInsertReq req) {
+    public R<Boolean> create(@RequestBody DeptInsertReq req) {
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(req);
         return R.success(sysDeptService.create(sysDept));
     }
@@ -53,7 +57,7 @@ public class SysDeptController {
      * @return 响应信息
      */
     @PutMapping
-    public R<Boolean> update(@RequestBody SysDeptUpdateReq req) {
+    public R<Boolean> update(@RequestBody DeptUpdateReq req) {
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(req);
         return R.success(sysDeptService.update(sysDept));
     }
@@ -64,8 +68,17 @@ public class SysDeptController {
      * @return 响应信息
      */
     @GetMapping("/{deptId}")
-    public R<SysDept> get(@PathVariable Long deptId) {
-        return R.success(sysDeptService.getById(deptId));
+    public R<DeptGetResp> get(@PathVariable Long deptId) {
+        return R.success(SysDeptConvert.INSTANCE.convertGet(sysDeptService.getById(deptId)));
+    }
+
+    /**
+     * 查询部门列表精简信息
+     * @return 响应信息
+     */
+    @GetMapping("/list-simple")
+    public R<List<DeptListSimpleResp>> listSimple() {
+        return R.success(sysDeptService.listAs(DeptListSimpleResp.class));
     }
 
     /**
@@ -73,16 +86,10 @@ public class SysDeptController {
      * @param req 查询对象
      * @return 响应信息
      */
-    @GetMapping("/tree")
-    public R<List<SysDept>> tree(SysDeptQueryReq req) {
-        SysDept sysDept = SysDeptConvert.INSTANCE.convert(req);
-        QueryWrapper queryWrapper = new QueryWrapper();
-//        queryWrapper.select(SysDeptQueryReq::getDeptName, SysDeptQueryReq::setDeptCode)
-//                .from("SysDeptQueryReq::new,SysDeptQueryReq::new")
-//                .where(SysDeptQueryReq::getDeptName).like(req.getDeptName())
-//                .and(SysDeptInsertReq::getDeptCode).eq(req.getDeptCode());
-        List<SysDept> list = sysDeptService.list(queryWrapper);
-        return R.success(list);
+    @GetMapping("/list")
+    public R<List<DeptListResp>> list(DeptQueryReq req) {
+        QueryWrapper queryWrapper = Wrappers.buildWhere(req);
+        return R.success(sysDeptService.listAs(queryWrapper, DeptListResp.class));
     }
 
 }

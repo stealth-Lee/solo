@@ -25,6 +25,11 @@
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.solo</groupId>
+			<artifactId>solo-common-core</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>

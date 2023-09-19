@@ -1,17 +1,20 @@
-package com.solo.system.model.dept.req;
+package com.solo.system.model.dept.resp;
 
-import com.mybatisflex.annotation.Table;
 import lombok.Data;
 
 /**
- * 部门新增实体类
+ * 部门详情返回实体类
  * @author 十一
- * @since 2023/09/08 10:11
+ * @since 2023/09/19 15:21
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Data
-@Table(value = "sys_user")
-public class SysDeptInsertReq {
+public class DeptGetResp {
+
+    /**
+     * 部门id
+     */
+    private Long deptId;
 
     /**
      * 父级部门id

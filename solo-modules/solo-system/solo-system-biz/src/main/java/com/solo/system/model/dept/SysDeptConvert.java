@@ -1,9 +1,10 @@
 package com.solo.system.model.dept;
 
 import com.solo.system.api.entity.SysDept;
-import com.solo.system.model.dept.req.SysDeptInsertReq;
-import com.solo.system.model.dept.req.SysDeptQueryReq;
-import com.solo.system.model.dept.req.SysDeptUpdateReq;
+import com.solo.system.model.dept.req.DeptInsertReq;
+import com.solo.system.model.dept.req.DeptQueryReq;
+import com.solo.system.model.dept.req.DeptUpdateReq;
+import com.solo.system.model.dept.resp.DeptGetResp;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -18,10 +19,12 @@ public interface SysDeptConvert {
 
     SysDeptConvert INSTANCE = Mappers.getMapper(SysDeptConvert.class);
 
-    SysDept convert(SysDeptInsertReq bean);
+    SysDept convert(DeptInsertReq bean);
 
-    SysDept convert(SysDeptUpdateReq bean);
+    SysDept convert(DeptUpdateReq bean);
 
-    SysDept convert(SysDeptQueryReq bean);
+    SysDept convert(DeptQueryReq bean);
+
+    DeptGetResp convertGet(SysDept bean);
 
 }

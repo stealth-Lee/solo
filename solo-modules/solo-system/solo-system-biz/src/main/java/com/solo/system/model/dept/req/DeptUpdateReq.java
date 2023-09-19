@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  **/
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SysDeptUpdateReq extends SysDeptInsertReq {
+public class DeptUpdateReq extends DeptInsertReq {
 
     /**
      * 部门id

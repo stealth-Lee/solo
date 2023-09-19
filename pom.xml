@@ -59,7 +59,7 @@
         <mysql.version>8.1.0</mysql.version>
         <hikaricp.version>5.0.1</hikaricp.version>
 
-        <mybatis-flex.version>1.6.1</mybatis-flex.version>
+        <mybatis-flex.version>1.6.5</mybatis-flex.version>
 
         <lombok.version>1.18.28</lombok.version>
 
