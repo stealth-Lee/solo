@@ -23,6 +23,12 @@
             <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
 
+        <!--hibernate-validator-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
         <!-- Hutool核心，包括集合、字符串、Bean等工具 https://doc.hutool.cn/module/core/ -->
         <dependency>
             <groupId>cn.hutool</groupId>

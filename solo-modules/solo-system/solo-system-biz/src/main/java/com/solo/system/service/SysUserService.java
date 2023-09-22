@@ -11,4 +11,18 @@ import com.solo.system.api.entity.SysUser;
  **/
 public interface SysUserService extends BasicService<SysUser> {
 
+    /**
+     * 新增用户
+     * @param entity 用户实体
+     * @return 是否成功
+     */
+    boolean create(SysUser entity);
+
+    /**
+     * 更新用户
+     * @param entity 用户实体
+     * @return 是否成功
+     */
+    boolean update(SysUser entity);
+
 }

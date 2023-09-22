@@ -1,5 +1,6 @@
 package com.solo.system.model.dept.req;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,11 +12,12 @@ import lombok.EqualsAndHashCode;
  **/
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DeptUpdateReq extends DeptInsertReq {
+public class DeptUpdateReq extends DeptCreateReq {
 
     /**
      * 部门id
      */
+    @NotNull(message = "部门id不能为空")
     private Long deptId;
 
 }

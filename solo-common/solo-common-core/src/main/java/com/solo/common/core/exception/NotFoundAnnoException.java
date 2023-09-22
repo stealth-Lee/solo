@@ -10,6 +10,7 @@ import com.solo.common.core.exception.basic.BasicException;
  **/
 public class NotFoundAnnoException extends BasicException {
 
+    // TODO 此处code码需重新考虑
     public NotFoundAnnoException(String module, String message) {
         super(module, 400100, message);
     }

@@ -4,6 +4,9 @@ import com.solo.common.core.exception.ServiceException;
 import com.solo.common.core.global.R;
 import com.solo.common.core.constant.enums.GlobalErrorCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -22,7 +25,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public R<?> handlerException(Exception e) {
-        log.error("全局异常信息 ex={}", e.getMessage(), e);
+        log.error("[Exception] {}", e.getMessage(), e);
         return R.global(GlobalErrorCode.ERROR);
     }
 
@@ -31,8 +34,30 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ServiceException.class)
     public R<?> handlerServiceException(ServiceException e) {
-        log.error("业务异常信息 ex={}", e.getMessage(), e);
-        return R.global(e.getCode(), e.getMessage(), null);
+        log.error("[ServiceException] {}", e.getMessage(), e);
+        return R.global(e.getCode(), e.getMessage());
+    }
+
+    /**
+     * SpringMVC 参数校验不正确异常
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public R<?> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        FieldError fieldError = e.getBindingResult().getFieldError();
+        assert fieldError != null;
+        log.warn("[MethodArgumentNotValidException] {}:{}", fieldError.getField(), fieldError.getDefaultMessage());
+        return R.global(GlobalErrorCode.BAD_REQUEST.code(), String.format("%s:%s", GlobalErrorCode.BAD_REQUEST.message(), fieldError.getDefaultMessage()));
+    }
+
+    /**
+     * 处理 SpringMVC 参数绑定不正确，本质上也是通过 Validator 校验
+     */
+    @ExceptionHandler(BindException.class)
+    public R<?> bindExceptionHandler(BindException ex) {
+        log.warn("[handleBindException]", ex);
+        FieldError fieldError = ex.getFieldError();
+        assert fieldError != null; // 断言，避免告警
+        return R.global(GlobalErrorCode.ERROR, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()));
     }
 
 }

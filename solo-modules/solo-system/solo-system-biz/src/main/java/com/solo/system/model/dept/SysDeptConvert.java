@@ -1,7 +1,7 @@
 package com.solo.system.model.dept;
 
 import com.solo.system.api.entity.SysDept;
-import com.solo.system.model.dept.req.DeptInsertReq;
+import com.solo.system.model.dept.req.DeptCreateReq;
 import com.solo.system.model.dept.req.DeptQueryReq;
 import com.solo.system.model.dept.req.DeptUpdateReq;
 import com.solo.system.model.dept.resp.DeptGetResp;
@@ -19,7 +19,7 @@ public interface SysDeptConvert {
 
     SysDeptConvert INSTANCE = Mappers.getMapper(SysDeptConvert.class);
 
-    SysDept convert(DeptInsertReq bean);
+    SysDept convert(DeptCreateReq bean);
 
     SysDept convert(DeptUpdateReq bean);
 

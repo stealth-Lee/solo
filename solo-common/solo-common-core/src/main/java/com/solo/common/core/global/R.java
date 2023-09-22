@@ -43,6 +43,10 @@ public class R<T> implements Serializable {
         return result;
     }
 
+    public static <T> R<T> global(Integer code, String message) {
+        return global(code, message, null);
+    }
+
     /**
      * 自定义错误码
      * @param global 错误码枚举

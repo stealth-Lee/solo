@@ -1,31 +1,22 @@
-package com.solo.system.api.entity;
+package com.solo.system.model.user.resp;
 
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
-import com.mybatisflex.annotation.Table;
-import com.solo.common.orm.base.entity.BasicEntity;
 import com.solo.system.api.constant.user.Sex;
 import com.solo.system.api.constant.user.Status;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
- * 用户实体类
- *
+ * 用户详情返回实体类
  * @author 十一
- * @since 2023/08/30 17:37
+ * @since 2023/09/21 15:35
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Table("sys_user")
-public class SysUser extends BasicEntity {
+public class UserGetResp {
 
     /**
      * 用户id
      */
-    @Id(keyType = KeyType.Auto)
-    private String userId;
+    private Long userId;
 
     /**
      * 所属部门id
@@ -38,7 +29,7 @@ public class SysUser extends BasicEntity {
     private String username;
 
     /**
-     * 用户密码
+     * 用户名
      */
     private String password;
 
@@ -71,5 +62,10 @@ public class SysUser extends BasicEntity {
      * 帐号状态[0正常 1停用]
      */
     private Status status;
+
+    /**
+     * 备注
+     */
+    private String remark;
 
 }

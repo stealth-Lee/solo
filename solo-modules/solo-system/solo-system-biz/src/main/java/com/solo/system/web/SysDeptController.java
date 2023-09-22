@@ -5,7 +5,7 @@ import com.solo.common.core.global.R;
 import com.solo.common.orm.core.query.Wrappers;
 import com.solo.system.api.entity.SysDept;
 import com.solo.system.model.dept.SysDeptConvert;
-import com.solo.system.model.dept.req.DeptInsertReq;
+import com.solo.system.model.dept.req.DeptCreateReq;
 import com.solo.system.model.dept.req.DeptQueryReq;
 import com.solo.system.model.dept.req.DeptUpdateReq;
 import com.solo.system.model.dept.resp.DeptGetResp;
@@ -13,6 +13,7 @@ import com.solo.system.model.dept.resp.DeptListResp;
 import com.solo.system.model.dept.resp.DeptListSimpleResp;
 import com.solo.system.service.SysDeptService;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class SysDeptController {
      * @return 响应信息
      */
     @PostMapping
-    public R<Boolean> create(@RequestBody DeptInsertReq req) {
+    public R<Boolean> create(@Valid @RequestBody DeptCreateReq req) {
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(req);
         return R.success(sysDeptService.create(sysDept));
     }
@@ -57,7 +58,7 @@ public class SysDeptController {
      * @return 响应信息
      */
     @PutMapping
-    public R<Boolean> update(@RequestBody DeptUpdateReq req) {
+    public R<Boolean> update(@Valid @RequestBody DeptUpdateReq req) {
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(req);
         return R.success(sysDeptService.update(sysDept));
     }

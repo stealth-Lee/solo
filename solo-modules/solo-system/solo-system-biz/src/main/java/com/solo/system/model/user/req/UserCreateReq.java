@@ -1,31 +1,21 @@
-package com.solo.system.api.entity;
+package com.solo.system.model.user.req;
 
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
-import com.mybatisflex.annotation.Table;
-import com.solo.common.orm.base.entity.BasicEntity;
 import com.solo.system.api.constant.user.Sex;
 import com.solo.system.api.constant.user.Status;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
- * 用户实体类
- *
+ * 用户新增实体类
  * @author 十一
- * @since 2023/08/30 17:37
+ * @since 2023/09/21 14:30
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Table("sys_user")
-public class SysUser extends BasicEntity {
-
-    /**
-     * 用户id
-     */
-    @Id(keyType = KeyType.Auto)
-    private String userId;
+public class UserCreateReq {
 
     /**
      * 所属部门id
@@ -35,11 +25,14 @@ public class SysUser extends BasicEntity {
     /**
      * 用户名
      */
+    @NotBlank(message = "用户名不能为空")
+    @Size(min = 4, max = 30, message = "用户名长度为 ${min}-${max} 个字符")
     private String username;
 
     /**
      * 用户密码
      */
+    @NotEmpty(message = "用户密码不能为空")
     private String password;
 
     /**
@@ -53,7 +46,7 @@ public class SysUser extends BasicEntity {
     private String name;
 
     /**
-     * 用户性别[0男 1女]
+     * 用户性别
      */
     private Sex sex;
 
@@ -65,11 +58,17 @@ public class SysUser extends BasicEntity {
     /**
      * 用户邮箱
      */
+    @Email(message = "邮箱格式不正确")
     private String email;
 
     /**
-     * 帐号状态[0正常 1停用]
+     * 帐号状态
      */
     private Status status;
+
+    /**
+     * 备注
+     */
+    private String remark;
 
 }
