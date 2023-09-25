@@ -1,9 +1,13 @@
 package com.solo.common.core.handler;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.solo.common.core.constant.enums.GlobalErrorCode;
 import com.solo.common.core.exception.ServiceException;
 import com.solo.common.core.global.R;
-import com.solo.common.core.constant.enums.GlobalErrorCode;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -47,6 +51,23 @@ public class GlobalExceptionHandler {
         assert fieldError != null;
         log.warn("[MethodArgumentNotValidException] {}:{}", fieldError.getField(), fieldError.getDefaultMessage());
         return R.global(GlobalErrorCode.BAD_REQUEST.code(), String.format("%s:%s", GlobalErrorCode.BAD_REQUEST.message(), fieldError.getDefaultMessage()));
+    }
+
+    /**
+     * SpringMVC 非法参数异常
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public R<?> handlerHttpMessageNotReadableException(HttpMessageNotReadableException e, HttpServletRequest request) {
+        log.warn("HttpMessageNotReadableException in ['{}'] : {}", request.getRequestURI(), e.getMessage());
+        String erroMessage = null;
+        Throwable cause = e.getCause();
+        if (cause instanceof JsonMappingException) {
+            JsonMappingException.Reference path = ((JsonMappingException) cause).getPath().get(0);
+            Object value = ((InvalidFormatException) cause).getValue();
+            String fieldName = path.getFieldName();
+            erroMessage = String.format("无效参数值[%s:%s]", fieldName, value);
+        }
+        return R.global(GlobalErrorCode.BAD_REQUEST.code(), String.format("%s:%s", GlobalErrorCode.BAD_REQUEST.message(), erroMessage));
     }
 
     /**
