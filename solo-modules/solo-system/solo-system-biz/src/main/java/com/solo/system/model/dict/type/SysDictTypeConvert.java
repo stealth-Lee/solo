@@ -23,4 +23,5 @@ public interface SysDictTypeConvert {
     SysDictType convert(DictTypeUpdateReq req);
 
     DictTypeGetResp convertGet(SysDictType entity);
+
 }

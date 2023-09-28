@@ -15,6 +15,8 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
 /**
  * 系统角色控制器
  * @author 十一
@@ -41,12 +43,12 @@ public class SysRoleController {
 
     /**
      * 删除角色
-     * @param roleId 角色id
+     * @param roleIds 角色id集合
      * @return 响应信息
      */
-    @DeleteMapping("/{roleId}")
-    public R<Boolean> delete(@PathVariable Long roleId) {
-        return R.success(sysRoleService.removeById(roleId));
+    @DeleteMapping("/{roleIds}")
+    public R<Boolean> delete(@PathVariable Long[] roleIds) {
+        return R.success(sysRoleService.removeByIds(Arrays.asList(roleIds)));
     }
 
     /**
