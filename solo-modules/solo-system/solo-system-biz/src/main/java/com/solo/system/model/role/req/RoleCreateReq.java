@@ -29,7 +29,7 @@ public class RoleCreateReq {
     private DataScope dataScope;
 
     /**
-     * 状态[0停用 1正常]
+     * 状态
      */
     private GlobalStatus status;
 

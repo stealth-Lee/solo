@@ -1,4 +1,4 @@
-package com.solo.system.api.constant.role;
+package com.solo.codegen.api.constant.table;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.mybatisflex.annotation.EnumValue;
@@ -6,20 +6,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 数据权限枚举类
+ * 模版类型枚举类
  * @author 十一
- * @since 2023/09/22 17:19
+ * @since 2023/10/08 15:36
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Getter
 @AllArgsConstructor
-public enum DataScope {
+public enum TplType {
 
-    ALL(1, "全部数据权限"),
-    DEPT(2, "本部门数据权限"),
-    DEPT_BELOW(3, "本部门及以下数据权限"),
-    CUSTOM(4, "自定义数据权限"),
-    ONLY_ME(5, "仅本人数据权限");
+    SINGLE_TABLE(1, "单表结构"),
+    TREE_TABLE(2, "树表结构"),
+    PRIMARY_CHILD_TABLE(3, "主子表结构");
 
     @EnumValue
     @JsonValue

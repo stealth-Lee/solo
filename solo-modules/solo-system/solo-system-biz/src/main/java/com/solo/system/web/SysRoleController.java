@@ -8,6 +8,7 @@ import com.solo.system.model.role.SysRoleConvert;
 import com.solo.system.model.role.req.RoleCreateReq;
 import com.solo.system.model.role.req.RoleQueryReq;
 import com.solo.system.model.role.req.RoleUpdateReq;
+import com.solo.system.model.role.req.RoleUpdateStatusReq;
 import com.solo.system.model.role.resp.RoleGetResp;
 import com.solo.system.model.role.resp.RoleListResp;
 import com.solo.system.service.SysRoleService;
@@ -60,6 +61,17 @@ public class SysRoleController {
     public R<Boolean> update(@Valid @RequestBody RoleUpdateReq req) {
         SysRole entity = SysRoleConvert.INSTANCE.convert(req);
         return R.success(sysRoleService.update(entity));
+    }
+
+    /**
+     * 角色状态切换
+     * @param req 系统角色修改状态对象
+     * @return 响应信息
+     */
+    @PutMapping("/update-status")
+    public R<Boolean> updateStatus(@Valid @RequestBody RoleUpdateStatusReq req) {
+        SysRole entity = SysRoleConvert.INSTANCE.convert(req);
+        return R.success(sysRoleService.updateById(entity));
     }
 
     /**

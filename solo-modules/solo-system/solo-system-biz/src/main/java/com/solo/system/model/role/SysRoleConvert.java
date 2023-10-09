@@ -3,6 +3,7 @@ package com.solo.system.model.role;
 import com.solo.system.api.entity.SysRole;
 import com.solo.system.model.role.req.RoleCreateReq;
 import com.solo.system.model.role.req.RoleUpdateReq;
+import com.solo.system.model.role.req.RoleUpdateStatusReq;
 import com.solo.system.model.role.resp.RoleGetResp;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -22,5 +23,8 @@ public interface SysRoleConvert {
 
     SysRole convert(RoleUpdateReq req);
 
+    SysRole convert(RoleUpdateStatusReq req);
+
     RoleGetResp convertGet(SysRole entity);
+
 }

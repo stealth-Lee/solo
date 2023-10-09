@@ -25,12 +25,16 @@ spring:
         locator:
           enabled: true
       routes:
-        # 系统模块
+        # 系统核心模块
         - id: solo-system
           uri: lb://solo-system
-#          uri: http://localhost:1001
           predicates:
             - Path=/system/**
+        # 代码生成模块
+        - id: solo-codegen
+          uri: lb://solo-codegen
+          predicates:
+            - Path=/gen/**
 #  config:
 #    import:
 #      - optional:nacos:application-@profiles.active@.yml
