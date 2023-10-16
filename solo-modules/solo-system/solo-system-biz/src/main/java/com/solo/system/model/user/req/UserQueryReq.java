@@ -1,6 +1,5 @@
 package com.solo.system.model.user.req;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.solo.common.orm.core.query.anno.Query;
 import com.solo.common.orm.core.query.anno.Wrappers;
 import com.solo.system.api.constant.user.Status;
@@ -32,7 +31,6 @@ public class UserQueryReq {
      * 帐号状态[0正常 1停用]
      */
     @Query
-    @JsonValue
     private Status status;
 
 }

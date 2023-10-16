@@ -59,9 +59,12 @@
         <mysql.version>8.1.0</mysql.version>
         <hikaricp.version>5.0.1</hikaricp.version>
 
-        <mybatis-flex.version>1.6.5</mybatis-flex.version>
+        <mybatis-flex.version>1.7.0</mybatis-flex.version>
+        <mybatis-plus-generator.version>3.5.3.1</mybatis-plus-generator.version>
 
-        <lombok.version>1.18.28</lombok.version>
+        <velocity.version>2.3</velocity.version>
+
+        <lombok.version>1.18.30</lombok.version>
 
         <hutool.version>5.8.21</hutool.version>
 
@@ -137,10 +140,34 @@
                 <version>${hikaricp.version}</version>
             </dependency>
 
+            <!-- mybatis-flex -->
             <dependency>
                 <groupId>com.mybatis-flex</groupId>
                 <artifactId>mybatis-flex-spring-boot-starter</artifactId>
                 <version>${mybatis-flex.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mybatis-flex</groupId>
+                <artifactId>mybatis-flex-codegen</artifactId>
+                <version>${mybatis-flex.version}</version>
+            </dependency>
+
+            <!-- 代码生成器，使用它解析表结构 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-core</artifactId>
+                <version>${mybatis-plus-generator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-generator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${velocity.version}</version>
             </dependency>
 
             <!--hutool all 工具类-->

@@ -14,4 +14,7 @@ public interface GenDatasourceService extends BasicService<GenDatasource> {
     boolean create(GenDatasource entity);
 
     boolean update(GenDatasource entity);
+
+    boolean test(Long sourceId);
+
 }

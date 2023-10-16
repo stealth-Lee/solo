@@ -1,0 +1,29 @@
+package ${table.packageName}.model.user.req;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+
+/**
+ * ${table.tableComment}新增对象 req
+ * @author $!{table.author}
+ * @since ${now}
+#if(${table.classTail})
+ * ${table.classTail}
+#end
+ **/
+@Data
+public class ${modelClassName}CreateReq {
+
+#foreach ($column in $columns)
+    /**
+     * ${column.javaComment}
+     */
+    #if (${column.isInsert.getValue()})
+    private ${column.javaType.getValue()} ${column.javaField};
+    #end
+
+#end
+}

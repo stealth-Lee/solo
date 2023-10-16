@@ -9,4 +9,11 @@
 
     <artifactId>solo-codegen-api</artifactId>
     <description>solo-system-api 系统核心模块</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-system-api</artifactId>
+        </dependency>
+    </dependencies>
 </project>

@@ -11,6 +11,12 @@
     <description>solo 通用工具核心包</description>
 
     <dependencies>
+        <!-- Web 相关 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <!--json依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

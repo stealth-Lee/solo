@@ -34,7 +34,7 @@ spring:
         - id: solo-codegen
           uri: lb://solo-codegen
           predicates:
-            - Path=/gen/**
+            - Path=/codegen/**
 #  config:
 #    import:
 #      - optional:nacos:application-@profiles.active@.yml

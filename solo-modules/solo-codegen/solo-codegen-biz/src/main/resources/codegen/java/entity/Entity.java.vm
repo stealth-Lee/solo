@@ -1,0 +1,33 @@
+package ${table.packageName}.api.entity;
+
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
+import com.solo.common.orm.base.entity.BasicEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * ${table.tableComment}实体类
+ * @author $!{table.author}
+ * @since ${now}
+#if(${table.classTail})
+ * ${table.classTail}
+#end
+ **/
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Table("${table.tableName}")
+public class ${table.className} extends BasicEntity {
+
+#foreach ($column in $columns)
+    /**
+     * ${column.javaComment}
+     */
+    #if (${column.isPk.getValue()})
+    @Id(keyType = KeyType.Auto)
+    #end
+    private ${column.javaType.getValue()} ${column.javaField};
+
+#end
+}

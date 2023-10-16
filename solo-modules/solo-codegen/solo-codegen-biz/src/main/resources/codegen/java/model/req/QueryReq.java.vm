@@ -1,0 +1,30 @@
+package ${table.packageName}.model.user.req;
+
+import com.solo.common.orm.core.query.anno.Query;
+import com.solo.common.orm.core.query.anno.Wrappers;
+import lombok.Data;
+
+/**
+ * ${table.tableComment}查询对象 req
+ * @author $!{table.author}
+ * @since ${now}
+#if(${table.classTail})
+ * ${table.classTail}
+#end
+ **/
+@Data
+@Wrappers
+public class ${modelClassName}QueryReq {
+
+#foreach ($column in $columns)
+    /**
+     * ${column.javaComment}
+     */
+    #if (${column.isQuery.getValue()})
+    @Query
+    private ${column.javaType.getValue()} ${column.javaField};
+    #end
+
+#end
+
+}

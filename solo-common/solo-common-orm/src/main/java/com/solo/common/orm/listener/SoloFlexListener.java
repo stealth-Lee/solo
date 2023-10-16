@@ -21,6 +21,7 @@ public class SoloFlexListener implements InsertListener, UpdateListener {
     @Override
     public void onInsert(Object entity) {
         BasicEntity basicEntity = (BasicEntity) entity;
+        basicEntity.setDeleted(false);
         basicEntity.setCreateBy("admin");
         basicEntity.setCreateTime(LocalDateTime.now());
     }

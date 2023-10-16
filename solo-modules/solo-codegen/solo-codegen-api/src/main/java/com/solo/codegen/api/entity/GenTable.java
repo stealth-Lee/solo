@@ -26,6 +26,11 @@ public class GenTable extends BasicEntity {
     private Long tableId;
 
     /**
+     * 数据源id
+     */
+    private Long sourceId;
+
+    /**
      * 表名称
      */
     private String tableName;
@@ -41,7 +46,7 @@ public class GenTable extends BasicEntity {
     private String author;
 
     /**
-     * 模版类型[1:单表结构 2:树表结构 3:主子表结构]
+     * 模版类型
      */
     private TplType tplType;
 
@@ -69,5 +74,10 @@ public class GenTable extends BasicEntity {
      * 实体类名称
      */
     private String className;
+
+    /**
+     * 实体类小尾巴
+     */
+    private String classTail;
 
 }

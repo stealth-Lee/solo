@@ -37,12 +37,6 @@
 			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
 		</dependency>
 
-		<!-- 工具包依赖 -->
-		<dependency>
-			<groupId>com.solo</groupId>
-			<artifactId>solo-common-core</artifactId>
-		</dependency>
 	</dependencies>
-
 
 </project>

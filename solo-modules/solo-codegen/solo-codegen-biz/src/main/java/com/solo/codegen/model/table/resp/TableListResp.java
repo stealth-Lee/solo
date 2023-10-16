@@ -15,6 +15,11 @@ import java.time.LocalDateTime;
 public class TableListResp {
 
     /**
+     * 表id
+     */
+    private Long tableId;
+
+    /**
      * 表名称
      */
     private String tableName;

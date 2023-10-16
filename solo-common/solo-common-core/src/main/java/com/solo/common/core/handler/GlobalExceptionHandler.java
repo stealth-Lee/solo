@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
     public R<?> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         FieldError fieldError = e.getBindingResult().getFieldError();
         assert fieldError != null;
-        log.warn("[MethodArgumentNotValidException] {}:{}", fieldError.getField(), fieldError.getDefaultMessage());
+        log.warn("[MethodArgumentNotValidException] {} : {}", fieldError.getField(), fieldError.getDefaultMessage());
         return R.global(GlobalErrorCode.BAD_REQUEST.code(), String.format("%s:%s", GlobalErrorCode.BAD_REQUEST.message(), fieldError.getDefaultMessage()));
     }
 

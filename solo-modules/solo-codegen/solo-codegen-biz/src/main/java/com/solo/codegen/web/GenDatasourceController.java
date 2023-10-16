@@ -8,6 +8,7 @@ import com.solo.codegen.model.datasource.req.DatasourceQueryReq;
 import com.solo.codegen.model.datasource.req.DatasourceUpdateReq;
 import com.solo.codegen.model.datasource.resp.DatasourceGetResp;
 import com.solo.codegen.model.datasource.resp.DatasourceListResp;
+import com.solo.codegen.model.datasource.resp.DatasourceListSimpleResp;
 import com.solo.codegen.service.GenDatasourceService;
 import com.solo.common.core.global.R;
 import com.solo.common.orm.core.query.Wrappers;
@@ -16,6 +17,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 代码生成数据源控制器类
@@ -73,6 +75,15 @@ public class GenDatasourceController {
     }
 
     /**
+     * 查询部门列表精简信息
+     * @return 响应信息
+     */
+    @GetMapping("/list-simple")
+    public R<List<DatasourceListSimpleResp>> listSimple() {
+        return R.success(genDatasourceService.listAs(DatasourceListSimpleResp.class));
+    }
+
+    /**
      * 分页查询数据源列表
      * @param page 分页对象
      * @param req 数据源查询对象
@@ -82,6 +93,11 @@ public class GenDatasourceController {
     public R<Page<DatasourceListResp>> page(Page<DatasourceListResp> page, DatasourceQueryReq req) {
         Page<DatasourceListResp> list = genDatasourceService.pageAs(page, Wrappers.buildWhere(req), DatasourceListResp.class);
         return R.success(list);
+    }
+
+    @GetMapping("test/{sourceId}")
+    public R<Boolean> test(@PathVariable Long sourceId) {
+        return R.success(genDatasourceService.test(sourceId));
     }
     
 }

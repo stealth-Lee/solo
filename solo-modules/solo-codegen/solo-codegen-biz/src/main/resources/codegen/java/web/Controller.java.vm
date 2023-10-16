@@ -1,0 +1,101 @@
+package ${table.packageName}.web;
+
+import com.mybatisflex.core.paginate.Page;
+import com.solo.common.core.global.R;
+import com.solo.common.orm.core.query.Wrappers;
+import ${table.packageName}.api.entity.${table.moduleName};
+import ${table.packageName}.model.${table.businessName}.${table.moduleName}Convert;
+import ${table.packageName}.model.${table.businessName}.req.RoleCreateReq;
+import ${table.packageName}.model.${table.businessName}.req.RoleQueryReq;
+import ${table.packageName}.model.${table.businessName}.req.RoleUpdateReq;
+import ${table.packageName}.model.${table.businessName}.req.RoleUpdateStatusReq;
+import ${table.packageName}.model.${table.businessName}.resp.RoleGetResp;
+import ${table.packageName}.model.${table.businessName}.resp.RoleListResp;
+import ${table.packageName}.service.${table.moduleName}Service;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+
+/**
+ * ${table.tableComment}控制器
+ * @author $!{table.author}
+ * @since ${now}
+#if(${table.classTail})
+ * ${table.classTail}
+#end
+ **/
+@RestController
+@RequestMapping("/${table.moduleName}/${table.businessName}")
+public class ${table.className}Controller {
+
+    @Resource
+    private ${table.className}Service ${table.className.substring(0, 1).toLowerCase()}${table.className.substring(1)}Service;
+
+    /**
+     * 新增角色
+     * @param req 角色新增对象
+     * @return 响应信息
+     */
+    @PostMapping
+    public R<Boolean> create(@Valid @RequestBody RoleCreateReq req) {
+        ${table.className} entity = ${table.className}Convert.INSTANCE.convert(req);
+        return R.success(sysRoleService.create(entity));
+    }
+
+    /**
+     * 删除角色
+     * @param roleIds 角色id集合
+     * @return 响应信息
+     */
+    @DeleteMapping("/{roleIds}")
+    public R<Boolean> delete(@PathVariable Long[] roleIds) {
+        return R.success(sysRoleService.removeByIds(Arrays.asList(roleIds)));
+    }
+
+    /**
+     * 更新角色
+     * @param req 角色更新对象
+     * @return 响应信息
+     */
+    @PutMapping
+    public R<Boolean> update(@Valid @RequestBody RoleUpdateReq req) {
+        SysRole entity = SysRoleConvert.INSTANCE.convert(req);
+        return R.success(sysRoleService.update(entity));
+    }
+
+    /**
+     * 角色状态切换
+     * @param req 系统角色修改状态对象
+     * @return 响应信息
+     */
+    @PutMapping("/update-status")
+    public R<Boolean> updateStatus(@Valid @RequestBody RoleUpdateStatusReq req) {
+        SysRole entity = SysRoleConvert.INSTANCE.convert(req);
+        return R.success(sysRoleService.updateById(entity));
+    }
+
+    /**
+     * 获取角色
+     * @param roleId 角色id
+     * @return 响应信息
+     */
+    @GetMapping("/{roleId}")
+    public R<RoleGetResp> get(@PathVariable Long roleId) {
+        return R.success(SysRoleConvert.INSTANCE.convertGet(sysRoleService.getById(roleId)));
+    }
+
+    /**
+     * 分页查询角色列表
+     * @param page 分页对象
+     * @param req 角色查询对象
+     * @return 响应信息
+     */
+    @GetMapping("/page")
+    public R<Page<RoleListResp>> page(Page<RoleListResp> page, RoleQueryReq req) {
+        Page<RoleListResp> list = sysRoleService.pageAs(page, Wrappers.buildWhere(req), RoleListResp.class);
+        return R.success(list);
+    }
+
+}

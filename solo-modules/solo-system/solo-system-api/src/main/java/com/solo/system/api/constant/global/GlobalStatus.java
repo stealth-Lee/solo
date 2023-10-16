@@ -2,6 +2,7 @@ package com.solo.system.api.constant.global;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.mybatisflex.annotation.EnumValue;
+import com.solo.common.orm.base.enums.BasicDict;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,7 +14,7 @@ import lombok.Getter;
  **/
 @Getter
 @AllArgsConstructor
-public enum GlobalStatus {
+public enum GlobalStatus implements BasicDict<Integer> {
 
     DEACTIVATE(0, "停用"),
     NORMAL(1, "正常");

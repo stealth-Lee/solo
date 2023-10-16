@@ -1,1 +1,2 @@
 com.solo.common.orm.config.SoloConfigurationCustomizer
+com.solo.common.orm.config.WebConfig
