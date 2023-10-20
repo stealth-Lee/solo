@@ -1,4 +1,4 @@
-package ${table.packageName}.model.user.req;
+package ${table.packageName}.model.${table.businessName}.req;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -18,12 +18,12 @@ import lombok.Data;
 public class ${modelClassName}CreateReq {
 
 #foreach ($column in $columns)
+    #if (${column.isCreate.getValue()})
     /**
      * ${column.javaComment}
      */
-    #if (${column.isInsert.getValue()})
     private ${column.javaType.getValue()} ${column.javaField};
-    #end
 
+    #end
 #end
 }

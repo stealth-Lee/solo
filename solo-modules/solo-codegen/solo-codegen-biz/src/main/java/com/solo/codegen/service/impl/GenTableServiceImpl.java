@@ -16,7 +16,9 @@ import com.solo.codegen.model.table.GenTableConvert;
 import com.solo.codegen.model.table.req.TableCreateReq;
 import com.solo.codegen.service.DatabaseTableService;
 import com.solo.codegen.service.GenTableService;
+import com.solo.codegen.service.inner.CodegenBuilder;
 import com.solo.codegen.service.inner.CodegenEngine;
+import com.solo.common.core.constant.Symbols;
 import com.solo.common.core.utils.StringUtils;
 import com.solo.common.orm.base.service.impl.BasicServiceImpl;
 import com.solo.system.api.constant.global.YesNo;
@@ -45,7 +47,6 @@ public class GenTableServiceImpl extends BasicServiceImpl<GenTableMapper, GenTab
     @Resource
     private CodegenEngine codegenEngine;
 
-
     @Override
     public boolean create(TableCreateReq req) {
         GenTable genTable = GenTableConvert.INSTANCE.convert(req);
@@ -59,19 +60,14 @@ public class GenTableServiceImpl extends BasicServiceImpl<GenTableMapper, GenTab
 
     @Override
     public List<TableInfo> selectListSimple(Long sourceId) {
-        List<TableInfo> tableList = databaseTableService.getTableList(sourceId);
-        return tableList;
+        return databaseTableService.getTableList(sourceId);
     }
 
     @Override
     public Map<String, String> generationCodes(Long tableId) {
         GenTable table = mapper.selectOneById(tableId);
-//        genColumnMapper.selectList
         List<GenColumn> columns = QueryChain.of(genColumnMapper).where(GenColumnTable.TableId.eq(tableId)).list();
-        List<GenColumn> dictColumns = QueryChain.of(genColumnMapper).
-                where(GenColumnTable.TableId.eq(tableId)).and(GenColumnTable.DictCode.isNotNull()).list();
-
-        return codegenEngine.execute(table, columns, dictColumns);
+        return codegenEngine.execute(table, columns);
     }
 
     /**
@@ -80,9 +76,9 @@ public class GenTableServiceImpl extends BasicServiceImpl<GenTableMapper, GenTab
      */
     private void buildTable(TableInfo tableInfo, GenTable genTable) {
         genTable.setTableName(tableInfo.getName());
-        genTable.setTableComment(tableInfo.getComment());
+        genTable.setTableComment(StringUtils.replaceLast(tableInfo.getComment(), "表", ""));
         genTable.setClassName(NamingCase.toPascalCase(tableInfo.getName()));
-        List<String> split = StringUtils.split(genTable.getTableName(), "_");
+        List<String> split = StringUtils.split(genTable.getTableName(), Symbols.UNDERLINE);
         genTable.setPackageName("com.solo." + split.get(0));
         genTable.setModuleName(split.get(0));
         genTable.setBusinessName(split.get(1));
@@ -96,26 +92,45 @@ public class GenTableServiceImpl extends BasicServiceImpl<GenTableMapper, GenTab
      */
     private List<GenColumn> buildColumn(Long tableId, List<TableField> fields) {
         List<GenColumn> columns = new ArrayList<>();
+        int index = 0;
         for (TableField field : fields) {
+            TableField.MetaInfo metaInfo = field.getMetaInfo();
+            int length = metaInfo.getLength();
+            String type = metaInfo.getJdbcType().toString();
+            String columnType = length > 0 ? type + "(" + length + ")" : type;
+
             GenColumn column = new GenColumn();
             column.setTableId(tableId);
             column.setColumnName(field.getName());
-            column.setColumnType(field.getMetaInfo().getJdbcType().toString());
-//            column.setColumnSort();
-            column.setJavaType(EnumUtil.getBy(JavaType::getValue, field.getPropertyType()));
+            column.setColumnType(columnType);
+            column.setColumnSort(index++);
+            column.setJavaType(StringUtils.isNotBlank(field.getPropertyType()) ? EnumUtil.getBy(JavaType::getValue, field.getPropertyType()) : JavaType.OBJECT);
             column.setJavaField(field.getPropertyName());
             column.setJavaComment(field.getComment());
             column.setIsPk(EnumUtil.getBy(YesNo::getValue, field.isKeyFlag()));
-            column.setIsInsert(YesNo.YES);
-            column.setIsUpdate(YesNo.YES);
-            column.setIsRequired(YesNo.YES);
-            column.setIsList(YesNo.YES);
-            column.setIsQuery(YesNo.YES);
+            column.setIsCreate(EnumUtil.getBy(YesNo::getValue, !CodegenBuilder.CREATE_IGNORE_FIELDS.contains(field.getPropertyName()) && !field.isKeyFlag()));
+            column.setIsUpdate(EnumUtil.getBy(YesNo::getValue, !CodegenBuilder.UPDATE_IGNORE_FIELDS.contains(field.getPropertyName())));
+            column.setIsRequired(EnumUtil.getBy(YesNo::getValue, !metaInfo.isNullable()));
+            column.setIsList(EnumUtil.getBy(YesNo::getValue, !CodegenBuilder.LIST_IGNORE_FIELDS.contains(field.getPropertyName())  && !field.isKeyFlag()));
+            column.setIsQuery(EnumUtil.getBy(YesNo::getValue, !CodegenBuilder.QUERY_IGNORE_FIELDS.contains(field.getPropertyName()) && !field.isKeyFlag()));
             column.setQueryMode(QueryMode.EQ);
-            column.setFormType(FormType.INPUT);
+            initFormType(column);
             columns.add(column);
         }
         return columns;
+    }
+
+    private void initFormType(GenColumn column) {
+
+        FormType formType = switch (column.getJavaType()) {
+            case LOCAL_DATE_TIME -> FormType.DATE_TIME;
+            case LOCAL_DATE -> FormType.DATE;
+            case LOCAL_TIME -> FormType.TIME;
+            case BOOLEAN -> FormType.SWITCH;
+            default -> FormType.INPUT;
+        };
+
+        column.setFormType(formType);
     }
 
 }

@@ -21,6 +21,7 @@ import lombok.EqualsAndHashCode;
 public class ${table.className} extends BasicEntity {
 
 #foreach ($column in $columns)
+    #if (!${basicEntity.contains(${column.javaField})})
     /**
      * ${column.javaComment}
      */
@@ -29,5 +30,6 @@ public class ${table.className} extends BasicEntity {
     #end
     private ${column.javaType.getValue()} ${column.javaField};
 
+    #end
 #end
 }

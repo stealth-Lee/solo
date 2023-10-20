@@ -46,7 +46,7 @@ public class GenColumn extends BasicEntity {
     /**
      * 列排序
      */
-    private String columnSort;
+    private Integer columnSort;
 
     /**
      * Java类型
@@ -71,7 +71,7 @@ public class GenColumn extends BasicEntity {
     /**
      * 是否插入字段
      */
-    private YesNo isInsert;
+    private YesNo isCreate;
 
     /**
      * 是否更新字段
@@ -94,7 +94,7 @@ public class GenColumn extends BasicEntity {
     private YesNo isQuery;
 
     /**
-     * 查询方式[EQ:等于 ]
+     * 查询方式
      */
     private QueryMode queryMode;
 

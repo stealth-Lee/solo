@@ -8,6 +8,8 @@ import com.solo.codegen.model.code.resp.CodePreviewResp;
 import com.solo.codegen.model.table.GenTableConvert;
 import com.solo.codegen.model.table.req.TableCreateReq;
 import com.solo.codegen.model.table.req.TableQueryReq;
+import com.solo.codegen.model.table.req.TableUpdateReq;
+import com.solo.codegen.model.table.resp.TableGetResp;
 import com.solo.codegen.model.table.resp.TableListResp;
 import com.solo.codegen.model.table.resp.TableListSimpleResp;
 import com.solo.codegen.service.GenTableService;
@@ -50,22 +52,24 @@ public class GenTableController {
     }
 
     /**
-     * 代码生成
-     * @param tableId 业务表id
-     * @param response 响应对象
-     * @throws IOException io异常
+     * 修改保存代码生成业务
      */
-    @GetMapping("/generate-code/{tableId}")
-    public void gen(@PathVariable Long tableId,HttpServletResponse response) throws IOException {
-        // 生成代码
-        Map<String, String> codes = genTableService.generationCodes(tableId);
-        // 构建 zip 包
-        String[] paths = codes.keySet().toArray(new String[0]);
-        ByteArrayInputStream[] ins = codes.values().stream().map(IoUtil::toUtf8Stream).toArray(ByteArrayInputStream[]::new);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ZipUtil.zip(outputStream, paths, ins);
-        // 输出
-        ServletUtils.writeAttachment(response, "codegen.zip", outputStream.toByteArray());
+    @PutMapping
+    public R<Boolean> update(@Valid @RequestBody TableUpdateReq req) {
+//        genTableService.validateEdit(genTable);
+//        genTableService.updateGenTable(genTable);
+        System.out.println(req);
+        return R.success();
+    }
+
+    /**
+     * 获取业务表详情
+     * @param tableId 业务表id
+     * @return 响应信息
+     */
+    @GetMapping("/{tableId}")
+    public R<TableGetResp> get(@PathVariable Long tableId) {
+        return R.success(GenTableConvert.INSTANCE.convertGet(genTableService.getById(tableId)));
     }
 
     /**
@@ -85,7 +89,6 @@ public class GenTableController {
 
         return R.success(collect);
     }
-
 
     /**
      * 获取业务表精简信息
@@ -108,6 +111,25 @@ public class GenTableController {
     public R<Page<TableListResp>> page(Page<TableListResp> page, TableQueryReq req) {
         Page<TableListResp> list = genTableService.pageAs(page, Wrappers.buildWhere(req), TableListResp.class);
         return R.success(list);
+    }
+
+    /**
+     * 代码生成
+     * @param tableId 业务表id
+     * @param response 响应对象
+     * @throws IOException io异常
+     */
+    @GetMapping("/generate-code/{tableId}")
+    public void gen(@PathVariable Long tableId, HttpServletResponse response) throws IOException {
+        // 生成代码
+        Map<String, String> codes = genTableService.generationCodes(tableId);
+        // 构建 zip 包
+        String[] paths = codes.keySet().toArray(new String[0]);
+        ByteArrayInputStream[] ins = codes.values().stream().map(IoUtil::toUtf8Stream).toArray(ByteArrayInputStream[]::new);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ZipUtil.zip(outputStream, paths, ins);
+        // 输出
+        ServletUtils.writeAttachment(response, "codegen.zip", outputStream.toByteArray());
     }
 
 }

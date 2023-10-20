@@ -1,4 +1,4 @@
-package ${table.packageName}.model.user.req;
+package ${table.packageName}.model.${table.businessName}.req;
 
 import com.solo.common.orm.core.query.anno.Query;
 import com.solo.common.orm.core.query.anno.Wrappers;
@@ -17,14 +17,13 @@ import lombok.Data;
 public class ${modelClassName}QueryReq {
 
 #foreach ($column in $columns)
+    #if (${column.isQuery.getValue()})
     /**
      * ${column.javaComment}
      */
-    #if (${column.isQuery.getValue()})
     @Query
     private ${column.javaType.getValue()} ${column.javaField};
+
     #end
-
 #end
-
 }

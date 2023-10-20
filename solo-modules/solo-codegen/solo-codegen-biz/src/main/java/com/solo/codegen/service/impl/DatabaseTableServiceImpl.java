@@ -43,6 +43,8 @@ public class DatabaseTableServiceImpl implements DatabaseTableService {
     private List<TableInfo> getTableList(Long sourceId, String tableName) {
         GenDatasource config = genDatasourceMapper.selectOneById(sourceId);
         Assert.notNull(config, "数据源[{}] 不存在！", sourceId);
+//        Table
+
         // 使用 MyBatis Plus Generator 解析表结构
         DataSourceConfig dataSourceConfig = new DataSourceConfig.Builder(config.getUrl(), config.getUsername(),
                 config.getPassword()).build();

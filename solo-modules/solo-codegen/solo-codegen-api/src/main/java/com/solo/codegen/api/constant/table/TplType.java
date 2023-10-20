@@ -2,6 +2,7 @@ package com.solo.codegen.api.constant.table;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.mybatisflex.annotation.EnumValue;
+import com.solo.common.orm.base.enums.BasicDict;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,7 +14,7 @@ import lombok.Getter;
  **/
 @Getter
 @AllArgsConstructor
-public enum TplType {
+public enum TplType implements BasicDict<Integer> {
 
     SINGLE_TABLE(1, "单表结构"),
     TREE_TABLE(2, "树表结构"),

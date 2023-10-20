@@ -1,10 +1,8 @@
-package ${table.packageName}.model.user.req;
+package ${table.packageName}.model.${table.businessName}.resp;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * ${table.tableComment}列表对象 resp
@@ -15,15 +13,15 @@ import lombok.Data;
 #end
  **/
 @Data
-public class ${modelTableName}ListResp {
+public class ${modelClassName}ListResp {
 
 #foreach ($column in $columns)
+    #if (${column.isList.getValue()} || ${column.isPk.getValue()})
     /**
      * ${column.javaComment}
      */
-    #if (${column.modelClassName.getValue()})
     private ${column.javaType.getValue()} ${column.javaField};
-    #end
 
+    #end
 #end
 }

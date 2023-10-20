@@ -11,4 +11,12 @@
 
     <description>solo-system-api 系统核心模块</description>
 
+    <dependencies>
+        <!-- solo redis缓存 -->
+        <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-common-rpc</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

@@ -12,6 +12,15 @@ public class FileSuffix {
      * java文件后缀
      */
     public static final String JAVA = ".java";
+
+    /**
+     * xml文件后缀
+     */
     public static final String XML = ".xml";
+
+    /**
+     * ts文件后缀
+     */
+    public static final String TS = ".ts";
 
 }

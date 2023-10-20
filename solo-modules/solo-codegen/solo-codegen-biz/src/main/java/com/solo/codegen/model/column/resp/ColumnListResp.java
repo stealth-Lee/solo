@@ -58,7 +58,7 @@ public class ColumnListResp {
     /**
      * 是否插入字段
      */
-    private YesNo isInsert;
+    private YesNo isCreate;
 
     /**
      * 是否更新字段

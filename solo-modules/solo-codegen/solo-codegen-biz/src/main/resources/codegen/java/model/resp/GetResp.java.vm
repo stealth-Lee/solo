@@ -1,9 +1,5 @@
-package ${table.packageName}.model.user.req;
+package ${table.packageName}.model.${table.businessName}.resp;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -18,12 +14,12 @@ import lombok.Data;
 public class ${modelClassName}GetResp {
 
 #foreach ($column in $columns)
+    #if (${column.isUpdate.getValue()})
     /**
      * ${column.javaComment}
      */
-    #if (${column.isInsert.getValue()})
     private ${column.javaType.getValue()} ${column.javaField};
-    #end
 
+    #end
 #end
 }

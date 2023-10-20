@@ -27,7 +27,7 @@ public class GenColumnController {
     private GenColumnService genColumnService;
 
     /**
-     * 查询部门列表精简信息
+     * 查询列的列表精简信息
      * @return 响应信息
      */
     @GetMapping("/{tableId}")

@@ -32,7 +32,7 @@ public class StringUtils extends StrUtil {
     }
 
     /**
-     * 去掉首部指定字符前的字符串并将剩余字符串首字母小写
+     * 去掉首部指定字符前的字符串并将剩余字符串首字母大写
      * @param str 字符串
      * @param separator 指定字符
      * @return 处理后的字符串
@@ -42,7 +42,10 @@ public class StringUtils extends StrUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(toCamelCase("system_user"));
+//        System.out.println(removePreAndUpperFirst("system_user", '_'));
+//        System.out.println(toUnderlineCase("systemUseraA"));
+        String  a  = "130603195301131228";
+        System.out.println(a.substring(0,6) + a.substring(8, 17));
     }
 
 }

@@ -16,5 +16,7 @@
     <modules>
         <module>solo-common-orm</module>
         <module>solo-common-core</module>
+        <module>solo-common-redis</module>
+        <module>solo-common-rpc</module>
     </modules>
 </project>

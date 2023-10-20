@@ -1,4 +1,4 @@
-package com.solo.system.api.constant.enums;
+package com.solo.system.api.enums;
 
 import com.solo.common.core.constant.ErrorCode;
 

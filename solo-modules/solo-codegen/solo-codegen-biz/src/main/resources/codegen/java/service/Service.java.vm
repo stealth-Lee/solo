@@ -3,9 +3,6 @@ package ${table.packageName}.service;
 import ${table.packageName}.api.entity.${table.className};
 import com.solo.common.orm.base.service.BasicService;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * ${table.tableComment} Service
  * @author $!{table.author}

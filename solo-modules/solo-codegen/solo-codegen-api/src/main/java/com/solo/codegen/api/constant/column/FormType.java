@@ -21,7 +21,10 @@ public enum FormType implements BasicDict<String> {
     SELECT("select", "下拉框"),
     CHECKBOX("checkbox", "复选框"),
     RADIO("radio", "单选按钮"),
-    DATE("date", "日期控件");
+    SWITCH("switch", "开关按钮"),
+    DATE_TIME("dateTime", "日期时间控件"),
+    DATE("date", "日期控件"),
+    TIME("time", "时间控件");
 
     @EnumValue
     @JsonValue

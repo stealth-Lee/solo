@@ -1,0 +1,34 @@
+import { http } from "@/utils/http";
+import { baseUrlApi } from "@/api/utils";
+
+// 新增${table.tableComment}
+export const creating = (data: object) => {
+  return http.post(baseUrlApi("/${table.moduleName}/${table.businessName}"), { data });
+};
+
+#if ($primaryColumn.javaType.getValue() == 'Long' || $primaryColumn.javaType.getValue() == 'Integer')
+    #set ($type = 'number')
+#else
+    #set ($type = 'string')
+#end
+// 删除${table.tableComment}
+export const deleting = (${primaryColumn.javaField}s: ${type}) => {
+  return http.delete(baseUrlApi("/${table.moduleName}/${table.businessName}/" + ${primaryColumn.javaField}s));
+};
+
+// 修改${table.tableComment}
+export const updating = (data: object) => {
+  return http.put(baseUrlApi("/${table.moduleName}/${table.businessName}"), { data });
+};
+
+// 获取单条${table.tableComment}信息
+export const getting = (${primaryColumn.javaField}: ${type}) => {
+  return http.get(baseUrlApi("/${table.moduleName}/${table.businessName}/" + ${primaryColumn.javaField}));
+};
+
+// 获取${table.tableComment}信息分页列表
+export const paging = (params?: object) => {
+  return http.get(baseUrlApi("/${table.moduleName}/${table.businessName}/page"), {
+    params
+  });
+};

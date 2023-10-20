@@ -1,6 +1,5 @@
 package com.solo.system.api.constant.global;
 
-import cn.hutool.core.util.EnumUtil;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.mybatisflex.annotation.EnumValue;
 import com.solo.common.orm.base.enums.BasicDict;
@@ -24,10 +23,5 @@ public enum YesNo implements BasicDict<Boolean> {
     @JsonValue
     private final Boolean value;
     private final String label;
-
-    public static void main(String[] args) {
-        YesNo by = EnumUtil.getBy(YesNo::getValue, true);
-        System.out.println(by);
-    }
 
 }
