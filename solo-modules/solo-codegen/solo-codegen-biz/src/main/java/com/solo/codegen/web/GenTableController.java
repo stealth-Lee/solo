@@ -56,9 +56,7 @@ public class GenTableController {
      */
     @PutMapping
     public R<Boolean> update(@Valid @RequestBody TableUpdateReq req) {
-//        genTableService.validateEdit(genTable);
-//        genTableService.updateGenTable(genTable);
-        System.out.println(req);
+        genTableService.update(req);
         return R.success();
     }
 
@@ -86,7 +84,6 @@ public class GenTableController {
             respVO.setCode(entry.getValue());
             return respVO;
         }).collect(Collectors.toList());
-
         return R.success(collect);
     }
 

@@ -14,6 +14,7 @@ import com.solo.codegen.mapper.GenColumnMapper;
 import com.solo.codegen.mapper.GenTableMapper;
 import com.solo.codegen.model.table.GenTableConvert;
 import com.solo.codegen.model.table.req.TableCreateReq;
+import com.solo.codegen.model.table.req.TableUpdateReq;
 import com.solo.codegen.service.DatabaseTableService;
 import com.solo.codegen.service.GenTableService;
 import com.solo.codegen.service.inner.CodegenBuilder;
@@ -21,9 +22,9 @@ import com.solo.codegen.service.inner.CodegenEngine;
 import com.solo.common.core.constant.Symbols;
 import com.solo.common.core.utils.StringUtils;
 import com.solo.common.orm.base.service.impl.BasicServiceImpl;
-import com.solo.system.api.constant.global.YesNo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,18 @@ public class GenTableServiceImpl extends BasicServiceImpl<GenTableMapper, GenTab
         List<GenColumn> columns = buildColumn(genTable.getTableId(), table.getFields());
         int i = genColumnMapper.insertBatch(columns);
         return false;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean update(TableUpdateReq req) {
+        GenTable table = req.getTable();
+        int update = mapper.update(table);
+        if (update > 0) {
+            List<GenColumn> columns = req.getColumns();
+            columns.forEach(column -> genColumnMapper.update(column));
+        }
+        return true;
     }
 
     @Override
@@ -107,12 +120,12 @@ public class GenTableServiceImpl extends BasicServiceImpl<GenTableMapper, GenTab
             column.setJavaType(StringUtils.isNotBlank(field.getPropertyType()) ? EnumUtil.getBy(JavaType::getValue, field.getPropertyType()) : JavaType.OBJECT);
             column.setJavaField(field.getPropertyName());
             column.setJavaComment(field.getComment());
-            column.setIsPk(EnumUtil.getBy(YesNo::getValue, field.isKeyFlag()));
-            column.setIsCreate(EnumUtil.getBy(YesNo::getValue, !CodegenBuilder.CREATE_IGNORE_FIELDS.contains(field.getPropertyName()) && !field.isKeyFlag()));
-            column.setIsUpdate(EnumUtil.getBy(YesNo::getValue, !CodegenBuilder.UPDATE_IGNORE_FIELDS.contains(field.getPropertyName())));
-            column.setIsRequired(EnumUtil.getBy(YesNo::getValue, !metaInfo.isNullable()));
-            column.setIsList(EnumUtil.getBy(YesNo::getValue, !CodegenBuilder.LIST_IGNORE_FIELDS.contains(field.getPropertyName())  && !field.isKeyFlag()));
-            column.setIsQuery(EnumUtil.getBy(YesNo::getValue, !CodegenBuilder.QUERY_IGNORE_FIELDS.contains(field.getPropertyName()) && !field.isKeyFlag()));
+            column.setIsPk(field.isKeyFlag());
+            column.setIsCreate(!CodegenBuilder.CREATE_IGNORE_FIELDS.contains(field.getPropertyName()) && !field.isKeyFlag());
+            column.setIsUpdate(!CodegenBuilder.UPDATE_IGNORE_FIELDS.contains(field.getPropertyName()));
+            column.setIsRequired(!metaInfo.isNullable());
+            column.setIsList(!CodegenBuilder.LIST_IGNORE_FIELDS.contains(field.getPropertyName()) && !field.isKeyFlag());
+            column.setIsQuery(!CodegenBuilder.QUERY_IGNORE_FIELDS.contains(field.getPropertyName()) && !field.isKeyFlag());
             column.setQueryMode(QueryMode.EQ);
             initFormType(column);
             columns.add(column);

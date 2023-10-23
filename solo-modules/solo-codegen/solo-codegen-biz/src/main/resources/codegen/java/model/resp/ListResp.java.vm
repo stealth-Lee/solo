@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class ${modelClassName}ListResp {
 
 #foreach ($column in $columns)
-    #if (${column.isList.getValue()} || ${column.isPk.getValue()})
+    #if (${column.isList} || ${column.isPk})
     /**
      * ${column.javaComment}
      */

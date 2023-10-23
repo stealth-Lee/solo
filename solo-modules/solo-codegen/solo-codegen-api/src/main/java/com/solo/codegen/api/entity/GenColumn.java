@@ -7,7 +7,6 @@ import com.solo.codegen.api.constant.column.FormType;
 import com.solo.codegen.api.constant.column.JavaType;
 import com.solo.codegen.api.constant.column.QueryMode;
 import com.solo.common.orm.base.entity.BasicEntity;
-import com.solo.system.api.constant.global.YesNo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -66,32 +65,32 @@ public class GenColumn extends BasicEntity {
     /**
      * 是否主键
      */
-    private YesNo isPk;
+    private Boolean isPk;
 
     /**
      * 是否插入字段
      */
-    private YesNo isCreate;
+    private Boolean isCreate;
 
     /**
      * 是否更新字段
      */
-    private YesNo isUpdate;
+    private Boolean isUpdate;
 
     /**
      * 是否必填字段
      */
-    private YesNo isRequired;
+    private Boolean isRequired;
 
     /**
      * 是否列表字段
      */
-    private YesNo isList;
+    private Boolean isList;
 
     /**
      * 是否查询字段
      */
-    private YesNo isQuery;
+    private Boolean isQuery;
 
     /**
      * 查询方式

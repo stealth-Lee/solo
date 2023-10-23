@@ -15,7 +15,6 @@ import com.solo.common.core.constant.FileSuffix;
 import com.solo.common.core.constant.Symbols;
 import com.solo.common.core.global.R;
 import com.solo.common.core.utils.StringUtils;
-import com.solo.system.api.constant.global.YesNo;
 import com.solo.system.api.entity.SysDictData;
 import com.solo.system.api.feign.SysDictApi;
 import lombok.AllArgsConstructor;
@@ -53,7 +52,7 @@ public class CodegenEngine {
         Map<String, String> result = Maps.newLinkedHashMapWithExpectedSize(Template.values().length); // 有序
         Dict dict = Dict.create();
         dict.set("table", table).set("columns", columns);
-        GenColumn primaryColumn = columns.stream().filter(column -> column.getIsPk() == YesNo.YES).findFirst().orElse(null);
+        GenColumn primaryColumn = columns.stream().filter(GenColumn::getIsPk).findFirst().orElse(null);
         dict.set("primaryColumn", primaryColumn); // 主键列
         List<GenColumn> dictColumns = columns.stream().filter(column -> StringUtils.isNotBlank(column.getDictCode())).toList();
         dict.set("dictColumns", dictColumns); // 字典列

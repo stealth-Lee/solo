@@ -2,7 +2,7 @@ package com.solo.system.model.user.req;
 
 import com.solo.common.orm.core.query.anno.Query;
 import com.solo.common.orm.core.query.anno.Wrappers;
-import com.solo.system.api.constant.user.Status;
+import com.solo.system.api.constant.global.GlobalStatus;
 import lombok.Data;
 
 @Data
@@ -31,6 +31,6 @@ public class UserQueryReq {
      * 帐号状态[0正常 1停用]
      */
     @Query
-    private Status status;
+    private GlobalStatus status;
 
 }

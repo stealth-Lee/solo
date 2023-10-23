@@ -25,7 +25,7 @@ public class ${table.className} extends BasicEntity {
     /**
      * ${column.javaComment}
      */
-    #if (${column.isPk.getValue()})
+    #if (${column.isPk})
     @Id(keyType = KeyType.Auto)
     #end
     private ${column.javaType.getValue()} ${column.javaField};

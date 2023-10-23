@@ -1,7 +1,7 @@
 package com.solo.system.model.user.req;
 
+import com.solo.system.api.constant.global.GlobalStatus;
 import com.solo.system.api.constant.user.Sex;
-import com.solo.system.api.constant.user.Status;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -64,7 +64,7 @@ public class UserCreateReq {
     /**
      * 帐号状态
      */
-    private Status status;
+    private GlobalStatus status;
 
     /**
      * 备注

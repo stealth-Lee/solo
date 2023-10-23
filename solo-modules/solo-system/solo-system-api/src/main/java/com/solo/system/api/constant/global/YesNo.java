@@ -14,14 +14,14 @@ import lombok.Getter;
  **/
 @Getter
 @AllArgsConstructor
-public enum YesNo implements BasicDict<Boolean> {
+public enum YesNo implements BasicDict<Integer> {
 
-    NO(false, "否"),
-    YES(true, "是");
+    NO(0, "否"),
+    YES(1, "是");
 
     @EnumValue
     @JsonValue
-    private final Boolean value;
+    private final Integer value;
     private final String label;
 
 }

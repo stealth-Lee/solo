@@ -15,12 +15,12 @@ import java.util.WeakHashMap;
  * @since 2023/10/09 17:46
  * 人生若只如初见，何事秋风悲画扇
  **/
-public class DictConvertFactory implements ConverterFactory<String, BasicDict> {
+public class DictConvertFactory implements ConverterFactory<Object, BasicDict> {
 
     private static final Map<Class, Converter> converterMap = new WeakHashMap<>();
 
     @Override
-    public <T extends BasicDict> Converter<String, T> getConverter(Class<T> targetType) {
+    public <T extends BasicDict> Converter<Object, T> getConverter(Class<T> targetType) {
         Converter result = converterMap.get(targetType);
         if(result == null) {
             result = new DictConverter<T>(targetType);

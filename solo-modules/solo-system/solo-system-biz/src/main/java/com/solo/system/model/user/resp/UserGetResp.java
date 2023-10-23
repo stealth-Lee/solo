@@ -1,7 +1,7 @@
 package com.solo.system.model.user.resp;
 
+import com.solo.system.api.constant.global.GlobalStatus;
 import com.solo.system.api.constant.user.Sex;
-import com.solo.system.api.constant.user.Status;
 import lombok.Data;
 
 /**
@@ -61,7 +61,7 @@ public class UserGetResp {
     /**
      * 帐号状态[0正常 1停用]
      */
-    private Status status;
+    private GlobalStatus status;
 
     /**
      * 备注

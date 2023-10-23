@@ -8,7 +8,7 @@
       label-width="82px"
     >
 #foreach ($column in $columns)
-  #if (${column.isCreate.getValue()})
+  #if (${column.isCreate})
     #if ($column.FormType == 'INPUT')
       <el-form-item label="${column.javaComment}" prop="${column.javaField}">
         <el-input
@@ -95,7 +95,7 @@ const formLoading = ref(false);
 const formTitle = ref("");
 const formModel = reactive({
 #foreach ($column in $columns)
-#if (${column.isUpdate.getValue()})
+#if (${column.isUpdate})
   ${column.javaField}: #if (${column.JavaType} == 'STRING')""#else'undefined'#end#if ($foreach.last)#else,#end
 #end
 #end
@@ -104,7 +104,7 @@ const formModel = reactive({
 // 自定义表单规则校验
 const formRules = reactive({
 #foreach ($column in $columns)
-  #if (($column.isCreate.getValue() || $column.isUpdate.getValue()) && !${column.isPk.getValue()} && ${column.isRequired.getValue()})
+  #if (($column.isCreate || $column.isUpdate) && !${column.isPk} && ${column.isRequired})
   ${column.javaField}: [{ required: true, message: "${column.javaComment}为必填项", trigger: "blur" }]#if ($foreach.last)#else,#end
   #end
 #end

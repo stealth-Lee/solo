@@ -3,6 +3,7 @@ package com.solo.codegen.service;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.solo.codegen.api.entity.GenTable;
 import com.solo.codegen.model.table.req.TableCreateReq;
+import com.solo.codegen.model.table.req.TableUpdateReq;
 import com.solo.common.orm.base.service.BasicService;
 
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.Map;
 public interface GenTableService extends BasicService<GenTable> {
 
     boolean create(TableCreateReq req);
+
+    boolean update(TableUpdateReq req);
 
     List<TableInfo> selectListSimple(Long sourceId);
 

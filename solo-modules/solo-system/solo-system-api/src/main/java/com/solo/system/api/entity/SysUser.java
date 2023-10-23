@@ -4,8 +4,8 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import com.solo.common.orm.base.entity.BasicEntity;
+import com.solo.system.api.constant.global.GlobalStatus;
 import com.solo.system.api.constant.user.Sex;
-import com.solo.system.api.constant.user.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -53,7 +53,7 @@ public class SysUser extends BasicEntity {
     private String name;
 
     /**
-     * 用户性别[0男 1女]
+     * 用户性别
      */
     private Sex sex;
 
@@ -68,8 +68,8 @@ public class SysUser extends BasicEntity {
     private String email;
 
     /**
-     * 帐号状态[0正常 1停用]
+     * 帐号状态
      */
-    private Status status;
+    private GlobalStatus status;
 
 }

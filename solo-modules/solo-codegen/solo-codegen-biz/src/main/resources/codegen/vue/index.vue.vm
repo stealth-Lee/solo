@@ -8,7 +8,7 @@
       class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px]"
     >
 #foreach ($column in $columns)
-  #if (${column.isQuery.getValue()})
+  #if (${column.isQuery})
     #set ($dict = $column.dictCode)
     #if ($column.FormType == 'INPUT')
       <el-form-item label="${column.javaComment}" prop="${column.javaField}">
@@ -223,7 +223,7 @@ const columns: TableColumnList = [
     width: 10
   },
 #foreach ($column in $columns)
-  #if (${column.isList.getValue()})
+  #if (${column.isList})
   {
     label: "${column.javaComment}",
     prop: "${column.javaField}",
