@@ -1,6 +1,6 @@
 package com.solo.codegen.model.table;
 
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.mybatisflex.codegen.entity.Table;
 import com.solo.codegen.api.entity.GenTable;
 import com.solo.codegen.model.table.req.TableCreateReq;
 import com.solo.codegen.model.table.resp.TableGetResp;
@@ -31,7 +31,7 @@ public interface GenTableConvert {
             @Mapping(source = "name", target = "tableName"),
             @Mapping(source = "comment", target = "tableComment"),
     })
-    TableListSimpleResp convertListSimple(TableInfo entity);
+    TableListSimpleResp convertListSimple(Table entity);
 
-    List<TableListSimpleResp> convertListSimple(List<TableInfo> list);
+    List<TableListSimpleResp> convertListSimple(List<Table> list);
 }

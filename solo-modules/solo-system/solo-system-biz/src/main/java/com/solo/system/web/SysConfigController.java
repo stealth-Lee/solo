@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
+import static com.solo.system.api.entity.table.SysConfigTableDef.SysConfigTable;
+
 /**
  * 系统配置控制器
  * @author 十一
@@ -70,6 +72,11 @@ public class SysConfigController {
     @GetMapping("/{configId}")
     public R<ConfigGetResp> get(@PathVariable Long configId) {
         return R.success(SysConfigConvert.INSTANCE.convertGet(sysConfigService.getById(configId)));
+    }
+
+    @GetMapping("/key/{configKey}")
+    public R<SysConfig> selectConfigByKey(@PathVariable String configKey) {
+        return R.success(sysConfigService.queryChain().where(SysConfigTable.ConfigKey.eq(configKey)).one());
     }
 
     /**

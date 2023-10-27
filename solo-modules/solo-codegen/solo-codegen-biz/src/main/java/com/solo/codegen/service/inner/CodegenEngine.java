@@ -57,23 +57,27 @@ public class CodegenEngine {
         List<GenColumn> dictColumns = columns.stream().filter(column -> StringUtils.isNotBlank(column.getDictCode())).toList();
         dict.set("dictColumns", dictColumns); // 字典列
         dict.set("now", DateUtil.format(new DateTime(), DatePattern.NORM_DATETIME_MINUTE_PATTERN));
-        String modelClassName = StringUtils.removePreAndUpperFirst(table.getTableName(), Symbols.UNDERLINE_CHAR);
+        String modelClassName = NamingCase.toPascalCase(StringUtils.removePreAndUpperFirst(table.getTableName(), Symbols.UNDERLINE_CHAR));
         dict.set("modelClassName", modelClassName);
         dict.set("basicEntity", CodegenBuilder.BASIC_ENTITY_FIELDS);
+        dict.set("StringUtils", new StringUtils());
         for (Template template : Template.values()) {
-            if (Template.CONSTANT.equals(template)) {
-                // 单独处理字典
-                for (GenColumn dictColumn : dictColumns) {
-                    String enumName = NamingCase.toPascalCase(dictColumn.getDictCode());
-                    dict.set("enumName", enumName);
-                    R<List<SysDictData>> listR = sysDictApi.selectByDictCode(dictColumn.getDictCode());
-                    List<SysDictData> data = listR.getData();
-                    dict.set("dicts", data);
-                    dict.set("StringUtils", new StringUtils());
-                    result.put(buildPath(template, table, enumName), templateEngine.getTemplate(template.getTemplatePath()).render(dict));
+            switch (template) {
+                case CONSTANT -> {
+                    // 单独处理字典
+                    for (GenColumn dictColumn : dictColumns) {
+                        String enumName = NamingCase.toPascalCase(dictColumn.getDictCode());
+                        dict.set("enumName", enumName);
+                        R<List<SysDictData>> listR = sysDictApi.selectByDictCode(dictColumn.getDictCode());
+                        List<SysDictData> data = listR.getData();
+                        dict.set("dicts", data);
+                        result.put(buildPath(template, table, enumName), templateEngine.getTemplate(template.getTemplatePath()).render(dict));
+                    }
                 }
-            } else {
-                result.put(buildPath(template, table, null), templateEngine.getTemplate(template.getTemplatePath()).render(dict));
+                case UPDATE_STATUS_REQ -> {
+                    if (table.getIsSwitch()) result.put(buildPath(template, table, modelClassName), templateEngine.getTemplate(template.getTemplatePath()).render(dict));
+                }
+                default -> result.put(buildPath(template, table, modelClassName), templateEngine.getTemplate(template.getTemplatePath()).render(dict));
             }
         }
 
@@ -85,17 +89,17 @@ public class CodegenEngine {
      * 构建文件路径
      * @param template 模版
      * @param table 业务表对象
-     * @param modelClassName model对象名
+     * @param className 对象名
      * @return {@link String}
      */
-    private String buildPath(Template template, GenTable table, String modelClassName) {
+    private String buildPath(Template template, GenTable table, String className) {
         Map<String, String> map = new HashMap<>();
         map.put("moduleName", table.getModuleName());
         map.put("businessName", table.getBusinessName());
         map.put("module", StringUtils.format(template.getModule(), map));
         map.put("packageName", StringUtils.replace(table.getPackageName(), Symbols.DOT, Symbols.SLASH));
         map.put("packagePath", StringUtils.format(template.getPackagePath(), map));
-        map.put("fileName", getFileName(template, table, modelClassName));
+        map.put("fileName", getFileName(template, table, className));
         return StringUtils.format("{module}/src/{packagePath}/{fileName}", map);
     }
 
@@ -103,20 +107,20 @@ public class CodegenEngine {
      * 获取文件名
      * @param template 模版
      * @param table 业务表对象
-     * @param enumName 枚举名称
+     * @param className 对象名
      * @return {@link String}
      */
-    private String getFileName(Template template, GenTable table, String enumName) {
+    private String getFileName(Template template, GenTable table, String className) {
         String templatePath = template.getTemplatePath();
         // codegen/java/mapper/Mapper.java.vm -> Mapper.java
         String suffix = templatePath.substring(templatePath.lastIndexOf(Symbols.SLASH)+1, templatePath.lastIndexOf(Symbols.DOT));
         return switch (template) {
             // 如果是req或者resp，需要将实体名去掉模块前缀+后缀，比如SysUser -> UserCreateReq.java
-            case CREATE_REQ, UPDATE_REQ, QUERY_REQ, GET_RESP, LIST_RESP ->
+            case CREATE_REQ, UPDATE_REQ, QUERY_REQ, GET_RESP, LIST_RESP, UPDATE_STATUS_REQ ->
                     // model的对象名,去掉表的前缀并大写首字母 sys_user -> User
-                    StringUtils.removePreAndUpperFirst(table.getTableName(), Symbols.UNDERLINE_CHAR) + suffix;
+                    className + suffix;
             // 如果是常量枚举，直接以字典类型转大驼峰，比如del_flag -> DelFlag.java
-            case CONSTANT -> enumName + FileSuffix.JAVA;
+            case CONSTANT -> className + FileSuffix.JAVA;
             // 如果是entity，直接返回SysUser + .java -> 直接返回SysUser.java
             case ENTITY -> table.getClassName() + FileSuffix.JAVA;
             // 如果是vue页面，直接返回后缀index.vue/form.vue/menu.sql.vm
@@ -144,16 +148,17 @@ public class CodegenEngine {
         CREATE_REQ("codegen/java/model/req/CreateReq.java.vm", "solo-{moduleName}-biz", "main/java/{packageName}/model/{businessName}/req"),
         UPDATE_REQ("codegen/java/model/req/UpdateReq.java.vm", "solo-{moduleName}-biz", "main/java/{packageName}/model/{businessName}/req"),
         QUERY_REQ("codegen/java/model/req/QueryReq.java.vm", "solo-{moduleName}-biz", "main/java/{packageName}/model/{businessName}/req"),
+        UPDATE_STATUS_REQ("codegen/java/model/req/UpdateStatusReq.java.vm", "solo-{moduleName}-biz", "main/java/{packageName}/model/{businessName}/req"),
         GET_RESP("codegen/java/model/resp/GetResp.java.vm", "solo-{moduleName}-biz", "main/java/{packageName}/model/{businessName}/resp"),
         LIST_RESP("codegen/java/model/resp/ListResp.java.vm", "solo-{moduleName}-biz", "main/java/{packageName}/model/{businessName}/resp"),
+        MAPPER("codegen/java/mapper/Mapper.java.vm", "solo-{moduleName}-biz", "main/java/{packageName}/mapper"),
         SERVICE("codegen/java/service/Service.java.vm", "solo-{moduleName}-biz", "main/java/{packageName}/service"),
         SERVICE_IMPL("codegen/java/service/ServiceImpl.java.vm", "solo-{moduleName}-biz", "main/java/{packageName}/service/impl"),
         CONTROLLER("codegen/java/web/Controller.java.vm", "solo-{moduleName}-biz", "main/java/{packageName}/web"),
-        MAPPER("codegen/java/mapper/Mapper.java.vm", "solo-{moduleName}-biz", "main/java/{packageName}/mapper"),
         SQL("codegen/sql/menu.sql.vm", "sql", ""),
+        TS("codegen/ts/index.ts.vm", "solo-ui", "api/{moduleName}"),
         INDEX("codegen/vue/index.vue.vm", "solo-ui", "view/{moduleName}/{businessName}"),
-        FORM("codegen/vue/form.vue.vm", "solo-ui", "view/{moduleName}/{businessName}"),
-        TS("codegen/ts/index.ts.vm", "solo-ui", "api/{moduleName}");
+        FORM("codegen/vue/form.vue.vm", "solo-ui", "view/{moduleName}/{businessName}");
 
         /**
          * 模版路径

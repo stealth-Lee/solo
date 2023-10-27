@@ -5,7 +5,7 @@ import com.solo.common.orm.core.query.anno.Wrappers;
 import lombok.Data;
 
 /**
- * ${table.tableComment}查询对象 req
+ * ${table.functionName}查询对象 req
  * @author $!{table.author}
  * @since ${now}
 #if(${table.classTail})
@@ -18,11 +18,31 @@ public class ${modelClassName}QueryReq {
 
 #foreach ($column in $columns)
     #if (${column.isQuery})
+    #if ($column.queryMode == 'EQ')
     /**
      * ${column.javaComment}
      */
     @Query
     private ${column.javaType.getValue()} ${column.javaField};
+    #elseif ($column.queryMode == 'BETWEEN')
+    /**
+     * 开始${column.javaComment}
+     */
+    @Query(mode = QueryMode.GE, value = "${column.columnName}")
+    private ${column.javaType.getValue()} start${StringUtils.upperFirst(${column.javaField})};
+
+    /**
+     * 结束${column.javaComment}
+     */
+    @Query(mode = QueryMode.LE, value = "${column.columnName}")
+    private ${column.javaType.getValue()} end${StringUtils.upperFirst(${column.javaField})};
+    #else
+    /**
+     * ${column.javaComment}
+     */
+    @Query(mode = QueryMode.${column.queryMode})
+    private ${column.javaType.getValue()} ${column.javaField};
+    #end
 
     #end
 #end

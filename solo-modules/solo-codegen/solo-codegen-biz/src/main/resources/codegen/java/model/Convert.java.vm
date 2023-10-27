@@ -3,12 +3,15 @@ package ${table.packageName}.model.${table.businessName};
 import ${table.packageName}.api.entity.${table.className};
 import ${table.packageName}.model.${table.businessName}.req.${modelClassName}CreateReq;
 import ${table.packageName}.model.${table.businessName}.req.${modelClassName}UpdateReq;
+#if (${table.isSwitch})
+import ${table.packageName}.model.${table.businessName}.req.${modelClassName}UpdateStatusReq;
+#end
 import ${table.packageName}.model.${table.businessName}.resp.${modelClassName}GetResp;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
- * ${table.tableComment}实体转换类
+ * ${table.functionName}实体转换类
  * @author $!{table.author}
  * @since ${now}
 #if(${table.classTail})
@@ -22,6 +25,10 @@ public interface ${table.className}Convert {
 
     ${table.className} convert(${modelClassName}CreateReq bean);
 
+#if (${table.isSwitch})
+    ${table.className} convert(${modelClassName}UpdateStatusReq req);
+
+#end
     ${table.className} convert(${modelClassName}UpdateReq bean);
 
     ${modelClassName}GetResp convertGet(${table.className} bean);

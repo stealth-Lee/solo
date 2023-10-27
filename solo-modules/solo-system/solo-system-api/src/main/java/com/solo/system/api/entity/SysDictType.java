@@ -4,6 +4,7 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import com.solo.common.orm.base.entity.BasicEntity;
+import com.solo.system.api.constant.dict.DictType;
 import com.solo.system.api.constant.global.GlobalStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,7 +37,12 @@ public class SysDictType extends BasicEntity {
     private String dictCode;
 
     /**
-     * 字典类型状态[0正常 1停用]
+     * 字典类型[1:string 2:number 3:boolean]
+     */
+    private DictType dictType;
+
+    /**
+     * 字典类型状态[0停用 1正常]
      */
     private GlobalStatus status;
 

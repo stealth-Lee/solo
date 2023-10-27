@@ -1,9 +1,21 @@
 import { http } from "@/utils/http";
 import { baseUrlApi } from "@/api/utils";
 
-// 新增${table.tableComment}
-export const creating = (data: object) => {
-  return http.post(baseUrlApi("/${table.moduleName}/${table.businessName}"), { data });
+export interface ${modelClassName}Req {
+#foreach ($column in $columns)
+#if ($column.javaField == $table.switchField)
+#set ($switchColumn = $column)
+#end
+#if (${column.isUpdate})
+  ${column.javaField}: ${column.javaType.getVueType()};
+#end
+#end
+}
+
+#set ($businessName = ${StringUtils.replace(${table.businessName}, '.', '-')})
+// 新增${table.functionName}
+export const creating = (data: ${modelClassName}Req) => {
+  return http.post(baseUrlApi("/${table.moduleName}/${businessName}"), { data });
 };
 
 #if ($primaryColumn.javaType.getValue() == 'Long' || $primaryColumn.javaType.getValue() == 'Integer')
@@ -11,24 +23,33 @@ export const creating = (data: object) => {
 #else
     #set ($type = 'string')
 #end
-// 删除${table.tableComment}
+// 删除${table.functionName}
 export const deleting = (${primaryColumn.javaField}s: ${type}) => {
-  return http.delete(baseUrlApi("/${table.moduleName}/${table.businessName}/" + ${primaryColumn.javaField}s));
+  return http.delete(baseUrlApi("/${table.moduleName}/${businessName}/" + ${primaryColumn.javaField}s));
 };
 
-// 修改${table.tableComment}
-export const updating = (data: object) => {
-  return http.put(baseUrlApi("/${table.moduleName}/${table.businessName}"), { data });
+#if (${table.isSwitch})
+// ${table.functionName}状态切换
+export const updateStatus = (${primaryColumn.javaField}: ${primaryColumn.javaType.getVueType()}, ${table.switchField}: ${switchColumn.javaType.getVueType()}) => {
+  const data = {
+    ${primaryColumn.javaField},
+    ${table.switchField}
+  };
+  return http.put(baseUrlApi("/${table.moduleName}/${businessName}/update-status"), { data });
 };
 
-// 获取单条${table.tableComment}信息
+#end
+// 修改${table.functionName}
+export const updating = (data: ${modelClassName}Req) => {
+  return http.put(baseUrlApi("/${table.moduleName}/${businessName}"), { data });
+};
+
+// 获取单条${table.functionName}信息
 export const getting = (${primaryColumn.javaField}: ${type}) => {
-  return http.get(baseUrlApi("/${table.moduleName}/${table.businessName}/" + ${primaryColumn.javaField}));
+  return http.get<${modelClassName}Req>(baseUrlApi("/${table.moduleName}/${businessName}/" + ${primaryColumn.javaField}));
 };
 
-// 获取${table.tableComment}信息分页列表
+// 获取${table.functionName}信息分页列表
 export const paging = (params?: object) => {
-  return http.get(baseUrlApi("/${table.moduleName}/${table.businessName}/page"), {
-    params
-  });
+  return http.get<${modelClassName}Req>(baseUrlApi("/${table.moduleName}/${businessName}/page"), { params });
 };

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * ${table.tableComment}列表对象 resp
+ * ${table.functionName}列表对象 resp
  * @author $!{table.author}
  * @since ${now}
 #if(${table.classTail})

@@ -1,5 +1,6 @@
 package com.solo.system.model.dict.type.req;
 
+import com.solo.system.api.constant.dict.DictType;
 import com.solo.system.api.constant.global.GlobalStatus;
 import lombok.Data;
 
@@ -21,6 +22,11 @@ public class DictTypeCreateReq {
      * 字典类型编码
      */
     private String dictCode;
+
+    /**
+     * 字典类型[1:string 2:number 3:boolean]
+     */
+    private DictType dictType;
 
     /**
      * 字典类型状态

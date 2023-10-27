@@ -1,6 +1,6 @@
 package com.solo.codegen.service;
 
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.mybatisflex.codegen.entity.Table;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface DatabaseTableService {
      * @param sourceId 数据源id
      * @return 表列表
      */
-    List<TableInfo> getTableList(Long sourceId);
+    List<Table> getTableList(Long sourceId);
 
     /**
      * 获取指定数据源下指定表
@@ -25,6 +25,6 @@ public interface DatabaseTableService {
      * @param tableName 表名称
      * @return 表信息
      */
-    TableInfo getTable(Long sourceId, String tableName);
+    Table getTable(Long sourceId, String tableName);
 
 }

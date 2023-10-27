@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * ${table.tableComment}实体类
+ * ${table.functionName}实体类
  * @author $!{table.author}
  * @since ${now}
 #if(${table.classTail})

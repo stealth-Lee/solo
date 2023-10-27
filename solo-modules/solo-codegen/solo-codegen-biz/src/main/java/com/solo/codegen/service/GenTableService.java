@@ -1,6 +1,6 @@
 package com.solo.codegen.service;
 
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.mybatisflex.codegen.entity.Table;
 import com.solo.codegen.api.entity.GenTable;
 import com.solo.codegen.model.table.req.TableCreateReq;
 import com.solo.codegen.model.table.req.TableUpdateReq;
@@ -19,9 +19,12 @@ public interface GenTableService extends BasicService<GenTable> {
 
     boolean create(TableCreateReq req);
 
+    boolean delete(Long[] tableIds);
+
     boolean update(TableUpdateReq req);
 
-    List<TableInfo> selectListSimple(Long sourceId);
+    List<Table> selectListSimple(Long sourceId);
 
     Map<String, String> generationCodes(Long tableId);
+
 }

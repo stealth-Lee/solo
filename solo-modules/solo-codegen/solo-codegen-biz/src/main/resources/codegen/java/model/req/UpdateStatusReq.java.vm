@@ -1,13 +1,10 @@
 package ${table.packageName}.model.${table.businessName}.req;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
- * ${table.functionName}新增对象 req
+ * ${table.functionName}状态修改 req
  * @author $!{table.author}
  * @since ${now}
 #if(${table.classTail})
@@ -15,13 +12,14 @@ import lombok.Data;
 #end
  **/
 @Data
-public class ${modelClassName}CreateReq {
+public class ${modelClassName}UpdateStatusReq {
 
 #foreach ($column in $columns)
-    #if (${column.isCreate})
+    #if (${column.isPk} || ($column.javaField == $table.switchField))
     /**
      * ${column.javaComment}
      */
+    @NotNull(message = "${column.javaComment}不能为空")
     private ${column.javaType.getValue()} ${column.javaField};
 
     #end

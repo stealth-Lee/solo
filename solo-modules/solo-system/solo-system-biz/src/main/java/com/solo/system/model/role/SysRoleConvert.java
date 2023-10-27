@@ -21,9 +21,9 @@ public interface SysRoleConvert {
 
     SysRole convert(RoleCreateReq req);
 
-    SysRole convert(RoleUpdateReq req);
-
     SysRole convert(RoleUpdateStatusReq req);
+
+    SysRole convert(RoleUpdateReq req);
 
     RoleGetResp convertGet(SysRole entity);
 

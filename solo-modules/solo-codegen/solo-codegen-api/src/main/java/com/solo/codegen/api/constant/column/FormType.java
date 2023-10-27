@@ -17,6 +17,7 @@ import lombok.Getter;
 public enum FormType implements BasicDict<String> {
 
     INPUT("input", "文本框"),
+    NUMBER("number", "数字框"),
     TEXTAREA("textarea", "文本域"),
     SELECT("select", "下拉框"),
     CHECKBOX("checkbox", "复选框"),

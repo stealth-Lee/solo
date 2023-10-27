@@ -2,7 +2,7 @@ package com.solo.codegen.web;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.ZipUtil;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.mybatisflex.codegen.entity.Table;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.codegen.model.code.resp.CodePreviewResp;
 import com.solo.codegen.model.table.GenTableConvert;
@@ -51,6 +51,12 @@ public class GenTableController {
         return R.success(genTableService.create(req));
     }
 
+    @DeleteMapping("/{tableIds}")
+    public R<Boolean> delete(@PathVariable Long[] tableIds) {
+        genTableService.delete(tableIds);
+        return R.success();
+    }
+
     /**
      * 修改保存代码生成业务
      */
@@ -94,7 +100,7 @@ public class GenTableController {
      */
     @GetMapping("/list-simple/{sourceId}")
     public R<List<TableListSimpleResp>> listSimple(@PathVariable Long sourceId) {
-        List<TableInfo> tableInfos = genTableService.selectListSimple(sourceId);
+        List<Table> tableInfos = genTableService.selectListSimple(sourceId);
         return R.success(GenTableConvert.INSTANCE.convertListSimple(tableInfos));
     }
 

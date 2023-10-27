@@ -3,7 +3,7 @@ package ${table.packageName}.model.${table.businessName}.resp;
 import lombok.Data;
 
 /**
- * ${table.tableComment}详情对象 resp
+ * ${table.functionName}详情对象 resp
  * @author $!{table.author}
  * @since ${now}
 #if(${table.classTail})

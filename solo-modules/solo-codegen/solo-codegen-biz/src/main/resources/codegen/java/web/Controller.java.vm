@@ -8,6 +8,9 @@ import ${table.packageName}.model.${table.businessName}.${table.className}Conver
 import ${table.packageName}.model.${table.businessName}.req.${modelClassName}CreateReq;
 import ${table.packageName}.model.${table.businessName}.req.${modelClassName}QueryReq;
 import ${table.packageName}.model.${table.businessName}.req.${modelClassName}UpdateReq;
+#if (${table.isSwitch})
+import ${table.packageName}.model.${table.businessName}.req.${modelClassName}UpdateStatusReq;
+#end
 import ${table.packageName}.model.${table.businessName}.resp.${modelClassName}GetResp;
 import ${table.packageName}.model.${table.businessName}.resp.${modelClassName}ListResp;
 import ${table.packageName}.service.${table.className}Service;
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 
 /**
- * ${table.tableComment}控制器
+ * ${table.functionName}控制器
  * @author $!{table.author}
  * @since ${now}
 #if(${table.classTail})
@@ -26,7 +29,7 @@ import java.util.Arrays;
 #end
  **/
 @RestController
-@RequestMapping("/${table.moduleName}/${table.businessName}")
+@RequestMapping("/${table.moduleName}/${StringUtils.replace(${table.businessName}, '.', '-')}")
 public class ${table.className}Controller {
 
     #set ($className = $table.className.substring(0, 1).toLowerCase() +  ${table.className.substring(1)})
@@ -34,8 +37,8 @@ public class ${table.className}Controller {
     private ${table.className}Service ${className}Service;
 
     /**
-     * 新增${table.tableComment}
-     * @param req ${table.tableComment}新增对象
+     * 新增${table.functionName}
+     * @param req ${table.functionName}新增对象
      * @return 响应信息
      */
     @PostMapping
@@ -45,8 +48,8 @@ public class ${table.className}Controller {
     }
 
     /**
-     * 删除${table.tableComment}
-     * @param ${primaryColumn.javaField}s ${table.tableComment}集合
+     * 删除${table.functionName}
+     * @param ${primaryColumn.javaField}s ${table.functionName}集合
      * @return 响应信息
      */
     @DeleteMapping("/{${primaryColumn.javaField}s}")
@@ -54,9 +57,22 @@ public class ${table.className}Controller {
         return R.success(${className}Service.removeByIds(Arrays.asList(${primaryColumn.javaField}s)));
     }
 
+#if (${table.isSwitch})
     /**
-     * 更新${table.tableComment}
-     * @param req ${table.tableComment}更新对象
+     * ${table.functionName}状态切换
+     * @param req ${table.functionName}状态修改对象
+     * @return 响应信息
+     */
+    @PutMapping("/update-status")
+    public R<Boolean> updateStatus(@Valid @RequestBody ${modelClassName}UpdateStatusReq req) {
+        ${table.className} entity = ${table.className}Convert.INSTANCE.convert(req);
+        return R.success(${className}Service.updateById(entity));
+    }
+
+#end
+    /**
+     * 更新${table.functionName}
+     * @param req ${table.functionName}更新对象
      * @return 响应信息
      */
     @PutMapping
@@ -66,8 +82,8 @@ public class ${table.className}Controller {
     }
 
     /**
-     * 获取${table.tableComment}
-     * @param ${primaryColumn.javaField} ${table.tableComment}
+     * 获取${table.functionName}
+     * @param ${primaryColumn.javaField} ${table.functionName}
      * @return 响应信息
      */
     @GetMapping("/{${primaryColumn.javaField}}")
@@ -76,9 +92,9 @@ public class ${table.className}Controller {
     }
 
     /**
-     * 分页查询${table.tableComment}列表
+     * 分页查询${table.functionName}列表
      * @param page 分页对象
-     * @param req ${table.tableComment}查询对象
+     * @param req ${table.functionName}查询对象
      * @return 响应信息
      */
     @GetMapping("/page")

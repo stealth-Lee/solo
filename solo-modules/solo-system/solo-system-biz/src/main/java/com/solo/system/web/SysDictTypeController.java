@@ -3,17 +3,24 @@ package com.solo.system.web;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.global.R;
 import com.solo.common.orm.core.query.Wrappers;
+import com.solo.system.api.constant.global.GlobalStatus;
 import com.solo.system.api.entity.SysDictType;
 import com.solo.system.model.dict.type.SysDictTypeConvert;
 import com.solo.system.model.dict.type.req.DictTypeCreateReq;
 import com.solo.system.model.dict.type.req.DictTypeQueryReq;
 import com.solo.system.model.dict.type.req.DictTypeUpdateReq;
+import com.solo.system.model.dict.type.req.DictTypeUpdateStatusReq;
 import com.solo.system.model.dict.type.resp.DictTypeGetResp;
 import com.solo.system.model.dict.type.resp.DictTypeListResp;
+import com.solo.system.model.dict.type.resp.DictTypeListSimpleResp;
 import com.solo.system.service.SysDictTypeService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static com.solo.system.api.entity.table.SysDictTypeTableDef.SysDictTypeTable;
 
 /**
  * 字典类型控制器
@@ -50,6 +57,17 @@ public class SysDictTypeController {
     }
 
     /**
+     * 字典类型状态切换
+     * @param req 字典类型状态修改对象
+     * @return 响应信息
+     */
+    @PutMapping("/update-status")
+    public R<Boolean> updateStatus(@Valid @RequestBody DictTypeUpdateStatusReq req) {
+        SysDictType entity = SysDictTypeConvert.INSTANCE.convert(req);
+        return R.success(sysDictTypeService.updateById(entity));
+    }
+
+    /**
      * 更新字典类型
      * @param req 字典类型更新对象
      * @return 响应信息
@@ -68,6 +86,18 @@ public class SysDictTypeController {
     @GetMapping("/{typeId}")
     public R<DictTypeGetResp> get(@PathVariable Long typeId) {
         return R.success(SysDictTypeConvert.INSTANCE.convertGet(sysDictTypeService.getById(typeId)));
+    }
+
+    /**
+     * 查询部门列表精简信息
+     * @return 响应信息
+     */
+    @GetMapping("/list-simple")
+    public R<List<DictTypeListSimpleResp>> listSimple() {
+        List<DictTypeListSimpleResp> list = sysDictTypeService.queryChain()
+                .where(SysDictTypeTable.Status.eq(GlobalStatus.NORMAL))
+                .listAs(DictTypeListSimpleResp.class);
+        return R.success(list);
     }
 
     /**

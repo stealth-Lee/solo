@@ -80,4 +80,14 @@ public class GenTable extends BasicEntity {
      */
     private String classTail;
 
+    /**
+     * 是否启用开关按钮
+     */
+    private Boolean isSwitch;
+
+    /**
+     * 开关字段
+     */
+    private String switchField;
+
 }

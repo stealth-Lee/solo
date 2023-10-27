@@ -15,6 +15,12 @@ import java.time.LocalDateTime;
 public class DictDataListResp {
 
     /**
+     * 字典数据id
+     */
+    private Long dataId;
+
+
+    /**
      * 字典编码
      */
     private String dictCode;

@@ -2,16 +2,14 @@ package com.solo.codegen.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
-import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.rules.DateType;
+import com.mybatisflex.codegen.Generator;
+import com.mybatisflex.codegen.config.GlobalConfig;
+import com.mybatisflex.codegen.entity.Table;
 import com.solo.codegen.api.entity.GenDatasource;
 import com.solo.codegen.mapper.GenDatasourceMapper;
 import com.solo.codegen.service.DatabaseTableService;
+import com.solo.common.core.utils.StringUtils;
+import com.zaxxer.hikari.HikariDataSource;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -31,33 +29,29 @@ public class DatabaseTableServiceImpl implements DatabaseTableService {
     private GenDatasourceMapper genDatasourceMapper;
 
     @Override
-    public List<TableInfo> getTableList(Long sourceId) {
+    public List<Table> getTableList(Long sourceId) {
         return getTableList(sourceId, null);
     }
 
     @Override
-    public TableInfo getTable(Long sourceId, String tableName) {
+    public Table getTable(Long sourceId, String tableName) {
         return CollUtil.getFirst(getTableList(sourceId, tableName));
     }
 
-    private List<TableInfo> getTableList(Long sourceId, String tableName) {
+    private List<Table> getTableList(Long sourceId, String tableName) {
         GenDatasource config = genDatasourceMapper.selectOneById(sourceId);
         Assert.notNull(config, "数据源[{}] 不存在！", sourceId);
-//        Table
-
-        // 使用 MyBatis Plus Generator 解析表结构
-        DataSourceConfig dataSourceConfig = new DataSourceConfig.Builder(config.getUrl(), config.getUsername(),
-                config.getPassword()).build();
-        StrategyConfig.Builder strategyConfig = new StrategyConfig.Builder();
-        if (StrUtil.isNotEmpty(tableName)) {
-            strategyConfig.addInclude(tableName);
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setJdbcUrl(config.getUrl());
+        dataSource.setUsername(config.getUsername());
+        dataSource.setPassword(config.getPassword());
+        GlobalConfig globalConfig = new GlobalConfig();
+        if (StringUtils.isNotEmpty(tableName)) {
+            globalConfig.getStrategyConfig().setGenerateTable(tableName);
         }
-        GlobalConfig globalConfig = new GlobalConfig.Builder().dateType(DateType.TIME_PACK).build(); // 只使用 LocalDateTime 类型，不使用 LocalDate
-        ConfigBuilder builder = new ConfigBuilder(null, dataSourceConfig, strategyConfig.build(),
-                null, globalConfig, null);
-        // 按照名字排序
-        List<TableInfo> tables = builder.getTableInfoList();
-        tables.sort(Comparator.comparing(TableInfo::getName));
+        Generator generator = new Generator(dataSource, globalConfig);
+        List<Table> tables = generator.getTables();
+        tables.sort(Comparator.comparing(Table::getName));
         return tables;
     }
 

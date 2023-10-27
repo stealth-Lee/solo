@@ -8,7 +8,7 @@
       label-width="82px"
     >
 #foreach ($column in $columns)
-  #if (${column.isCreate})
+  #if ((${column.isCreate} || ${column.isUpdate}) && !${column.isPk})
     #if ($column.FormType == 'INPUT')
       <el-form-item label="${column.javaComment}" prop="${column.javaField}">
         <el-input
@@ -16,6 +16,10 @@
           placeholder="请输入${column.javaComment}"
           clearable
         />
+      </el-form-item>
+    #elseif ($column.FormType == 'NUMBER')
+      <el-form-item label="${column.javaComment}" prop="${column.javaField}">
+        <el-input-number v-model="formModel.${column.javaField}" />
       </el-form-item>
     #elseif ($column.FormType == 'TEXTAREA')
       <el-form-item label="${column.javaComment}" prop="${column.javaField}">
@@ -25,8 +29,8 @@
           type="textarea"
         />
       </el-form-item>
-    #elseif ($column.FormType == 'SELECT')
-      <el-form-item label="${column.javaComment}：" prop="${column.javaField}">
+    #elseif ($column.FormType == 'SELECT' && ${column.dictCode})
+      <el-form-item label="${column.javaComment}" prop="${column.javaField}">
         <el-select
           v-model="formModel.${column.javaField}"
           placeholder="请选择${column.javaComment}"
@@ -40,7 +44,7 @@
           />
         </el-select>
       </el-form-item>
-    #elseif ($column.FormType == 'RADIO')
+    #elseif ($column.FormType == 'RADIO' && ${column.dictCode})
       <el-form-item label="${column.javaComment}" prop="${column.javaField}">
         <el-radio-group v-model="formModel.${column.javaField}">
           <el-radio-button
@@ -51,7 +55,7 @@
           </el-radio-button>
         </el-radio-group>
       </el-form-item>
-    #elseif ($column.FormType == 'switch')
+    #elseif ($column.FormType == 'SWITCH')
       <el-form-item label="${column.javaComment}" prop="${column.javaField}">
         <el-switch
           v-model="formModel.${column.javaField}"
@@ -96,7 +100,7 @@ const formTitle = ref("");
 const formModel = reactive({
 #foreach ($column in $columns)
 #if (${column.isUpdate})
-  ${column.javaField}: #if (${column.JavaType} == 'STRING')""#else'undefined'#end#if ($foreach.last)#else,#end
+  ${column.javaField}:#if (${column.JavaType} == 'STRING') ""#else undefined#end#if ($foreach.last)#else,#end
 #end
 #end
 });

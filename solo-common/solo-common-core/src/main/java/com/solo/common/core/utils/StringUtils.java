@@ -44,8 +44,11 @@ public class StringUtils extends StrUtil {
     public static void main(String[] args) {
 //        System.out.println(removePreAndUpperFirst("system_user", '_'));
 //        System.out.println(toUnderlineCase("systemUseraA"));
-        String  a  = "130603195301131228";
-        System.out.println(a.substring(0,6) + a.substring(8, 17));
+//        String  a  = "130603195301131228";
+//        System.out.println(a.substring(0,6) + a.substring(8, 17));
+//        System.out.println(split("sys_user_role", '_', 2));
+//        System.out.println(replace("sys_user_role", "_", "-"));
+        System.out.println(subAfter("java.long.String", ".", true));
     }
 
 }

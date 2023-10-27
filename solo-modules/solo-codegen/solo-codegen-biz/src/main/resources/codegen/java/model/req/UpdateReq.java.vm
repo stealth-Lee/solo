@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
- * ${table.tableComment}修改对象 req
+ * ${table.functionName}修改对象 req
  * @author $!{table.author}
  * @since ${now}
 #if(${table.classTail})

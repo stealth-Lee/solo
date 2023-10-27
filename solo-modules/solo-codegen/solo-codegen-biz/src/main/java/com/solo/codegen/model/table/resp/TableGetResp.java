@@ -73,6 +73,16 @@ public class TableGetResp {
     private String classTail;
 
     /**
+     * 是否启用开关按钮
+     */
+    private Boolean isSwitch;
+
+    /**
+     * 开关字段
+     */
+    private String switchField;
+
+    /**
      * 备注
      */
     private String remark;

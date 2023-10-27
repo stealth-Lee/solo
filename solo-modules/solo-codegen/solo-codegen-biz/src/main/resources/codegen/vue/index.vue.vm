@@ -168,15 +168,15 @@
         </pure-table>
       </template>
     </PureTableBar>
+    <${modelClassName}Form ref="dialogFormRef" @refresh="loadData()" />
   </div>
-  <${modelClassName}Form ref="dialogFormRef" @refresh="loadData()" />
 </template>
 
 <script setup lang="tsx">
 import { PureTableBar } from "@/components/RePureTableBar";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { BasicTableProps } from "@/hooks/table";
-import { paging, deleting } from "@/api/${table.moduleName}/${table.businessName}";
+import { paging, deleting#if (${table.isSwitch}), updateStatus#end } from "@/api/${table.moduleName}/${table.businessName}";
 
 defineOptions({ name: "${table.className}" });
 
@@ -196,10 +196,14 @@ const {
 );
 #end
 const props: BasicTableProps = reactive<BasicTableProps>({
-  title: "${table.tableComment}",
+  title: "${table.functionName}",
   pk: "${primaryColumn.javaField}",
   listApi: paging,
   deleteApi: deleting,
+#if (${table.isSwitch})
+  switchApi: updateStatus,
+  switchField: "${table.switchField}",
+#end
   queryRef: queryFormRef,
   formRef: dialogFormRef
 });
@@ -213,7 +217,8 @@ const {
   handleReset,
   handleCreate,
   handleUpdate,
-  handleDelete
+  handleDelete#if (${table.isSwitch}),
+  handleSwitch#end
 } = useTable(props);
 
 const columns: TableColumnList = [
@@ -227,9 +232,17 @@ const columns: TableColumnList = [
   {
     label: "${column.javaComment}",
     prop: "${column.javaField}",
-    minWidth: 120#if (${column.dictCode}),
+    minWidth: 120#if (${column.dictCode} && $table.switchField != $column.javaField),
     cellRenderer: scope => (
       <dict-tag options={${column.dictCode}.value} value={scope.row.${column.javaField}}></dict-tag>
+    )#elseif (${table.isSwitch} && $table.switchField == $column.javaField),
+    cellRenderer: scope => (
+      <el-switch
+        v-model={scope.row.${table.switchField}}
+        active-value={1}
+        inactive-value={0}
+        onChange={() => handleSwitch(scope.row)}
+      />
     )#end
   },
   #end

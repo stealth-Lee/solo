@@ -7,7 +7,7 @@ import com.solo.common.orm.base.service.impl.BasicServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
- * ${table.tableComment} Service实现类
+ * ${table.functionName} Service实现类
  * @author $!{table.author}
  * @since ${now}
 #if(${table.classTail})

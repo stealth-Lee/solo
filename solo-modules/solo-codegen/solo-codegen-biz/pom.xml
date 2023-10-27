@@ -38,15 +38,6 @@
             <artifactId>mybatis-flex-codegen</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-        </dependency>
-
         <!-- Hutool扩展，包括模版引擎、压缩、FTP等工具 https://doc.hutool.cn/pages/extra/ -->
         <dependency>
             <groupId>cn.hutool</groupId>
