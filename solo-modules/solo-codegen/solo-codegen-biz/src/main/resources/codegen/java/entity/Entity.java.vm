@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
  **/
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table("${table.tableName}")
+@Table("${table.name}")
 public class ${table.className} extends BasicEntity {
 
 #foreach ($column in $columns)

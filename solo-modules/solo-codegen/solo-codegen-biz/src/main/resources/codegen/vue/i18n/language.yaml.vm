@@ -1,0 +1,20 @@
+${i18nBusinessName}:
+  title: ${i18nFunctionName}
+  column:
+#foreach ($column in $i18nColumns)
+    #if (($column.isList || $column.isQuery || $column.isCreate || $column.isUpdate) && !$column.isPk)
+    ${column.javaField}: ${column.javaComment}
+    #end
+#end
+  tip:
+#foreach ($column in $i18nColumns)
+    #if (($column.isQuery || $column.isCreate || $column.isUpdate) && !$column.isPk)
+    ${column.javaField}: #if ($column.formType == 'SELECT')${i18nSelectTip}#else${i18nInputTip}#end${column.javaComment}
+    #end
+#end
+  required:
+#foreach ($column in $i18nColumns)
+    #if ($column.isRequired && !$column.isPk)
+    ${column.javaField}: ${column.javaComment}${i18nNotNullMessage}
+    #end
+#end

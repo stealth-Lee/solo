@@ -1,6 +1,6 @@
 server:
   # 应用端口
-  port: 1001
+  port: 1101
 
 spring:
   application:

@@ -83,18 +83,18 @@ public class SysDictDataController {
 
     /**
      * 根据编码获取字典数据列表
-     * @param dictCode 字典类型编码
+     * @param code 字典类型编码
      * @return 响应信息
      */
-    @GetMapping("/code/{dictCode}")
-    public R<List<DictDataListSimpleResp>> selectByDictCode(@PathVariable String dictCode) {
+    @GetMapping("/code/{code}")
+    public R<List<DictDataListSimpleResp>> selectByCode(@PathVariable String code) {
         QueryWrapper queryWrapper = QueryWrapper.create()
                 .select(SysDictDataTable.AllColumns,
-                        SysDictTypeTable.DictType)
+                        SysDictTypeTable.Type)
                 .from(SysDictTypeTable)
                 .leftJoin(SysDictDataTable)
-                .on(SysDictTypeTable.DictCode.eq(SysDictDataTable.DictCode))
-                .where(SysDictTypeTable.DictCode.eq(dictCode)).and(SysDictTypeTable.Status.eq(GlobalStatus.NORMAL));
+                .on(SysDictTypeTable.Code.eq(SysDictDataTable.Code))
+                .where(SysDictTypeTable.Code.eq(code)).and(SysDictTypeTable.Status.eq(GlobalStatus.NORMAL));
         List<DictDataListSimpleResp> list = sysDictDataService.listAs(queryWrapper, DictDataListSimpleResp.class);
         return R.success(list);
     }

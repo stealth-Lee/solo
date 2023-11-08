@@ -19,12 +19,12 @@ public class TableQueryReq {
      * 表名称
      */
     @Query(mode = QueryMode.LIKE)
-    private String tableName;
+    private String name;
 
     /**
      * 表描述
      */
     @Query(mode = QueryMode.LIKE)
-    private String tableComment;
+    private String comment;
 
 }

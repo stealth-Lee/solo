@@ -16,17 +16,17 @@ public class DictDataCreateReq {
     /**
      * 字典编码
      */
-    private String dictCode;
+    private String code;
 
     /**
      * 字典键值
      */
-    private String dictValue;
+    private String value;
 
     /**
      * 字典标签
      */
-    private String dictLabel;
+    private String label;
 
     /**
      * 标签类型

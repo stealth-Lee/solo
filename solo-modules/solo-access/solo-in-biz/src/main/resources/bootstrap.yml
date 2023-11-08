@@ -1,0 +1,22 @@
+server:
+  # 应用端口
+  port: 1001
+
+spring:
+  application:
+    # 应用名称
+    name: solo-in
+  profiles:
+    # 环境配置
+    active: @profiles.active@
+  # Nacos 参数配置
+  cloud:
+    nacos:
+      config:
+        # 配置中心地址
+        server-addr: 127.0.0.1:8848
+        # 配置中心文件后缀
+        file-extension: yaml
+      discovery:
+        # 服务发现地址
+        server-addr: 127.0.0.1:8848

@@ -19,12 +19,12 @@ public class DeptQueryReq {
      * 部门名称
      */
     @Query(mode = QueryMode.LIKE)
-    private String deptName;
+    private String name;
 
     /**
      * 部门编码
      */
     @Query
-    private String deptCode;
+    private String code;
 
 }

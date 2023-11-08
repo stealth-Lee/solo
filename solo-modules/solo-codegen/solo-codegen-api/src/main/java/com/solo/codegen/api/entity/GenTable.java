@@ -33,12 +33,12 @@ public class GenTable extends BasicEntity {
     /**
      * 表名称
      */
-    private String tableName;
+    private String name;
 
     /**
      * 表描述
      */
-    private String tableComment;
+    private String comment;
 
     /**
      * 作者

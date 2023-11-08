@@ -15,10 +15,18 @@
     <modules>
         <module>solo-system</module>
         <module>solo-codegen</module>
+        <module>solo-access</module>
     </modules>
 
     <dependencyManagement>
        <dependencies>
+           <!-- 百度api -->
+           <dependency>
+               <groupId>com.solo</groupId>
+               <artifactId>solo-in-api</artifactId>
+               <version>${revision}</version>
+           </dependency>
+
            <!-- solo 系统核心模块 -->
            <dependency>
                <groupId>com.solo</groupId>
@@ -33,11 +41,4 @@
            </dependency>
        </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.solo</groupId>
-            <artifactId>solo-common-orm</artifactId>
-        </dependency>
-    </dependencies>
 </project>

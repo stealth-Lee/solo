@@ -18,19 +18,19 @@ public class ConfigQueryReq {
      * 配置名称
      */
     @Query
-    private String configName;
+    private String name;
 
     /**
      * 配置键
      */
     @Query
-    private String configKey;
+    private String key;
 
     /**
      * 配置值
      */
     @Query
-    private String configValue;
+    private String value;
 
     /**
      * 系统标识[0:否 1:是]

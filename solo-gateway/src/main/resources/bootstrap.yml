@@ -25,6 +25,12 @@ spring:
         locator:
           enabled: true
       routes:
+        # in模块
+        - id: solo-in
+          uri: lb://solo-in
+          predicates:
+            - Path=/in/**
+
         # 系统核心模块
         - id: solo-system
           uri: lb://solo-system

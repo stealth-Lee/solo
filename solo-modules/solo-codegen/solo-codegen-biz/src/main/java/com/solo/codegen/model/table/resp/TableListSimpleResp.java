@@ -14,11 +14,11 @@ public class TableListSimpleResp {
     /**
      * 表名称
      */
-    private String tableName;
+    private String name;
 
     /**
      * 表描述
      */
-    private String tableComment;
+    private String comment;
 
 }

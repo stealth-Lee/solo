@@ -18,19 +18,19 @@ public class DictDataQueryReq {
      * 字典编码
      */
     @Query
-    private String dictCode;
+    private String code;
 
     /**
      * 字典键值
      */
     @Query
-    private String dictValue;
+    private String value;
 
     /**
      * 字典标签
      */
     @Query
-    private String dictLabel;
+    private String label;
 
     /**
      * 状态[0禁用 1正常]

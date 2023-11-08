@@ -19,7 +19,11 @@
       </el-form-item>
     #elseif ($column.FormType == 'NUMBER')
       <el-form-item label="${column.javaComment}" prop="${column.javaField}">
-        <el-input-number v-model="formModel.${column.javaField}" />
+        <el-input-number
+          v-model="formModel.${column.javaField}"
+          placeholder="请输入${column.javaComment}"
+          class="!w-[100%]"
+        />
       </el-form-item>
     #elseif ($column.FormType == 'TEXTAREA')
       <el-form-item label="${column.javaComment}" prop="${column.javaField}">
@@ -29,26 +33,27 @@
           type="textarea"
         />
       </el-form-item>
-    #elseif ($column.FormType == 'SELECT' && ${column.dictCode})
+    #elseif ($column.FormType == 'SELECT' && ${column.code})
       <el-form-item label="${column.javaComment}" prop="${column.javaField}">
         <el-select
           v-model="formModel.${column.javaField}"
           placeholder="请选择${column.javaComment}"
           clearable
+          class="!w-[100%]"
         >
           <el-option
-            v-for="dict in ${column.dictCode}"
+            v-for="dict in ${column.code}"
             :key="dict.value"
             :label="dict.label"
             :value="dict.value"
           />
         </el-select>
       </el-form-item>
-    #elseif ($column.FormType == 'RADIO' && ${column.dictCode})
+    #elseif ($column.FormType == 'RADIO' && ${column.code})
       <el-form-item label="${column.javaComment}" prop="${column.javaField}">
         <el-radio-group v-model="formModel.${column.javaField}">
           <el-radio-button
-            v-for="(item, index) in ${column.dictCode}"
+            v-for="(item, index) in ${column.code}"
             :label="item.value"
             :key="index"
             >{{ item.label }}
@@ -84,11 +89,11 @@ defineOptions({ name: "${table.className}Form" });
 #if ($dictColumns.size() > 0)
 const {
   #foreach ($column in $dictColumns)
-  ${column.dictCode}#if ($foreach.last)#else,#end
+  ${column.code}#if ($foreach.last)#else,#end
   #end
 } = useDict(
   #foreach ($column in $dictColumns)
-  "${column.dictCode}"#if ($foreach.last)#else,#end
+  "${column.code}"#if ($foreach.last)#else,#end
   #end
 );
 #end

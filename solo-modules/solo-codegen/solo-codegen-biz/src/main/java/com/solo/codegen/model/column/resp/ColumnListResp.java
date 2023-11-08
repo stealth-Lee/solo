@@ -22,17 +22,17 @@ public class ColumnListResp {
     /**
      * 列名
      */
-    private String columnName;
+    private String name;
 
     /**
      * 列类型
      */
-    private String columnType;
+    private String type;
 
     /**
      * 列排序
      */
-    private String columnSort;
+    private String sort;
 
     /**
      * Java类型

@@ -9,7 +9,7 @@
     >
 #foreach ($column in $columns)
   #if (${column.isQuery})
-    #set ($dict = $column.dictCode)
+    #set ($dict = $column.code)
     #if ($column.FormType == 'INPUT')
       <el-form-item label="${column.javaComment}" prop="${column.javaField}">
         <el-input
@@ -187,11 +187,11 @@ const dialogFormRef = ref();
 #if ($dictColumns.size() > 0)
 const {
   #foreach ($column in $dictColumns)
-  ${column.dictCode}#if ($foreach.last)#else,#end
+  ${column.code}#if ($foreach.last)#else,#end
   #end
 } = useDict(
   #foreach ($column in $dictColumns)
-  "${column.dictCode}"#if ($foreach.last)#else,#end
+  "${column.code}"#if ($foreach.last)#else,#end
   #end
 );
 #end
@@ -232,9 +232,9 @@ const columns: TableColumnList = [
   {
     label: "${column.javaComment}",
     prop: "${column.javaField}",
-    minWidth: 120#if (${column.dictCode} && $table.switchField != $column.javaField),
+    minWidth: 120#if (${column.code} && $table.switchField != $column.javaField),
     cellRenderer: scope => (
-      <dict-tag options={${column.dictCode}.value} value={scope.row.${column.javaField}}></dict-tag>
+      <dict-tag options={${column.code}.value} value={scope.row.${column.javaField}}></dict-tag>
     )#elseif (${table.isSwitch} && $table.switchField == $column.javaField),
     cellRenderer: scope => (
       <el-switch

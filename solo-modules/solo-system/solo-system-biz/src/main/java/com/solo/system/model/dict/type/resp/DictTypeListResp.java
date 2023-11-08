@@ -23,17 +23,17 @@ public class DictTypeListResp {
     /**
      * 字典类型名称
      */
-    private String dictName;
+    private String name;
 
     /**
      * 字典类型编码
      */
-    private String dictCode;
+    private String code;
 
     /**
      * 字典类型[1:string 2:number 3:boolean]
      */
-    private DictType dictType;
+    private DictType type;
 
     /**
      * 字典类型状态

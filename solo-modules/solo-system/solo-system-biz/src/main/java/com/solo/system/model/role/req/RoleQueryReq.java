@@ -14,13 +14,13 @@ public class RoleQueryReq {
      * 角色名称
      */
     @Query(mode = QueryMode.LIKE)
-    private String roleName;
+    private String name;
 
     /**
      * 角色编码
      */
     @Query
-    private String roleCode;
+    private String code;
 
     /**
      * 状态[0停用 1正常]

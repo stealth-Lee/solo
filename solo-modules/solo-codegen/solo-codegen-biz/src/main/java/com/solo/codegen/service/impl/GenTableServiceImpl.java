@@ -47,7 +47,7 @@ public class GenTableServiceImpl extends BasicServiceImpl<GenTableMapper, GenTab
     @Transactional(rollbackFor = Exception.class)
     public boolean create(TableCreateReq req) {
         GenTable genTable = GenTableConvert.INSTANCE.convert(req);
-        Table table = databaseTableService.getTable(req.getSourceId(), req.getTableName());
+        Table table = databaseTableService.getTable(req.getSourceId(), req.getName());
         codegenBuilder.buildTable(table, genTable);
         mapper.insert(genTable, true);
         List<GenColumn> columns = codegenBuilder.buildColumn(genTable.getTableId(), table.getColumns());

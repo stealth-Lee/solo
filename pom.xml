@@ -52,7 +52,7 @@
     <properties>
         <revision>2023.9.1</revision>
 
-        <spring-boot.version>3.1.4</spring-boot.version>
+        <spring-boot.version>3.1.5</spring-boot.version>
         <spring-cloud.version>2022.0.4</spring-cloud.version>
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
 
@@ -64,7 +64,7 @@
         <velocity.version>2.3</velocity.version>
 
         <lombok.version>1.18.30</lombok.version>
-
+        <fastjson2.version>2.0.41</fastjson2.version>
         <hutool.version>5.8.21</hutool.version>
 
         <mapstruct.version>1.5.5.Final</mapstruct.version>
@@ -155,6 +155,13 @@
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity-engine-core</artifactId>
                 <version>${velocity.version}</version>
+            </dependency>
+
+            <!-- fastjson2 -->
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
             </dependency>
 
             <!--hutool all 工具类-->

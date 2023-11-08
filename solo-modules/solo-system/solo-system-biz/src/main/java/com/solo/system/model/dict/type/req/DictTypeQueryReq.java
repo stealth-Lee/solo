@@ -19,13 +19,13 @@ public class DictTypeQueryReq {
      * 字典类型名称
      */
     @Query
-    private String dictName;
+    private String name;
 
     /**
      * 字典类型编码
      */
     @Query
-    private String dictCode;
+    private String code;
 
     /**
      * 字典类型状态

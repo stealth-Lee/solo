@@ -23,4 +23,14 @@ public class FileSuffix {
      */
     public static final String TS = ".ts";
 
+    /**
+     * yaml文件后缀
+     */
+    public static final String YAML = ".yaml";
+
+    /**
+     * yml文件后缀
+     */
+    public static final String YML = ".yml";
+
 }

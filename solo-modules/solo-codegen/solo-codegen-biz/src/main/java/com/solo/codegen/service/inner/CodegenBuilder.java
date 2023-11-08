@@ -14,9 +14,7 @@ import com.solo.codegen.api.entity.GenTable;
 import com.solo.common.core.constant.Symbols;
 import com.solo.common.core.utils.StringUtils;
 import com.solo.common.orm.base.entity.BasicEntity;
-import com.solo.system.api.entity.SysConfig;
-import com.solo.system.api.feign.SysConfigApi;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -24,8 +22,17 @@ import java.util.*;
 @Component
 public class CodegenBuilder {
 
-    @Resource
-    private SysConfigApi sysConfigApi;
+    /**
+     * 作者
+     */
+    @Value("${codegen.author}")
+    private String author;
+
+    /**
+     * 类尾部注释
+     */
+    @Value("${codegen.tail}")
+    private String tail;
 
     /**
      * 基础实体类的字段
@@ -69,18 +76,16 @@ public class CodegenBuilder {
      * @param table 表信息
      */
     public void buildTable(Table table, GenTable genTable) {
-        genTable.setTableName(table.getName());
-        genTable.setTableComment(table.getComment());
+        genTable.setName(table.getName());
+        genTable.setComment(table.getComment());
         genTable.setClassName(NamingCase.toPascalCase(table.getName()));
         genTable.setFunctionName(StringUtils.replaceLast(table.getComment(), "表", ""));
-        List<String> split = StringUtils.split(genTable.getTableName(), Symbols.UNDERLINE_CHAR, 2);
+        List<String> split = StringUtils.split(genTable.getName(), Symbols.UNDERLINE_CHAR, 2);
         genTable.setPackageName("com.solo." + split.get(0));
         genTable.setModuleName(split.get(0));
         genTable.setBusinessName(StringUtils.replace(split.get(1), Symbols.UNDERLINE, Symbols.DOT));
-        SysConfig genClassTail = sysConfigApi.selectConfigByKey("gen_class_tail").getData();
-        SysConfig genAuthor = sysConfigApi.selectConfigByKey("gen_author").getData();
-        genTable.setClassTail(genClassTail.getConfigValue());
-        genTable.setAuthor(genAuthor.getConfigValue());
+        genTable.setAuthor(author);
+        genTable.setClassTail(tail);
         genTable.setIsSwitch(false);
     }
 
@@ -96,9 +101,9 @@ public class CodegenBuilder {
         for (Column column : columns) {
             GenColumn genColumn = new GenColumn();
             genColumn.setTableId(tableId);
-            genColumn.setColumnName(column.getName());
-            genColumn.setColumnType(column.getRawType());
-            genColumn.setColumnSort(index++);
+            genColumn.setName(column.getName());
+            genColumn.setType(column.getRawType() + "(" + column.getRawLength() + ")");
+            genColumn.setSort(index++);
             genColumn.setJavaType(StringUtils.isNotBlank(column.getPropertyType())
                     ? EnumUtil.getBy(JavaType::getValue, StringUtils.subAfter(column.getPropertyType(), Symbols.DOT, true))
                     : JavaType.OBJECT);
@@ -111,7 +116,7 @@ public class CodegenBuilder {
             genColumn.setIsList(!CodegenBuilder.LIST_IGNORE_FIELDS.contains(column.getProperty()) && !column.isPrimaryKey());
             genColumn.setIsQuery(!CodegenBuilder.QUERY_IGNORE_FIELDS.contains(column.getProperty()) && !column.isPrimaryKey());
             genColumn.setQueryMode(QueryMode.EQ);
-            genColumn.setFormType(initFormType(genColumn));
+            genColumn.setFormType(initFormType(genColumn, column.getRawLength()));
             genColumns.add(genColumn);
         }
         return genColumns;
@@ -122,7 +127,7 @@ public class CodegenBuilder {
      * @param genColumn 字段信息
      * @return 表单类型
      */
-    private FormType initFormType(GenColumn genColumn) {
+    private FormType initFormType(GenColumn genColumn, int rawLength) {
         return switch (genColumn.getJavaType()) {
             case LOCAL_DATE_TIME -> FormType.DATE_TIME;
             case LOCAL_DATE -> FormType.DATE;
@@ -130,8 +135,8 @@ public class CodegenBuilder {
             case BOOLEAN -> FormType.SWITCH;
             case INTEGER, LONG, FLOAT, DOUBLE, BIG_DECIMAL -> FormType.NUMBER;
             case STRING -> {
-                // TODO 11 判断某情况下是textarea，下周做数据库加个长度字段，当长度大于某个值时，就是textarea
-//                if (genColumn.get)
+                if (rawLength > 200)
+                    yield FormType.TEXTAREA;
                 yield FormType.INPUT;
             }
             case null, default -> FormType.INPUT;

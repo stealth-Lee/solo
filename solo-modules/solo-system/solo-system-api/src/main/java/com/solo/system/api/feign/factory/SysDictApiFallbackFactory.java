@@ -17,7 +17,7 @@ public class SysDictApiFallbackFactory implements FallbackFactory<SysDictApi> {
         log.error("字典服务调用失败:{}", cause.getMessage());
         return new SysDictApi() {
             @Override
-            public R<List<SysDictData>> selectByDictCode(String dictCode) {
+            public R<List<SysDictData>> selectByCode(String code) {
                 return null;
             }
         };

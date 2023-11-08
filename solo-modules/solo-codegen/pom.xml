@@ -19,6 +19,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-common-orm</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
         </dependency>

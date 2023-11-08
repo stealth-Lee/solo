@@ -12,7 +12,7 @@ import java.util.List;
 @FeignClient(contextId = "sysDictApi", value = "solo-system", fallback = SysDictApiFallbackFactory.class)
 public interface SysDictApi {
 
-    @GetMapping("/system/dict-data/code/{dictCode}")
-    R<List<SysDictData>> selectByDictCode(@PathVariable("dictCode") String dictCode);
+    @GetMapping("/system/dict-data/code/{code}")
+    R<List<SysDictData>> selectByCode(@PathVariable("code") String code);
 
 }

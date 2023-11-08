@@ -11,7 +11,7 @@ import com.solo.system.api.entity.SysDictType;
  **/
 public interface SysDictTypeService extends BasicService<SysDictType> {
 
-    boolean create(SysDictType sysDept);
+    boolean create(SysDictType entity);
 
     boolean delete(Long typeId);
 

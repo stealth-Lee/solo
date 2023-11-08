@@ -22,9 +22,9 @@ public interface DatabaseTableService {
     /**
      * 获取指定数据源下指定表
      * @param sourceId 数据源id
-     * @param tableName 表名称
+     * @param name 表名称
      * @return 表信息
      */
-    Table getTable(Long sourceId, String tableName);
+    Table getTable(Long sourceId, String name);
 
 }

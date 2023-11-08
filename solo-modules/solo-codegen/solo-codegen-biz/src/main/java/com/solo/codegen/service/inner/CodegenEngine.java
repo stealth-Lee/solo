@@ -15,11 +15,14 @@ import com.solo.common.core.constant.FileSuffix;
 import com.solo.common.core.constant.Symbols;
 import com.solo.common.core.global.R;
 import com.solo.common.core.utils.StringUtils;
+import com.solo.in.api.entity.UniversalTranslation;
+import com.solo.in.api.feign.TranslateApi;
 import com.solo.system.api.entity.SysDictData;
 import com.solo.system.api.feign.SysDictApi;
+import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -29,8 +32,16 @@ import java.util.Map;
 @Component
 public class CodegenEngine {
 
-    @Autowired
+    /**
+     * 生成语言包的默认语言列表
+     */
+    @Value("${codegen.languages}")
+    private String languages;
+
+    @Resource
     private SysDictApi sysDictApi;
+    @Resource
+    private TranslateApi translateApi;
     private final TemplateEngine templateEngine;
 
     /**
@@ -57,7 +68,7 @@ public class CodegenEngine {
         List<GenColumn> dictColumns = columns.stream().filter(column -> StringUtils.isNotBlank(column.getDictCode())).toList();
         dict.set("dictColumns", dictColumns); // 字典列
         dict.set("now", DateUtil.format(new DateTime(), DatePattern.NORM_DATETIME_MINUTE_PATTERN));
-        String modelClassName = NamingCase.toPascalCase(StringUtils.removePreAndUpperFirst(table.getTableName(), Symbols.UNDERLINE_CHAR));
+        String modelClassName = NamingCase.toPascalCase(StringUtils.removePreAndUpperFirst(table.getName(), Symbols.UNDERLINE_CHAR));
         dict.set("modelClassName", modelClassName);
         dict.set("basicEntity", CodegenBuilder.BASIC_ENTITY_FIELDS);
         dict.set("StringUtils", new StringUtils());
@@ -68,22 +79,55 @@ public class CodegenEngine {
                     for (GenColumn dictColumn : dictColumns) {
                         String enumName = NamingCase.toPascalCase(dictColumn.getDictCode());
                         dict.set("enumName", enumName);
-                        R<List<SysDictData>> listR = sysDictApi.selectByDictCode(dictColumn.getDictCode());
+                        R<List<SysDictData>> listR = sysDictApi.selectByCode(dictColumn.getDictCode());
                         List<SysDictData> data = listR.getData();
                         dict.set("dicts", data);
-                        result.put(buildPath(template, table, enumName), templateEngine.getTemplate(template.getTemplatePath()).render(dict));
+                        result.put(buildPath(template, table, enumName),
+                                templateEngine.getTemplate(template.getTemplatePath()).render(dict));
                     }
                 }
                 case UPDATE_STATUS_REQ -> {
-                    if (table.getIsSwitch()) result.put(buildPath(template, table, modelClassName), templateEngine.getTemplate(template.getTemplatePath()).render(dict));
+                    if (table.getIsSwitch())
+                        result.put(buildPath(template, table, modelClassName),
+                                templateEngine.getTemplate(template.getTemplatePath()).render(dict));
                 }
-                default -> result.put(buildPath(template, table, modelClassName), templateEngine.getTemplate(template.getTemplatePath()).render(dict));
+                case LANGUAGE -> {
+                    List<String> languageList = StringUtils.split(languages, Symbols.COMMA);
+                    languageList.forEach(language -> {
+                        columns.forEach(column -> {
+                            if ((column.getIsQuery() || column.getIsUpdate() || column.getIsCreate() || column.getIsRequired()) && !column.getIsPk()) {
+                                String javaComment = column.getJavaComment();
+                                if (StringUtils.isBlank(javaComment)) {
+                                    javaComment = StringUtils.replace(column.getName(), Symbols.UNDERLINE, " ");
+                                }
+                                column.setJavaComment(handelLanguage(language, javaComment));
+                            }
+                        });
+                        dict.set("i18nColumns", columns);
+                        dict.set("i18nFunctionName", handelLanguage(language, table.getFunctionName()));
+                        dict.set("i18nBusinessName", StringUtils.toCamelCase(table.getBusinessName(), Symbols.DOT_CHAT));
+                        dict.set("i18nInputTip", StringUtils.replaceLast(handelLanguage(language, "请输入996"), "996", ""));
+                        dict.set("i18nSelectTip", StringUtils.replaceLast(handelLanguage(language, "请选择996"), "996", ""));
+                        dict.set("i18nNotNullMessage", StringUtils.replaceFirst(handelLanguage(language, "996不能为空"), "996", ""));
+                        result.put(buildPath(template, table, language),
+                                templateEngine.getTemplate(template.getTemplatePath()).render(dict));
+                    });
+                }
+                default -> result.put(buildPath(template, table, modelClassName),
+                        templateEngine.getTemplate(template.getTemplatePath()).render(dict));
             }
         }
-
         return result;
     }
 
+
+    private String handelLanguage(String to, String q) {
+        UniversalTranslation universalTranslation = new UniversalTranslation();
+        universalTranslation.setTo(to);
+        universalTranslation.setQ(q);
+        String text = translateApi.test(universalTranslation);
+        return StringUtils.capitalizeEnglishWords(text);
+    }
 
     /**
      * 构建文件路径
@@ -127,6 +171,8 @@ public class CodegenEngine {
             case INDEX, FORM, SQL -> suffix;
             // 如果是ts，直接返回SysUser
             case TS -> table.getBusinessName() + FileSuffix.TS;
+            // 如果是语言包，直接返回指定名称+后缀 如en + .yaml -> en.yaml
+            case LANGUAGE -> className + FileSuffix.YAML;
             // 其它情况，直接返回类名+后缀 如：SysUser + Service.java -> SysUserService.java
             default -> table.getClassName() + suffix;
         };
@@ -158,7 +204,9 @@ public class CodegenEngine {
         SQL("codegen/sql/menu.sql.vm", "sql", ""),
         TS("codegen/ts/index.ts.vm", "solo-ui", "api/{moduleName}"),
         INDEX("codegen/vue/index.vue.vm", "solo-ui", "view/{moduleName}/{businessName}"),
-        FORM("codegen/vue/form.vue.vm", "solo-ui", "view/{moduleName}/{businessName}");
+        FORM("codegen/vue/form.vue.vm", "solo-ui", "view/{moduleName}/{businessName}"),
+        // TODO 一定要把语言包的模版放在最后，因为语言包的模版需要修改columns的javaComment, 一定要在其它模版执行完毕后再执行
+        LANGUAGE("codegen/vue/i18n/language.yaml.vm", "solo-ui", "view/{moduleName}/{businessName}/i18n");
 
         /**
          * 模版路径
@@ -166,12 +214,12 @@ public class CodegenEngine {
         private final String templatePath;
 
         /**
-         * 所属模块[api biz]
+         * 所属模块
          */
         private final String module;
 
         /**
-         * 各种类的部分包路径
+         * 部分包路径
          */
         private final String packagePath;
 

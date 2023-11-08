@@ -24,20 +24,20 @@ public class DeptCreateReq {
      */
     @NotBlank(message = "部门名称不能为空")
     @Size(max = 32, message = "部门名称长度不能超过32个字符")
-    private String deptName;
+    private String name;
 
     /**
      * 部门编码
      */
     @NotBlank(message = "部门编码不能为空")
     @Size(max = 32, message = "部门编码长度不能超过32个字符")
-    private String deptCode;
+    private String code;
 
     /**
      * 部门排序
      */
     @NotNull(message = "部门排序不能为空")
-    private Integer deptSort;
+    private Integer sort;
 
     /**
      * 备注

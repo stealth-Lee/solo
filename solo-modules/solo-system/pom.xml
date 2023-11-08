@@ -20,6 +20,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-common-orm</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
         </dependency>
@@ -31,7 +36,6 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-jdk8</artifactId>
         </dependency>
-
     </dependencies>
 
 </project>

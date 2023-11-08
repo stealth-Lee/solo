@@ -23,7 +23,7 @@ public class SysDeptServiceImpl extends BasicServiceImpl<SysDeptMapper, SysDept>
 
     @Override
     public boolean create(SysDept entity) {
-        long count = QueryChain.of(mapper).where(SysDeptTable.DeptCode.eq(entity.getDeptCode())).count();
+        long count = QueryChain.of(mapper).where(SysDeptTable.Code.eq(entity.getCode())).count();
         if (NumberUtils.isPositiveInteger(count)) {
             throw exception("部门编码已存在");
         }
@@ -42,7 +42,7 @@ public class SysDeptServiceImpl extends BasicServiceImpl<SysDeptMapper, SysDept>
     @Override
     public boolean update(SysDept entity) {
         SysDept result = QueryChain.of(mapper).select(SysDeptTable.DeptId)
-                .where(SysDeptTable.DeptCode.eq(entity.getDeptCode())).one();
+                .where(SysDeptTable.Code.eq(entity.getCode())).one();
         if (ObjectUtils.isNotEmpty(result) && !result.getDeptId().equals(entity.getDeptId())) {
             throw exception("部门编码已存在");
         }

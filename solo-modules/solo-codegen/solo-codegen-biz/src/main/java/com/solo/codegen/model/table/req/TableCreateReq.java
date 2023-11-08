@@ -19,6 +19,6 @@ public class TableCreateReq {
     /**
      * 表名称
      */
-    private String tableName;
+    private String name;
 
 }

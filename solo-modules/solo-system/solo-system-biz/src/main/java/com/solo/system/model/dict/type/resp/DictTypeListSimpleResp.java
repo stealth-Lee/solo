@@ -14,11 +14,11 @@ public class DictTypeListSimpleResp {
     /**
      * 字典类型名称
      */
-    private String dictName;
+    private String name;
 
     /**
      * 字典类型编码
      */
-    private String dictCode;
+    private String code;
 
 }

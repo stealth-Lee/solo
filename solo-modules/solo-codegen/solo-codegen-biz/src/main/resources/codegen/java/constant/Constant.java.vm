@@ -19,7 +19,7 @@ import lombok.Getter;
 public enum ${enumName} implements BasicDict<String> {
 
 #foreach ($dict in $dicts)
-    ${StringUtils.toUnderlineCase(${dict.dictValue}).toUpperCase()}("${dict.dictValue}", "${dict.dictLabel}")#if ($foreach.last);#else,#end
+    ${StringUtils.toUnderlineCase(${dict.value}).toUpperCase()}("${dict.value}", "${dict.label}")#if ($foreach.last);#else,#end
 #end
 
     @EnumValue

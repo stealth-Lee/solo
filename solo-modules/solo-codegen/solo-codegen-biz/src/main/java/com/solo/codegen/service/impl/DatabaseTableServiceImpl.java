@@ -34,11 +34,11 @@ public class DatabaseTableServiceImpl implements DatabaseTableService {
     }
 
     @Override
-    public Table getTable(Long sourceId, String tableName) {
-        return CollUtil.getFirst(getTableList(sourceId, tableName));
+    public Table getTable(Long sourceId, String name) {
+        return CollUtil.getFirst(getTableList(sourceId, name));
     }
 
-    private List<Table> getTableList(Long sourceId, String tableName) {
+    private List<Table> getTableList(Long sourceId, String name) {
         GenDatasource config = genDatasourceMapper.selectOneById(sourceId);
         Assert.notNull(config, "数据源[{}] 不存在！", sourceId);
         HikariDataSource dataSource = new HikariDataSource();
@@ -46,8 +46,8 @@ public class DatabaseTableServiceImpl implements DatabaseTableService {
         dataSource.setUsername(config.getUsername());
         dataSource.setPassword(config.getPassword());
         GlobalConfig globalConfig = new GlobalConfig();
-        if (StringUtils.isNotEmpty(tableName)) {
-            globalConfig.getStrategyConfig().setGenerateTable(tableName);
+        if (StringUtils.isNotEmpty(name)) {
+            globalConfig.getStrategyConfig().setGenerateTable(name);
         }
         Generator generator = new Generator(dataSource, globalConfig);
         List<Table> tables = generator.getTables();

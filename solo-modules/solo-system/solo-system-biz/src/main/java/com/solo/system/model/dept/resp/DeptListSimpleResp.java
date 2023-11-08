@@ -24,6 +24,6 @@ public class DeptListSimpleResp {
     /**
      * 部门名称
      */
-    private String deptName;
+    private String name;
 
 }

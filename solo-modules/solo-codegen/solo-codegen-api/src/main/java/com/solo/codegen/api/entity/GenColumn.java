@@ -35,17 +35,17 @@ public class GenColumn extends BasicEntity {
     /**
      * 列名
      */
-    private String columnName;
+    private String name;
 
     /**
      * 列类型
      */
-    private String columnType;
+    private String type;
 
     /**
      * 列排序
      */
-    private Integer columnSort;
+    private Integer sort;
 
     /**
      * Java类型

@@ -26,17 +26,17 @@ public class DeptListResp {
     /**
      * 部门名称
      */
-    private String deptName;
+    private String name;
 
     /**
      * 部门编码
      */
-    private String deptCode;
+    private String code;
 
     /**
      * 部门排序
      */
-    private Integer deptSort;
+    private Integer sort;
 
     /**
      * 创建时间

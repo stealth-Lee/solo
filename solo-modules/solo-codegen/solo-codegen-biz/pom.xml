@@ -52,6 +52,10 @@
 
         <dependency>
             <groupId>com.solo</groupId>
+            <artifactId>solo-in-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.solo</groupId>
             <artifactId>solo-codegen-api</artifactId>
         </dependency>
         <dependency>

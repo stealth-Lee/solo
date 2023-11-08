@@ -23,7 +23,7 @@ public class SysRoleServiceImpl extends BasicServiceImpl<SysRoleMapper, SysRole>
 
     @Override
     public boolean create(SysRole entity) {
-        long count = QueryChain.of(mapper).where(SysRoleTable.RoleCode.eq(entity.getRoleCode())).count();
+        long count = QueryChain.of(mapper).where(SysRoleTable.Code.eq(entity.getCode())).count();
         if (NumberUtils.isPositiveInteger(count)) {
             throw exception("角色编码已存在");
         }
@@ -33,7 +33,7 @@ public class SysRoleServiceImpl extends BasicServiceImpl<SysRoleMapper, SysRole>
     @Override
     public boolean update(SysRole entity) {
         SysRole result = QueryChain.of(mapper).select(SysRoleTable.RoleId)
-                .where(SysRoleTable.RoleCode.eq(entity.getRoleCode())).one();
+                .where(SysRoleTable.Code.eq(entity.getCode())).one();
         if (ObjectUtils.isNotEmpty(result) && !result.getRoleId().equals(entity.getRoleId())) {
             throw exception("角色编码已存在");
         }

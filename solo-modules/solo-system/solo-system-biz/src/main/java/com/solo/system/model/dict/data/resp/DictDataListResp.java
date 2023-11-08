@@ -1,5 +1,6 @@
 package com.solo.system.model.dict.data.resp;
 
+import com.solo.system.api.constant.dict.TagType;
 import com.solo.system.api.constant.global.GlobalStatus;
 import lombok.Data;
 
@@ -23,17 +24,22 @@ public class DictDataListResp {
     /**
      * 字典编码
      */
-    private String dictCode;
+    private String code;
 
     /**
      * 字典键值
      */
-    private String dictValue;
+    private String value;
 
     /**
      * 字典标签
      */
-    private String dictLabel;
+    private String label;
+
+    /**
+     * 标签类型
+     */
+    private TagType tagType;
 
     /**
      * 字典排序

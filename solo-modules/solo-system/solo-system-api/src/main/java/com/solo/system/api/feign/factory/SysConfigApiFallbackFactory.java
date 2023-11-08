@@ -17,7 +17,7 @@ public class SysConfigApiFallbackFactory implements FallbackFactory<SysDictApi> 
         log.error("系统参数服务调用失败:{}", cause.getMessage());
         return new SysDictApi() {
             @Override
-            public R<List<SysDictData>> selectByDictCode(String dictCode) {
+            public R<List<SysDictData>> selectByCode(String code) {
                 return null;
             }
         };

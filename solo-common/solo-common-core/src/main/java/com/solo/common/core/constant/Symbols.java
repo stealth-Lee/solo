@@ -23,6 +23,7 @@ public class Symbols {
      * 点
      */
     public static final String DOT = ".";
+    public static final char DOT_CHAT = '.';
 
     /**
      * 斜杠

@@ -2,6 +2,8 @@ package com.solo.common.core.utils;
 
 import cn.hutool.core.util.StrUtil;
 
+import java.util.regex.Pattern;
+
 /**
  * 字符串工具类
  * @author 十一
@@ -41,14 +43,51 @@ public class StringUtils extends StrUtil {
         return removePreAndUpperFirst(str, indexOf(str, separator) + 1);
     }
 
+    /**
+     * 判断是否是英文
+     * @param str 字符串
+     * @return 是否是英文
+     */
+    public static boolean isEnglish(String str) {
+        String pattern = ".*[a-zA-Z].*";
+        return Pattern.matches(pattern, str);
+    }
+
+    /**
+     * 大写英文单词首字母
+     * 例如：hello word -> Hello World； hello i18n -> Hello i18n
+     * @param input 源文本
+     * @return 大写后的字符串
+     */
+    public static String capitalizeEnglishWords(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+        String[] words = input.split("\\s+");
+        StringBuilder result = new StringBuilder();
+        Pattern englishWordPattern = Pattern.compile("^[a-z]+$");
+        for (String word : words) {
+            if (englishWordPattern.matcher(word).matches()) {
+                if (!word.isEmpty()) {
+                    result.append(Character.toUpperCase(word.charAt(0)));
+                    if (word.length() > 1) {
+                        result.append(word.substring(1));
+                    }
+                }
+            } else {
+                result.append(word); // 不是英文单词，保持原样
+            }
+            result.append(" ");
+        }
+        if (!result.isEmpty()) {
+            result.setLength(result.length() - 1); // 移除末尾的额外空格
+        }
+        return result.toString();
+    }
+
     public static void main(String[] args) {
-//        System.out.println(removePreAndUpperFirst("system_user", '_'));
-//        System.out.println(toUnderlineCase("systemUseraA"));
-//        String  a  = "130603195301131228";
-//        System.out.println(a.substring(0,6) + a.substring(8, 17));
-//        System.out.println(split("sys_user_role", '_', 2));
-//        System.out.println(replace("sys_user_role", "_", "-"));
-        System.out.println(subAfter("java.long.String", ".", true));
+
+        System.out.println(isEnglish("hello, 啊 1213"));
     }
 
 }

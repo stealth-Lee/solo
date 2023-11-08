@@ -28,8 +28,8 @@ public interface GenTableConvert {
     TableGetResp convertGet(GenTable entity);
 
     @Mappings({
-            @Mapping(source = "name", target = "tableName"),
-            @Mapping(source = "comment", target = "tableComment"),
+            @Mapping(source = "name", target = "name"),
+            @Mapping(source = "comment", target = "comment"),
     })
     TableListSimpleResp convertListSimple(Table entity);
 

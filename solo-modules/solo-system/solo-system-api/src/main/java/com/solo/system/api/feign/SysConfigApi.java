@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(contextId = "sysConfigApi", value = "solo-system", fallback = SysConfigApiFallbackFactory.class)
 public interface SysConfigApi {
 
-    @GetMapping("/system/config/key/{configKey}")
-    R<SysConfig> selectConfigByKey(@PathVariable(value = "configKey") String configKey);
+    @GetMapping("/system/config/key/{key}")
+    R<SysConfig> selectConfigByKey(@PathVariable(value = "key") String key);
 
 }

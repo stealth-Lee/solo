@@ -74,9 +74,9 @@ public class SysConfigController {
         return R.success(SysConfigConvert.INSTANCE.convertGet(sysConfigService.getById(configId)));
     }
 
-    @GetMapping("/key/{configKey}")
-    public R<SysConfig> selectConfigByKey(@PathVariable String configKey) {
-        return R.success(sysConfigService.queryChain().where(SysConfigTable.ConfigKey.eq(configKey)).one());
+    @GetMapping("/key/{key}")
+    public R<SysConfig> selectConfigByKey(@PathVariable String key) {
+        return R.success(sysConfigService.queryChain().where(SysConfigTable.Key.eq(key)).one());
     }
 
     /**

@@ -23,7 +23,7 @@ public class SysDictTypeServiceImpl extends BasicServiceImpl<SysDictTypeMapper, 
 
     @Override
     public boolean create(SysDictType entity) {
-        long count = QueryChain.of(mapper).where(SysDictTypeTable.DictCode.eq(entity.getDictCode())).count();
+        long count = QueryChain.of(mapper).where(SysDictTypeTable.Code.eq(entity.getCode())).count();
         if (NumberUtils.isPositiveInteger(count)) {
             throw exception("字典编码已存在");
         }
@@ -42,7 +42,7 @@ public class SysDictTypeServiceImpl extends BasicServiceImpl<SysDictTypeMapper, 
     @Override
     public boolean update(SysDictType entity) {
         SysDictType result = QueryChain.of(mapper).select(SysDictTypeTable.TypeId)
-                .where(SysDictTypeTable.DictCode.eq(entity.getDictCode())).one();
+                .where(SysDictTypeTable.Code.eq(entity.getCode())).one();
         if (ObjectUtils.isNotEmpty(result) && !result.getTypeId().equals(entity.getTypeId())) {
             throw exception("字典编码已存在");
         }

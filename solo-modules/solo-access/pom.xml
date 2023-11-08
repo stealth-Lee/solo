@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.solo</groupId>
+        <artifactId>solo-modules</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <packaging>pom</packaging>
+    <artifactId>solo-access</artifactId>
+    <description>通道服务</description>
+
+    <modules>
+        <module>solo-in-api</module>
+        <module>solo-in-biz</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-common-core</artifactId>
+        </dependency>
+        <!-- Http客户端工具 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-http</artifactId>
+        </dependency>
+    </dependencies>
+</project>
