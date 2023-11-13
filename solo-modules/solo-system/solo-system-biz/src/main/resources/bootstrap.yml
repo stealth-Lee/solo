@@ -9,6 +9,12 @@ spring:
   profiles:
     # 环境配置
     active: @profiles.active@
+  # Servlet 配置
+  servlet:
+    # 文件上传相关配置项
+    multipart:
+      max-file-size: 16MB # 单个文件大小
+      max-request-size: 32MB # 设置总上传的文件大小
   # Nacos 参数配置
   cloud:
     nacos:

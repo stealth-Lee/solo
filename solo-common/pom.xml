@@ -18,5 +18,6 @@
         <module>solo-common-core</module>
         <module>solo-common-redis</module>
         <module>solo-common-rpc</module>
+        <module>solo-common-excel</module>
     </modules>
 </project>

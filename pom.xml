@@ -66,8 +66,8 @@
         <lombok.version>1.18.30</lombok.version>
         <fastjson2.version>2.0.41</fastjson2.version>
         <hutool.version>5.8.21</hutool.version>
-
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <easyexcel.version>3.3.2</easyexcel.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -194,16 +194,23 @@
                 <version>${mapstruct.version}</version>
             </dependency>
 
-            <!-- solo orm扩展封装包 -->
+            <!-- easyexcel https://easyexcel.opensource.alibaba.com/ -->
             <dependency>
-                <groupId>com.solo</groupId>
-                <artifactId>solo-common-orm</artifactId>
-                <version>${revision}</version>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
             </dependency>
+
             <!-- solo 通用工具核心包 -->
             <dependency>
                 <groupId>com.solo</groupId>
                 <artifactId>solo-common-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!-- solo orm扩展封装包 -->
+            <dependency>
+                <groupId>com.solo</groupId>
+                <artifactId>solo-common-orm</artifactId>
                 <version>${revision}</version>
             </dependency>
             <!-- solo rpc远程调用服务 -->
@@ -216,6 +223,12 @@
             <dependency>
                 <groupId>com.solo</groupId>
                 <artifactId>solo-common-redis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!-- solo excel导入导出 -->
+            <dependency>
+                <groupId>com.solo</groupId>
+                <artifactId>solo-common-excel</artifactId>
                 <version>${revision}</version>
             </dependency>
 

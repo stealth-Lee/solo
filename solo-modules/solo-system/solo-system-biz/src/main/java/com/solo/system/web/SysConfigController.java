@@ -1,6 +1,7 @@
 package com.solo.system.web;
 
 import com.mybatisflex.core.paginate.Page;
+import com.solo.common.core.aop.annotation.Runtime;
 import com.solo.common.core.global.R;
 import com.solo.common.orm.core.query.Wrappers;
 import com.solo.system.api.entity.SysConfig;
@@ -12,9 +13,12 @@ import com.solo.system.model.config.resp.ConfigGetResp;
 import com.solo.system.model.config.resp.ConfigListResp;
 import com.solo.system.service.SysConfigService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import static com.solo.system.api.entity.table.SysConfigTableDef.SysConfigTable;
@@ -85,10 +89,22 @@ public class SysConfigController {
      * @param req 系统配置查询对象
      * @return 响应信息
      */
+    @Runtime
     @GetMapping("/page")
     public R<Page<ConfigListResp>> page(Page<ConfigListResp> page, ConfigQueryReq req) {
         Page<ConfigListResp> list = sysConfigService.pageAs(page, Wrappers.buildWhere(req), ConfigListResp.class);
         return R.success(list);
     }
+
+    @PostMapping("/import")
+    public void importExcel(MultipartFile file) throws IOException {
+        sysConfigService.importExcel(file);
+    }
+
+    @GetMapping("export")
+    public void exportExcel1(HttpServletResponse response, ConfigQueryReq req) throws IOException {
+        sysConfigService.exportExcel(response, req);
+    }
+
 
 }
