@@ -10,34 +10,34 @@
 #foreach ($column in $columns)
   #if ((${column.isCreate} || ${column.isUpdate}) && !${column.isPk})
     #if ($column.FormType == 'INPUT')
-      <el-form-item label="${column.javaComment}" prop="${column.javaField}">
+      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-input
           v-model="formModel.${column.javaField}"
-          placeholder="请输入${column.javaComment}"
+          :placeholder="$t('${table.businessName}.tip.${column.javaField}')"
           clearable
         />
       </el-form-item>
     #elseif ($column.FormType == 'NUMBER')
-      <el-form-item label="${column.javaComment}" prop="${column.javaField}">
+      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-input-number
           v-model="formModel.${column.javaField}"
-          placeholder="请输入${column.javaComment}"
+          :placeholder="$t('${table.businessName}.tip.${column.javaField}')"
           class="!w-[100%]"
         />
       </el-form-item>
     #elseif ($column.FormType == 'TEXTAREA')
-      <el-form-item label="${column.javaComment}" prop="${column.javaField}">
+      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-input
           v-model="formModel.${column.javaField}"
-          placeholder="请输入${column.javaComment}"
+          :placeholder="$t('${table.businessName}.tip.${column.javaField}')"
           type="textarea"
         />
       </el-form-item>
     #elseif ($column.FormType == 'SELECT' && ${column.code})
-      <el-form-item label="${column.javaComment}" prop="${column.javaField}">
+      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-select
           v-model="formModel.${column.javaField}"
-          placeholder="请选择${column.javaComment}"
+          :placeholder="$t('${table.businessName}.tip.${column.javaField}')"
           clearable
           class="!w-[100%]"
         >
@@ -50,7 +50,7 @@
         </el-select>
       </el-form-item>
     #elseif ($column.FormType == 'RADIO' && ${column.code})
-      <el-form-item label="${column.javaComment}" prop="${column.javaField}">
+      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-radio-group v-model="formModel.${column.javaField}">
           <el-radio-button
             v-for="(item, index) in ${column.code}"
@@ -61,7 +61,7 @@
         </el-radio-group>
       </el-form-item>
     #elseif ($column.FormType == 'SWITCH')
-      <el-form-item label="${column.javaComment}" prop="${column.javaField}">
+      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-switch
           v-model="formModel.${column.javaField}"
           active-value="1"
@@ -74,8 +74,12 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="visible = false">取消</el-button>
-        <el-button type="primary" @click="handleSubmit">确定</el-button>
+        <el-button @click="visible = false">{{
+          t("buttons.common.cancel")
+        }}</el-button>
+        <el-button type="primary" @click="handleSubmit">{{
+          t("buttons.common.confirm")
+        }}</el-button>
       </span>
     </template>
   </el-drawer>
@@ -97,6 +101,7 @@ const {
   #end
 );
 #end
+const { t } = useI18n();
 const message = useMessage();
 const formRef = ref();
 const visible = ref(false);
@@ -114,7 +119,7 @@ const formModel = reactive({
 const formRules = reactive({
 #foreach ($column in $columns)
   #if (($column.isCreate || $column.isUpdate) && !${column.isPk} && ${column.isRequired})
-  ${column.javaField}: [{ required: true, message: "${column.javaComment}为必填项", trigger: "blur" }]#if ($foreach.last)#else,#end
+  ${column.javaField}: [{ required: true, message: t("${table.businessName}.required.${column.javaField}"), trigger: "blur" }]#if ($foreach.last)#else,#end
   #end
 #end
 });
@@ -143,7 +148,7 @@ const handleSubmit = async () => {
   try {
     formLoading.value = true;
     formModel.${primaryColumn.javaField} ? await updating(formModel) : await creating(formModel);
-    message.success(`${formTitle.value}成功！`);
+    message.success();
     visible.value = false;
     emit("refresh");
   } finally {

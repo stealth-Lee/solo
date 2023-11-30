@@ -29,4 +29,9 @@ public class Symbols {
      * 斜杠
      */
     public static final String SLASH = "/";
+
+    /**
+     * 冒号
+     */
+    public static final String COLON = ":";
 }

@@ -1,5 +1,6 @@
 package com.solo.system.web;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.global.R;
 import com.solo.common.orm.core.query.Wrappers;
@@ -37,6 +38,7 @@ public class SysRoleController {
      * @return 响应信息
      */
     @PostMapping
+    @SaCheckPermission("role-create")
     public R<Boolean> create(@Valid @RequestBody RoleCreateReq req) {
         SysRole entity = SysRoleConvert.INSTANCE.convert(req);
         return R.success(sysRoleService.create(entity));
@@ -47,6 +49,7 @@ public class SysRoleController {
      * @param roleIds 角色id集合
      * @return 响应信息
      */
+    @SaCheckPermission("role-delete")
     @DeleteMapping("/{roleIds}")
     public R<Boolean> delete(@PathVariable Long[] roleIds) {
         return R.success(sysRoleService.removeByIds(Arrays.asList(roleIds)));
@@ -58,6 +61,7 @@ public class SysRoleController {
      * @return 响应信息
      */
     @PutMapping
+    @SaCheckPermission("role-update")
     public R<Boolean> update(@Valid @RequestBody RoleUpdateReq req) {
         SysRole entity = SysRoleConvert.INSTANCE.convert(req);
         return R.success(sysRoleService.update(entity));
@@ -69,6 +73,7 @@ public class SysRoleController {
      * @return 响应信息
      */
     @PutMapping("/update-status")
+    @SaCheckPermission("role-update")
     public R<Boolean> updateStatus(@Valid @RequestBody RoleUpdateStatusReq req) {
         SysRole entity = SysRoleConvert.INSTANCE.convert(req);
         return R.success(sysRoleService.updateById(entity));
@@ -80,6 +85,7 @@ public class SysRoleController {
      * @return 响应信息
      */
     @GetMapping("/{roleId}")
+    @SaCheckPermission("role-select")
     public R<RoleGetResp> get(@PathVariable Long roleId) {
         return R.success(SysRoleConvert.INSTANCE.convertGet(sysRoleService.getById(roleId)));
     }
@@ -91,6 +97,7 @@ public class SysRoleController {
      * @return 响应信息
      */
     @GetMapping("/page")
+    @SaCheckPermission("role-select")
     public R<Page<RoleListResp>> page(Page<RoleListResp> page, RoleQueryReq req) {
         Page<RoleListResp> list = sysRoleService.pageAs(page, Wrappers.buildWhere(req), RoleListResp.class);
         return R.success(list);

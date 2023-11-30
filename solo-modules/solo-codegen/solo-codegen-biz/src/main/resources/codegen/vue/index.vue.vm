@@ -11,19 +11,19 @@
   #if (${column.isQuery})
     #set ($dict = $column.code)
     #if ($column.FormType == 'INPUT')
-      <el-form-item label="${column.javaComment}" prop="${column.javaField}">
+      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-input
           v-model="props.queryParams.${column.javaField}"
-          placeholder="请输入${column.javaComment}"
+          :placeholder="$t('${table.businessName}.tip.${column.javaField}')"
           clearable
           class="!w-[180px]"
         />
       </el-form-item>
     #elseif(($column.FormType == 'SELECT' || $column.FormType == 'RADIO' || $column.FormType == 'SWITCH') && $dict)
-      <el-form-item label="${column.javaComment}" prop="${column.javaField}">
+      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-select
           v-model="props.queryParams.${column.javaField}"
-          placeholder="请选择${column.javaComment}"
+          :placeholder="$t('${table.businessName}.tip.${column.javaField}')"
           clearable
           class="!w-[180px]"
         >
@@ -39,7 +39,7 @@
   #end
 #end
       <el-form-item>
-        <el-tooltip content="搜索" placement="top">
+        <el-tooltip :content="$t('buttons.common.search')" placement="top">
           <el-button
             :icon="useRenderIcon('ep:search')"
             :loading="props.loading"
@@ -47,7 +47,7 @@
             circle
           />
         </el-tooltip>
-        <el-tooltip content="重置" placement="top">
+        <el-tooltip :content="$t('buttons.common.reset')" placement="top">
           <el-button
             :icon="useRenderIcon('ep:refresh-right')"
             @click="handleReset()"
@@ -57,10 +57,14 @@
       </el-form-item>
     </el-form>
 
+    #set ( $d = '$')
     <!-- 列表 -->
     <PureTableBar
-      :title="`${props.title}列表`"
+      :title="`${props.title}${d}{t('commons.other.list')}`"
       :columns="columns"
+#if ($table.tplType == 'TREE_TABLE')
+      :tableRef="tableRef?.getTableRef()"
+#end
       @refresh="handleQuery"
     >
       <template #buttons>
@@ -70,7 +74,7 @@
           @click="handleCreate()"
           plain
         >
-          新增
+          {{ t("buttons.common.create") }}
         </el-button>
         <el-button
           type="success"
@@ -79,12 +83,12 @@
           :disabled="props.single"
           plain
         >
-          编辑
+          {{ t("buttons.common.edit") }}
         </el-button>
         <el-popconfirm
           width="180"
           icon-color="red"
-          title="是否删除选中数据？"
+          :title="$t('commons.ask.delete')"
           @confirm="handleDelete()"
         >
           <template #reference>
@@ -94,7 +98,7 @@
               :disabled="props.multiple"
               plain
             >
-              删除
+              {{ t("buttons.common.delete") }}
             </el-button>
           </template>
         </el-popconfirm>
@@ -104,7 +108,7 @@
           @click="handleUpdate()"
           plain
         >
-          导入
+          {{ t("buttons.common.import") }}
         </el-button>
         <el-button
           type="warning"
@@ -112,28 +116,35 @@
           @click="handleUpdate()"
           plain
         >
-          导出
+          {{ t("buttons.common.export") }}
         </el-button>
       </template>
       <template v-slot="{ size, dynamicColumns }">
         <pure-table
+#if ($table.tplType == 'TREE_TABLE')
+          ref="tableRef"
+          row-key="menuId"
+          default-expand-all
+#end
           align-whole="center"
-          showOverflowTooltip
           table-layout="auto"
-          :loading="props.loading"
-          :size="size"
-          adaptive
           :data="props.dataList"
           :columns="dynamicColumns"
-          :pagination="props.pagination"
-          :paginationSmall="size === 'small' ? true : false"
+          :loading="props.loading"
+          :size="size"
           :header-cell-style="{
             background: 'var(--el-fill-color-light)',
             color: 'var(--el-text-color-primary)'
           }"
+          showOverflowTooltip
+          adaptive
+        #if ($table.tplType == 'SINGLE_TABLE')
+          :pagination="props.pagination"
+          :paginationSmall="size === 'small' ? true : false"
           @selection-change="handleSelectionChange"
           @page-size-change="handleSizeChange"
           @page-current-change="handleCurrentChange"
+        #end
         >
           <template #operation="{ row }">
             <el-button
@@ -144,12 +155,12 @@
               :icon="useRenderIcon('ep:edit-pen')"
               @click="handleUpdate(row.${primaryColumn.javaField})"
             >
-              编辑
+              {{ t("buttons.common.edit") }}
             </el-button>
             <el-popconfirm
               width="180"
               icon-color="red"
-              title="是否删除选中数据？"
+              :title="$t('commons.ask.delete')"
               @confirm="handleDelete(row.${primaryColumn.javaField})"
             >
               <template #reference>
@@ -160,7 +171,7 @@
                   :size="size"
                   :icon="useRenderIcon('ep:delete')"
                 >
-                  删除
+                  {{ t("buttons.common.delete") }}
                 </el-button>
               </template>
             </el-popconfirm>
@@ -176,11 +187,17 @@
 import { PureTableBar } from "@/components/RePureTableBar";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { BasicTableProps } from "@/hooks/table";
-import { paging, deleting#if (${table.isSwitch}), updateStatus#end } from "@/api/${table.moduleName}/${table.businessName}";
+  #if ($table.tplType == 'TREE_TABLE')
+    #set ($listApi = 'listing')
+  #else
+    #set ($listApi = 'paging')
+  #end
+import { ${listApi}, deleting#if (${table.isSwitch}), updateStatus#end } from "@/api/${table.moduleName}/${table.businessName}";
 
 defineOptions({ name: "${table.className}" });
 
 const ${modelClassName}Form = defineAsyncComponent(() => import("./form.vue"));
+const { t } = useI18n();
 const queryFormRef = ref();
 const dialogFormRef = ref();
 
@@ -196,9 +213,12 @@ const {
 );
 #end
 const props: BasicTableProps = reactive<BasicTableProps>({
-  title: "${table.functionName}",
+#if ($table.tplType == 'TREE_TABLE')
+  type: "tree",
+#end
+  title: t("${table.businessName}.title"),
   pk: "${primaryColumn.javaField}",
-  listApi: paging,
+  listApi: ${listApi},
   deleteApi: deleting,
 #if (${table.isSwitch})
   switchApi: updateStatus,
@@ -209,10 +229,10 @@ const props: BasicTableProps = reactive<BasicTableProps>({
 });
 
 const {
-  loadData,
+  loadData,#if ($table.tplType == 'SINGLE_TABLE')
   handleSizeChange,
   handleCurrentChange,
-  handleSelectionChange,
+  handleSelectionChange,#end
   handleQuery,
   handleReset,
   handleCreate,
@@ -230,7 +250,7 @@ const columns: TableColumnList = [
 #foreach ($column in $columns)
   #if (${column.isList})
   {
-    label: "${column.javaComment}",
+    label: t("${table.businessName}.column.${column.javaField}"),
     prop: "${column.javaField}",
     minWidth: 120#if (${column.code} && $table.switchField != $column.javaField),
     cellRenderer: scope => (
@@ -248,7 +268,7 @@ const columns: TableColumnList = [
   #end
 #end
   {
-    label: "操作",
+    label: t("commons.columns.action"),
     fixed: "right",
     width: 240,
     slot: "operation"

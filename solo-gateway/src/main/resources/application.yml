@@ -1,0 +1,88 @@
+server:
+  # 应用端口
+  port: 8888
+
+spring:
+  config:
+    import:
+      #        - optional:nacos:application-@profiles.active@.yml
+      - optional:nacos:${spring.application.name}-@profiles.active@.yml
+  application:
+    # 应用名称
+    name: solo-gateway
+  profiles:
+    # 环境配置
+    active: @profiles.active@
+  # Nacos 参数配置
+  cloud:
+    nacos:
+      config:
+        # 配置中心地址
+        server-addr: 127.0.0.1:8848
+        # 配置中心文件后缀
+        file-extension: yml
+      discovery:
+        # 服务发现地址
+        server-addr: 127.0.0.1:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        # 认证中心
+        - id: solo-auth
+          uri: lb://solo-auth
+          predicates:
+            - Path=/auth/**
+#          filters:
+#            # 验证码处理
+#            - ValidateCodeGatewayFilter
+#            # 前端密码解密
+#            - PasswordDecoderFilter
+        # in模块
+        - id: solo-in
+          uri: lb://solo-in
+          predicates:
+            - Path=/in/**
+
+        # 系统核心模块
+        - id: solo-system
+          uri: lb://solo-system
+          predicates:
+            - Path=/system/**
+        # 代码生成模块
+        - id: solo-codegen
+          uri: lb://solo-codegen
+          predicates:
+            - Path=/codegen/**
+#  config:
+#    import:
+#      - optional:nacos:application-@profiles.active@.yml
+#      - optional:nacos:${spring.application.name}-@profiles.active@.yml
+
+  # redis配置
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+#      password: 123456
+
+# 安全配置
+security:
+  # 不校验白名单
+  ignore:
+    whites:
+      - /auth/login
+      - /auth/logout
+
+# Sa-Token配置
+sa-token:
+  # token名称 (同时也是cookie名称)
+  token-name: Authorization
+  # 开启内网服务调用鉴权(不允许越过gateway访问内网服务 保障服务安全)
+  check-same-token: true
+  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+  is-share: false
+

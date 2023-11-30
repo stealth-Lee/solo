@@ -37,6 +37,50 @@
 			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
 		</dependency>
 
+		<!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：https://sa-token.cc -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
+		</dependency>
+
+		<!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-redis-jackson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.solo</groupId>
+			<artifactId>solo-common-satoken</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.solo</groupId>
+			<artifactId>solo-common-satoken</artifactId>
+			<exclusions>
+				<!-- 排除web依赖-->
+				<exclusion>
+					<groupId>com.solo</groupId>
+					<artifactId>solo-system-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.solo</groupId>
+			<artifactId>solo-common-core</artifactId>
+			<exclusions>
+				<!-- 排除web依赖-->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-web</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 
 </project>

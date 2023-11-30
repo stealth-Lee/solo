@@ -19,5 +19,7 @@
         <module>solo-common-redis</module>
         <module>solo-common-rpc</module>
         <module>solo-common-excel</module>
+        <module>solo-common-satoken</module>
+        <module>solo-common-security</module>
     </modules>
 </project>

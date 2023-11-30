@@ -26,6 +26,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-json</artifactId>
         </dependency>
+        <!-- SpringBoot Actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
         <!--server-api-->
         <dependency>
@@ -43,6 +48,7 @@
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
         </dependency>
+
         <!-- Hutool核心，包括集合、字符串、Bean等工具 https://doc.hutool.cn/module/core/ -->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -58,6 +64,9 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-json</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-extra</artifactId>
+        </dependency>
     </dependencies>
 </project>

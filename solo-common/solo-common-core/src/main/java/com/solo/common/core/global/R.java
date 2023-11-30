@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * 响应信息主体类
- * @author 十一
+ * @author Gentleman.Lee
  * @since 2023/08/31 16:53
  * 人生若只如初见，何事秋风悲画扇
  **/
@@ -35,37 +35,6 @@ public class R<T> implements Serializable {
      */
     private R() {}
 
-    public static <T> R<T> global(Integer code, String message, T data) {
-        R<T> result = new R<>();
-        result.setCode(code);
-        result.setMessage(message);
-        result.setData(data);
-        return result;
-    }
-
-    public static <T> R<T> global(Integer code, String message) {
-        return global(code, message, null);
-    }
-
-    /**
-     * 自定义错误码
-     * @param global 错误码枚举
-     * @return 响应信息主体类
-     */
-    public static <T> R<T> global(ErrorCode global) {
-        return global(global, null);
-    }
-
-    /**
-     * 自定义错误码,携带响应数据
-     * @param global 错误码枚举
-     * @param data 响应数据
-     * @return 响应信息主体类
-     */
-    public static <T> R<T> global(ErrorCode global, T data) {
-        return global(global.code(), global.message(), data);
-    }
-
     /**
      * 返回成功消息
      * @return 成功消息
@@ -88,7 +57,7 @@ public class R<T> implements Serializable {
      * @return 错误信息
      */
     public static <T> R<T> failed() {
-        return global(GlobalErrorCode.FAILED, null);
+        return global(GlobalErrorCode.FAILED);
     }
 
     /**
@@ -97,7 +66,7 @@ public class R<T> implements Serializable {
      * @return 错误信息
      */
     public static <T> R<T> failed(String message) {
-        return global(GlobalErrorCode.FAILED.code(), message, null);
+        return global(GlobalErrorCode.FAILED, message);
     }
 
     /**
@@ -111,12 +80,50 @@ public class R<T> implements Serializable {
 
     /**
      * 返回错误信息,自定义错误信息提示,携带响应数据
-     * @param message 错误信息提示
      * @param data 响应数据
+     * @param message 错误信息提示
      * @return 错误信息
      */
-    public static <T> R<T> failed(String message, T data) {
+    public static <T> R<T> failed(T data, String message) {
         return global(GlobalErrorCode.FAILED.code(), message, data);
+    }
+
+
+    public static <T> R<T> global(Integer code, String message, T data) {
+        R<T> result = new R<>();
+        result.setCode(code);
+        result.setMessage(message);
+        result.setData(data);
+        return result;
+    }
+
+    /**
+     * 自定义错误码
+     * @param global 错误码枚举
+     * @return 响应信息主体类
+     */
+    public static <T> R<T> global(ErrorCode global) {
+        return global(global.code(), global.message(), null);
+    }
+
+    /**
+     * 自定义错误码
+     * @param global  错误码
+     * @param message 错误消息
+     * @return {@link R}<{@link T}>
+     */
+    public static <T> R<T> global(ErrorCode global, String message) {
+        return global(global.code(), message, null);
+    }
+
+    /**
+     * 自定义错误码
+     * @param global 错误码
+     * @param data   数据
+     * @return {@link R}<{@link T}>
+     */
+    public static <T> R<T> global(ErrorCode global, T data) {
+        return global(global.code(), global.message(), data);
     }
 
 }

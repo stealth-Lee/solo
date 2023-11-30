@@ -91,6 +91,18 @@ public class ${table.className}Controller {
         return R.success(${table.className}Convert.INSTANCE.convertGet(${className}Service.getById(${primaryColumn.javaField})));
     }
 
+#if ($table.tplType == 'TREE_TABLE')
+    /**
+     * 查询${table.functionName}列表
+     * @param req 查询对象
+     * @return 响应信息
+     */
+    @GetMapping("/list")
+    public R<List<${modelClassName}ListResp>> list(${modelClassName}QueryReq req) {
+        QueryWrapper queryWrapper = Wrappers.buildWhere(req);
+        return R.success(${className}Service.listAs(queryWrapper, ${modelClassName}ListResp.class));
+    }
+#else
     /**
      * 分页查询${table.functionName}列表
      * @param page 分页对象
@@ -102,5 +114,6 @@ public class ${table.className}Controller {
         Page<${modelClassName}ListResp> list = ${className}Service.pageAs(page, Wrappers.buildWhere(req), ${modelClassName}ListResp.class);
         return R.success(list);
     }
+#end
 
 }

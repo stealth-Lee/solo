@@ -12,7 +12,7 @@
     <description>solo-system-api 系统核心模块</description>
 
     <dependencies>
-        <!-- solo rpc -->
+        <!-- solo dubbo -->
         <dependency>
             <groupId>com.solo</groupId>
             <artifactId>solo-common-rpc</artifactId>

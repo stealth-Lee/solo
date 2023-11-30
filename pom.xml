@@ -40,6 +40,7 @@
         <module>solo-gateway</module>
         <module>solo-common</module>
         <module>solo-modules</module>
+        <module>solo-auth</module>
     </modules>
 
     <!--
@@ -52,14 +53,14 @@
     <properties>
         <revision>2023.9.1</revision>
 
-        <spring-boot.version>3.1.5</spring-boot.version>
-        <spring-cloud.version>2022.0.4</spring-cloud.version>
+        <spring-boot.version>3.2.0</spring-boot.version>
+        <spring-cloud.version>2023.0.0-SNAPSHOT</spring-cloud.version>
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
-
+        <dubbo.version>3.3.0-beta.1</dubbo.version>
         <mysql.version>8.1.0</mysql.version>
         <hikaricp.version>5.0.1</hikaricp.version>
 
-        <mybatis-flex.version>1.7.3</mybatis-flex.version>
+        <mybatis-flex.version>1.7.5</mybatis-flex.version>
 
         <velocity.version>2.3</velocity.version>
 
@@ -69,11 +70,12 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <easyexcel.version>3.3.2</easyexcel.version>
 
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sa-token.version>1.37.0</sa-token.version>
 
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <!--
@@ -124,6 +126,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- Dubbo -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <!-- mysql -->
             <dependency>
@@ -151,6 +161,7 @@
                 <version>${mybatis-flex.version}</version>
             </dependency>
 
+            <!-- velocity模版引擎 -->
             <dependency>
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity-engine-core</artifactId>
@@ -174,14 +185,13 @@
                 <scope>import</scope>
             </dependency>
 
-            <!--mapStruct依赖 高性能对象映射-->
-            <!--mapstruct核心-->
+            <!-- mapstruct核心 高性能对象映射 -->
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
-            <!--mapstruct编译-->
+            <!-- mapstruct编译 -->
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-processor</artifactId>
@@ -200,6 +210,38 @@
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
             </dependency>
+
+            <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot3-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：https://sa-token.cc -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-redis-jackson</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <!-- Sa-Token 权限认证（core核心包）, 在线文档：http://sa-token.dev33.cn/ -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-core</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <!-- Sa-Token 整合 Dubbo -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-dubbo3</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+
 
             <!-- solo 通用工具核心包 -->
             <dependency>
@@ -231,6 +273,18 @@
                 <artifactId>solo-common-excel</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <!-- solo 权限认证模块 -->
+            <dependency>
+                <groupId>com.solo</groupId>
+                <artifactId>solo-common-satoken</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!-- solo 安全模块 -->
+            <dependency>
+                <groupId>com.solo</groupId>
+                <artifactId>solo-common-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -247,17 +301,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--
-            bootstrap 启动器
-            bootstrap.properties比application.properties的优先级要高
-            由于bootstrap.properties是系统级的资源配置文件，是用在程序引导执行时更加早期配置信息读取；
-            而application.properties是用户级的资源配置文件，是用来后续的一些配置所需要的公共参数。
-            但是在SpringCloud 2020.* 版本把bootstrap禁用了，导致在读取文件的时候读取不到而报错，所以我们只要把bootstrap从新导入进来就会生效了。
-         -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
     </dependencies>
 
     <!-- 构建项目需要的信息 -->

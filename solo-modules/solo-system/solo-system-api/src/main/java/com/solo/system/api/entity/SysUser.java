@@ -25,7 +25,7 @@ public class SysUser extends BasicEntity {
      * 用户id
      */
     @Id(keyType = KeyType.Auto)
-    private String userId;
+    private Long userId;
 
     /**
      * 所属部门id

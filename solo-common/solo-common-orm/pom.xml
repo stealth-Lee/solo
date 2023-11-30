@@ -9,12 +9,25 @@
 	</parent>
 
 	<artifactId>solo-common-orm</artifactId>
-	<description>solo orm扩展封装包</description>
+	<description>solo orm扩展封装包, 整合Mybatis-Flex</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.mybatis-flex</groupId>
 			<artifactId>mybatis-flex-spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.mybatis</groupId>
+					<artifactId>mybatis-spring</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- 解决SpringBoot3.2.0和mybatis不兼容，启动报错Invalid value type for attribute ‘factoryBeanObjectType‘: java.lang.String  -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>3.0.3</version>
 		</dependency>
 
 		<dependency>
@@ -48,6 +61,11 @@
 		<dependency>
 			<groupId>com.solo</groupId>
 			<artifactId>solo-common-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.solo</groupId>
+			<artifactId>solo-common-rpc</artifactId>
 		</dependency>
 	</dependencies>
 

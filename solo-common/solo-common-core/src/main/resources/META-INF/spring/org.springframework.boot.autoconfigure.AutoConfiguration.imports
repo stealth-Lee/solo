@@ -1,2 +1,1 @@
 com.solo.common.core.config.JacksonConfig
-com.solo.common.core.handler.GlobalExceptionHandler

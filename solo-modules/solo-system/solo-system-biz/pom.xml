@@ -34,6 +34,11 @@
 
         <dependency>
             <groupId>com.solo</groupId>
+            <artifactId>solo-common-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.solo</groupId>
             <artifactId>solo-system-api</artifactId>
         </dependency>
 

@@ -1,0 +1,1 @@
+dubboRequestFilter=com.solo.common.dubbo.filter.DubboRequestFilter
