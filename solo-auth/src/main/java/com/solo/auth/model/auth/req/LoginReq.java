@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 /**
  * 登录请求对象
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/11/15 10:20
  * 人生若只如初见，何事秋风悲画扇
  **/

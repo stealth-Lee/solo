@@ -14,15 +14,18 @@ dubbo:
   # 注册中心配置
   registry:
     address: nacos://${spring.cloud.nacos.config.server-addr}
-#    group: DUBBO_GROUP
-#    parameters:
-#      namespace: ${spring.profiles.active}
+    # 注意这里的 group 与 nacos 的 group 要区分开
+    # 和 nacos 使用同样的 group，它们的注册订阅可能会冲突，会导致 dubbo 启用 rest 协议支持。
+    # 再加上 dubbo 的 AnnotationUtils.isAnnotationPresent() 有一个 NPE bug
+    group: DUBBO_GROUP
+    parameters:
+      namespace: ${spring.profiles.active}
   # 消费者相关配置
   consumer:
     # 结果缓存(LRU算法)
     # 会有数据不一致问题 建议在注解局部开启
     cache: false
-    # 支持校验注解
+    # 支持校验注解,jdk17以上使用 jvalidationNew, jdk17以下使用 jvalidation
     validation: jvalidationNew
     # 调用重试 不包括第一次 0为不需要重试
     retries: 0

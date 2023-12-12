@@ -13,15 +13,14 @@ import com.solo.codegen.api.entity.GenColumn;
 import com.solo.codegen.api.entity.GenTable;
 import com.solo.common.core.constant.FileSuffix;
 import com.solo.common.core.constant.Symbols;
-import com.solo.common.core.global.R;
 import com.solo.common.core.utils.StringUtils;
+import com.solo.in.api.TranslateApi;
 import com.solo.in.api.entity.UniversalTranslation;
-import com.solo.in.api.feign.TranslateApi;
+import com.solo.system.api.SysDictApi;
 import com.solo.system.api.entity.SysDictData;
-import com.solo.system.api.feign.SysDictApi;
-import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -37,12 +36,11 @@ public class CodegenEngine {
      */
     @Value("${codegen.languages}")
     private String languages;
-
-    @Resource
-    private SysDictApi sysDictApi;
-    @Resource
-    private TranslateApi translateApi;
     private final TemplateEngine templateEngine;
+    @DubboReference
+    private SysDictApi sysDictApi;
+    @DubboReference
+    private TranslateApi translateApi;
 
     /**
      * 初始化 TemplateEngine 属性
@@ -79,8 +77,7 @@ public class CodegenEngine {
                     for (GenColumn dictColumn : dictColumns) {
                         String enumName = NamingCase.toPascalCase(dictColumn.getDictCode());
                         dict.set("enumName", enumName);
-                        R<List<SysDictData>> listR = sysDictApi.selectByCode(dictColumn.getDictCode());
-                        List<SysDictData> data = listR.getData();
+                        List<SysDictData> data = sysDictApi.selectByCode(dictColumn.getDictCode());
                         dict.set("dicts", data);
                         result.put(buildPath(template, table, enumName),
                                 templateEngine.getTemplate(template.getTemplatePath()).render(dict));
@@ -125,7 +122,7 @@ public class CodegenEngine {
         UniversalTranslation universalTranslation = new UniversalTranslation();
         universalTranslation.setTo(to);
         universalTranslation.setQ(q);
-        String text = translateApi.test(universalTranslation);
+        String text = translateApi.text(universalTranslation);
         return StringUtils.capitalizeEnglishWords(text);
     }
 

@@ -1,5 +1,6 @@
 package com.solo.system.web;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.global.R;
 import com.solo.common.orm.core.query.Wrappers;
@@ -33,6 +34,7 @@ public class SysUserController {
      * @return 响应信息
      */
     @PostMapping
+    @SaCheckPermission("system-user-create")
     public R<Boolean> create(@Valid @RequestBody UserCreateReq req) {
         SysUser entity = SysUserConvert.INSTANCE.convert(req);
         return R.success(sysUserService.create(entity));
@@ -44,6 +46,7 @@ public class SysUserController {
      * @return 响应信息
      */
     @DeleteMapping("/{userId}")
+    @SaCheckPermission("system-user-delete")
     public R<Boolean> delete(@PathVariable Long userId) {
         return R.success(sysUserService.removeById(userId));
     }
@@ -54,6 +57,7 @@ public class SysUserController {
      * @return 响应信息
      */
     @PutMapping
+    @SaCheckPermission("system-user-update")
     public R<Boolean> update(@Valid @RequestBody UserUpdateReq req) {
         SysUser entity = SysUserConvert.INSTANCE.convert(req);
         return R.success(sysUserService.update(entity));
@@ -65,6 +69,7 @@ public class SysUserController {
      * @return 响应信息
      */
     @GetMapping("/{userId}")
+    @SaCheckPermission("system-user-select")
     public R<UserGetResp> get(@PathVariable Long userId) {
         return R.success(SysUserConvert.INSTANCE.convertGet(sysUserService.getById(userId)));
     }
@@ -76,6 +81,7 @@ public class SysUserController {
      * @return 响应信息
      */
     @GetMapping("/page")
+    @SaCheckPermission("system-user-select")
     public R<Page<SysUser>> page(Page<SysUser> page, UserQueryReq req) {
         Page<SysUser> list = sysUserService.page(page, Wrappers.buildWhere(req));
         return R.success(list);

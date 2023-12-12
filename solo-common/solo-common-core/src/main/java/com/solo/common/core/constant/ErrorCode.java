@@ -2,7 +2,7 @@ package com.solo.common.core.constant;
 
 /**
  * 错误代码接口
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/09/11 17:14
  * 人生若只如初见，何事秋风悲画扇
  **/

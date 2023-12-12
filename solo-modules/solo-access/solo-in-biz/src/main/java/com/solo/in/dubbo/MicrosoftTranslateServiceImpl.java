@@ -1,4 +1,4 @@
-package com.solo.in.service.impl;
+package com.solo.in.dubbo;
 
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
@@ -7,11 +7,12 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.solo.common.core.utils.StringUtils;
+import com.solo.in.api.TranslateApi;
 import com.solo.in.api.entity.UniversalTranslation;
-import com.solo.in.service.TranslateService;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Base64;
 
 /**
  * 微软翻译Service实现
@@ -20,7 +21,8 @@ import java.util.*;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Service
-public class MicrosoftTranslateServiceImpl implements TranslateService {
+@DubboService
+public class MicrosoftTranslateServiceImpl implements TranslateApi {
 
     /** 令牌 */
     private String token = null;

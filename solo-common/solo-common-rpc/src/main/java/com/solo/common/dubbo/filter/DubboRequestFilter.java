@@ -12,7 +12,7 @@ import org.apache.dubbo.rpc.service.GenericService;
 
 /**
  * dubbo日志过滤器
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/11/29 15:16
  * 人生若只如初见，何事秋风悲画扇
  **/

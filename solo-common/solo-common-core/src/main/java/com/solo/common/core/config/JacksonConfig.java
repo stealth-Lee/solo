@@ -37,7 +37,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Jackson配置类
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/09/04 09:40
  * 人生若只如初见，何事秋风悲画扇
  **/

@@ -1,5 +1,6 @@
 package ${table.packageName}.web;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.global.R;
 import com.solo.common.orm.core.query.Wrappers;
@@ -28,8 +29,9 @@ import java.util.Arrays;
  * ${table.classTail}
 #end
  **/
+#set ($businessName = ${StringUtils.replace(${table.businessName}, '.', '-')})
 @RestController
-@RequestMapping("/${table.moduleName}/${StringUtils.replace(${table.businessName}, '.', '-')}")
+@RequestMapping("/${table.moduleName}/${businessName}")
 public class ${table.className}Controller {
 
     #set ($className = $table.className.substring(0, 1).toLowerCase() +  ${table.className.substring(1)})
@@ -42,6 +44,7 @@ public class ${table.className}Controller {
      * @return 响应信息
      */
     @PostMapping
+    @SaCheckPermission("${table.moduleName}-${businessName}-create")
     public R<Boolean> create(@Valid @RequestBody ${modelClassName}CreateReq req) {
         ${table.className} entity = ${table.className}Convert.INSTANCE.convert(req);
         return R.success(${className}Service.save(entity));
@@ -53,6 +56,7 @@ public class ${table.className}Controller {
      * @return 响应信息
      */
     @DeleteMapping("/{${primaryColumn.javaField}s}")
+    @SaCheckPermission("${table.moduleName}-${businessName}-delete")
     public R<Boolean> delete(@PathVariable Long[] ${primaryColumn.javaField}s) {
         return R.success(${className}Service.removeByIds(Arrays.asList(${primaryColumn.javaField}s)));
     }
@@ -64,6 +68,7 @@ public class ${table.className}Controller {
      * @return 响应信息
      */
     @PutMapping("/update-status")
+    @SaCheckPermission("${table.moduleName}-${businessName}-update-status")
     public R<Boolean> updateStatus(@Valid @RequestBody ${modelClassName}UpdateStatusReq req) {
         ${table.className} entity = ${table.className}Convert.INSTANCE.convert(req);
         return R.success(${className}Service.updateById(entity));
@@ -76,6 +81,7 @@ public class ${table.className}Controller {
      * @return 响应信息
      */
     @PutMapping
+    @SaCheckPermission("${table.moduleName}-${businessName}-update")
     public R<Boolean> update(@Valid @RequestBody ${modelClassName}UpdateReq req) {
         ${table.className} entity = ${table.className}Convert.INSTANCE.convert(req);
         return R.success(${className}Service.updateById(entity));
@@ -87,6 +93,7 @@ public class ${table.className}Controller {
      * @return 响应信息
      */
     @GetMapping("/{${primaryColumn.javaField}}")
+    @SaCheckPermission("${table.moduleName}-${businessName}-select")
     public R<${modelClassName}GetResp> get(@PathVariable Long ${primaryColumn.javaField}) {
         return R.success(${table.className}Convert.INSTANCE.convertGet(${className}Service.getById(${primaryColumn.javaField})));
     }
@@ -98,6 +105,7 @@ public class ${table.className}Controller {
      * @return 响应信息
      */
     @GetMapping("/list")
+    @SaCheckPermission("${table.moduleName}-${businessName}-select")
     public R<List<${modelClassName}ListResp>> list(${modelClassName}QueryReq req) {
         QueryWrapper queryWrapper = Wrappers.buildWhere(req);
         return R.success(${className}Service.listAs(queryWrapper, ${modelClassName}ListResp.class));
@@ -110,6 +118,7 @@ public class ${table.className}Controller {
      * @return 响应信息
      */
     @GetMapping("/page")
+    @SaCheckPermission("${table.moduleName}-${businessName}-select")
     public R<Page<${modelClassName}ListResp>> page(Page<${modelClassName}ListResp> page, ${modelClassName}QueryReq req) {
         Page<${modelClassName}ListResp> list = ${className}Service.pageAs(page, Wrappers.buildWhere(req), ${modelClassName}ListResp.class);
         return R.success(list);

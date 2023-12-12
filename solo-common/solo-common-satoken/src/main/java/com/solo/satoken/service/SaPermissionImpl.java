@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 用户权限管理实现类
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/11/24 16:24
  * 人生若只如初见，何事秋风悲画扇
  **/
@@ -23,7 +23,7 @@ public class SaPermissionImpl implements StpInterface {
      */
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        return new ArrayList<>(LoginHelper.getLoginUser().getMenuPermission());
+        return new ArrayList<>(LoginHelper.getLoginUser().getMenuPermissions());
     }
 
     /**
@@ -34,7 +34,7 @@ public class SaPermissionImpl implements StpInterface {
      */
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        return new ArrayList<>(LoginHelper.getLoginUser().getRolePermission());
+        return new ArrayList<>(LoginHelper.getLoginUser().getRolePermissions());
     }
 
 }

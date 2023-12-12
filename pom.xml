@@ -72,6 +72,7 @@
 
         <sa-token.version>1.37.0</sa-token.version>
 
+        <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
@@ -214,28 +215,11 @@
             <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
             <dependency>
                 <groupId>cn.dev33</groupId>
-                <artifactId>sa-token-spring-boot3-starter</artifactId>
+                <artifactId>sa-token-bom</artifactId>
                 <version>${sa-token.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
-            <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：https://sa-token.cc -->
-            <dependency>
-                <groupId>cn.dev33</groupId>
-                <artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
-                <version>${sa-token.version}</version>
-            </dependency>
-            <!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
-            <dependency>
-                <groupId>cn.dev33</groupId>
-                <artifactId>sa-token-redis-jackson</artifactId>
-                <version>${sa-token.version}</version>
-            </dependency>
-            <!-- Sa-Token 权限认证（core核心包）, 在线文档：http://sa-token.dev33.cn/ -->
-            <dependency>
-                <groupId>cn.dev33</groupId>
-                <artifactId>sa-token-core</artifactId>
-                <version>${sa-token.version}</version>
-            </dependency>
-            <!-- Sa-Token 整合 Dubbo -->
             <dependency>
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-dubbo3</artifactId>
@@ -312,7 +296,7 @@
                 <!-- 指定资源文件的位置 -->
                 <directory>src/main/resources</directory>
                 <!--
-                  ~ filetering是一个boolean变量，作用是将资源文件中的占位符替换成对应的值。
+                  ~ filtering是一个boolean变量，作用是将资源文件中的占位符替换成对应的值。
                   ~ filtering为true，开启过滤，替换directory下的文件中的参数(eg. ${name})。会把过滤的文件打到classpath下
                   ~ filtering为false，不过滤，不会进行占位符替换。会把不需要过滤的文件打到classpath下
                 -->
@@ -336,6 +320,10 @@
                     <version>${maven-compiler-plugin.version}</version>
                     <!-- 该插件所需要的特殊配置，在父子项目之间可以覆盖或合并 -->
                     <configuration>
+                        <parameters>true</parameters>
+                        <compilerArgs>
+                            <arg>-parameters</arg>
+                        </compilerArgs>
                         <annotationProcessorPaths>
                             <!-- maven-compiler-plugin 插件，解决 Lombok + MapStruct 组合, 不加的话，会有一些莫名其妙的bug, 比如mapstruct方法重载时，不会设置属性到新对象中 -->
                             <!-- https://stackoverflow.com/questions/33483697/re-run-spring-boot-configuration-annotation-processor-to-update-generated-metada -->

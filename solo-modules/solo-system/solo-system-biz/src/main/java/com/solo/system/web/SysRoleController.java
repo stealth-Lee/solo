@@ -38,7 +38,7 @@ public class SysRoleController {
      * @return 响应信息
      */
     @PostMapping
-    @SaCheckPermission("role-create")
+    @SaCheckPermission("system-role-create")
     public R<Boolean> create(@Valid @RequestBody RoleCreateReq req) {
         SysRole entity = SysRoleConvert.INSTANCE.convert(req);
         return R.success(sysRoleService.create(entity));
@@ -49,8 +49,8 @@ public class SysRoleController {
      * @param roleIds 角色id集合
      * @return 响应信息
      */
-    @SaCheckPermission("role-delete")
     @DeleteMapping("/{roleIds}")
+    @SaCheckPermission("system-role-delete")
     public R<Boolean> delete(@PathVariable Long[] roleIds) {
         return R.success(sysRoleService.removeByIds(Arrays.asList(roleIds)));
     }
@@ -61,7 +61,7 @@ public class SysRoleController {
      * @return 响应信息
      */
     @PutMapping
-    @SaCheckPermission("role-update")
+    @SaCheckPermission("system-role-update")
     public R<Boolean> update(@Valid @RequestBody RoleUpdateReq req) {
         SysRole entity = SysRoleConvert.INSTANCE.convert(req);
         return R.success(sysRoleService.update(entity));
@@ -73,7 +73,7 @@ public class SysRoleController {
      * @return 响应信息
      */
     @PutMapping("/update-status")
-    @SaCheckPermission("role-update")
+    @SaCheckPermission("system-role-update")
     public R<Boolean> updateStatus(@Valid @RequestBody RoleUpdateStatusReq req) {
         SysRole entity = SysRoleConvert.INSTANCE.convert(req);
         return R.success(sysRoleService.updateById(entity));
@@ -85,8 +85,8 @@ public class SysRoleController {
      * @return 响应信息
      */
     @GetMapping("/{roleId}")
-    @SaCheckPermission("role-select")
-    public R<RoleGetResp> get(@PathVariable Long roleId) {
+    @SaCheckPermission("system-role-select")
+    public R<RoleGetResp> get(@PathVariable("roleId") Long roleId) {
         return R.success(SysRoleConvert.INSTANCE.convertGet(sysRoleService.getById(roleId)));
     }
 
@@ -97,7 +97,7 @@ public class SysRoleController {
      * @return 响应信息
      */
     @GetMapping("/page")
-    @SaCheckPermission("role-select")
+    @SaCheckPermission("system-role-select")
     public R<Page<RoleListResp>> page(Page<RoleListResp> page, RoleQueryReq req) {
         Page<RoleListResp> list = sysRoleService.pageAs(page, Wrappers.buildWhere(req), RoleListResp.class);
         return R.success(list);

@@ -1,5 +1,6 @@
 package com.solo.codegen.web;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.solo.codegen.model.column.resp.ColumnListResp;
 import com.solo.codegen.service.GenColumnService;
 import com.solo.common.core.global.R;
@@ -31,6 +32,7 @@ public class GenColumnController {
      * @return 响应信息
      */
     @GetMapping("/{tableId}")
+    @SaCheckPermission("codegen-table-select")
     public R<List<ColumnListResp>> listSimple(@PathVariable String tableId) {
         return R.success(genColumnService.queryChain().where(GenColumnTable.TableId.eq(tableId)).listAs(ColumnListResp.class));
     }

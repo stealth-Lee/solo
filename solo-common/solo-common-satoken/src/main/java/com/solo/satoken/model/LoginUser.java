@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * 用户信息
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/11/27 15:20
  * 人生若只如初见，何事秋风悲画扇
  **/
@@ -51,12 +51,12 @@ public class LoginUser implements Serializable {
     /**
      * 角色权限
      */
-    private Set<String> rolePermission;
+    private Set<String> rolePermissions;
 
     /**
      * 菜单权限
      */
-    private Set<String> menuPermission;
+    private Set<String> menuPermissions;
 
     /**
      * 获取登录id

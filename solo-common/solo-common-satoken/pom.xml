@@ -22,6 +22,13 @@
             <artifactId>sa-token-redis-jackson</artifactId>
         </dependency>
 
+        <!-- Sa-Token 整合 jwt -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-jwt</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>com.solo</groupId>
             <artifactId>solo-system-api</artifactId>

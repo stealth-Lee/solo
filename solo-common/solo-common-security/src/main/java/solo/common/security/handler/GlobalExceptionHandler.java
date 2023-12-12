@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 全局异常处理器
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/09/11 11:11
  * 人生若只如初见，何事秋风悲画扇
  **/
@@ -126,15 +126,5 @@ public class GlobalExceptionHandler {
         log.error("[NotPermissionException] -> [请求地址:'{}', 没有访问权限: {}]", requestURI, e.getMessage());
         return R.global(GlobalErrorCode.FORBIDDEN, "没有访问权限，请联系管理员授权");
     }
-
-    /**
-     * 自定义验证异常
-     */
-//    @ExceptionHandler(ConstraintViolationException.class)
-//    public R<Void> constraintViolationException(ConstraintViolationException e) {
-//        log.error(e.getMessage());
-//        String message = StreamUtils.join(e.getConstraintViolations(), ConstraintViolation::getMessage, ", ");
-//        return R.fail(message);
-//    }
 
 }

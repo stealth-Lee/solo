@@ -12,11 +12,13 @@ import reactor.core.publisher.Mono;
 
 /**
  * 转发认证过滤器(内部服务外网隔离)
- *
- * @author Lion Li
- */
+ * @author 十一
+ * @since 2023/12/08 16:01
+ * 人生若只如初见，何事秋风悲画扇
+ **/
 @Component
 public class ForwardAuthFilter implements GlobalFilter, Ordered {
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         // 未开启配置则直接跳过
@@ -37,5 +39,6 @@ public class ForwardAuthFilter implements GlobalFilter, Ordered {
     public int getOrder() {
         return -100;
     }
+
 }
 

@@ -1,5 +1,6 @@
 package com.solo.system.web;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.aop.annotation.Runtime;
 import com.solo.common.core.global.R;
@@ -42,6 +43,7 @@ public class SysConfigController {
      * @return 响应信息
      */
     @PostMapping
+    @SaCheckPermission("system-config-create")
     public R<Boolean> create(@Valid @RequestBody ConfigCreateReq req) {
         SysConfig entity = SysConfigConvert.INSTANCE.convert(req);
         return R.success(sysConfigService.save(entity));
@@ -52,6 +54,7 @@ public class SysConfigController {
      * @param configIds 系统配置集合
      * @return 响应信息
      */
+    @SaCheckPermission("system-config-delete")
     @DeleteMapping("/{configIds}")
     public R<Boolean> delete(@PathVariable Long[] configIds) {
         return R.success(sysConfigService.removeByIds(Arrays.asList(configIds)));
@@ -63,6 +66,7 @@ public class SysConfigController {
      * @return 响应信息
      */
     @PutMapping
+    @SaCheckPermission("system-config-update")
     public R<Boolean> update(@Valid @RequestBody ConfigUpdateReq req) {
         SysConfig entity = SysConfigConvert.INSTANCE.convert(req);
         return R.success(sysConfigService.updateById(entity));
@@ -74,11 +78,13 @@ public class SysConfigController {
      * @return 响应信息
      */
     @GetMapping("/{configId}")
+    @SaCheckPermission("system-config-select")
     public R<ConfigGetResp> get(@PathVariable Long configId) {
         return R.success(SysConfigConvert.INSTANCE.convertGet(sysConfigService.getById(configId)));
     }
 
     @GetMapping("/key/{key}")
+    @SaCheckPermission("system-config-select")
     public R<SysConfig> selectConfigByKey(@PathVariable String key) {
         return R.success(sysConfigService.queryChain().where(SysConfigTable.Key.eq(key)).one());
     }
@@ -91,17 +97,20 @@ public class SysConfigController {
      */
     @Runtime
     @GetMapping("/page")
+    @SaCheckPermission("system-config-select")
     public R<Page<ConfigListResp>> page(Page<ConfigListResp> page, ConfigQueryReq req) {
         Page<ConfigListResp> list = sysConfigService.pageAs(page, Wrappers.buildWhere(req), ConfigListResp.class);
         return R.success(list);
     }
 
     @PostMapping("/import")
+    @SaCheckPermission("system-config-import")
     public void importExcel(MultipartFile file) throws IOException {
         sysConfigService.importExcel(file);
     }
 
     @GetMapping("export")
+    @SaCheckPermission("system-config-export")
     public void exportExcel1(HttpServletResponse response, ConfigQueryReq req) throws IOException {
         sysConfigService.exportExcel(response, req);
     }

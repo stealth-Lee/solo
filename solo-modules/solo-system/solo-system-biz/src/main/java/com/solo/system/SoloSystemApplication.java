@@ -8,7 +8,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * 系统模块启动入口
- *
  * @author 十一
  * @since 2023/08/30 17:38
  * 人生若只如初见，何事秋风悲画扇

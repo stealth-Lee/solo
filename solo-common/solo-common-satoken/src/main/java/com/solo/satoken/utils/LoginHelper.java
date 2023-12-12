@@ -11,6 +11,8 @@ import com.solo.satoken.model.LoginUser;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 /**
  * 登录鉴权助手
  * <p>
@@ -30,27 +32,24 @@ public class LoginHelper {
     public static final String TENANT_KEY = "tenantId";
     public static final String USER_KEY = "userId";
     public static final String DEPT_KEY = "deptId";
-    public static final String CLIENT_KEY = "clientid";
+    public static final String CLIENT_KEY = "clientId";
 
     /**
      * 登录系统 基于 设备类型
      * 针对相同用户体系不同设备
-     *
      * @param loginUser 登录用户信息
-     * @param model     配置参数
      */
-    public static void login(LoginUser loginUser, SaLoginModel model) {
+    public static void login(LoginUser loginUser) {
         SaStorage storage = SaHolder.getStorage();
         storage.set(LOGIN_USER_KEY, loginUser);
-//        storage.set(TENANT_KEY, loginUser.getTenantId());
         storage.set(USER_KEY, loginUser.getUserId());
         storage.set(DEPT_KEY, loginUser.getDeptId());
-        model = ObjectUtil.defaultIfNull(model, new SaLoginModel());
-        StpUtil.login(loginUser.getLoginId(),
-//                model.setExtra(TENANT_KEY, loginUser.getTenantId())
-                model.setExtra(USER_KEY, loginUser.getUserId())
-                        .setExtra(DEPT_KEY, loginUser.getDeptId()));
+        SaLoginModel model = new SaLoginModel();
+        model.setExtra(USER_KEY, loginUser.getUserId())
+                .setExtra(DEPT_KEY, loginUser.getDeptId());
+        StpUtil.login(loginUser.getLoginId(),model);
         StpUtil.getSession().set(LOGIN_USER_KEY, loginUser);
+
     }
 
     /**
@@ -121,7 +120,7 @@ public class LoginHelper {
      * 获取用户账户
      */
     public static String getUsername() {
-        return getLoginUser().getUsername();
+        return Objects.requireNonNull(getLoginUser()).getUsername();
     }
 
 }

@@ -1,20 +1,21 @@
 package solo.common.security.config;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.same.SaSameUtil;
-import cn.dev33.satoken.util.SaResult;
+import com.alibaba.fastjson2.JSON;
+import com.solo.common.core.global.R;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * 权限安全配置
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/11/29 09:00
  * 人生若只如初见，何事秋风悲画扇
  **/
@@ -41,7 +42,10 @@ public class SecurityConfig implements WebMvcConfigurer {
 						SaSameUtil.checkCurrentRequestToken();
 					}
 				})
-				.setError(e -> SaResult.error("认证失败，无法访问系统资源").setCode(HttpStatus.UNAUTHORIZED.value()));
+				.setError(e -> {
+					SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
+                    return JSON.toJSONString(R.failed("禁止直接访问子服务，必须通过网关访问"));
+                });
 	}
 
 }

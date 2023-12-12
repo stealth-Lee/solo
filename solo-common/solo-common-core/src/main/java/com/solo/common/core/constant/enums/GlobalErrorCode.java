@@ -4,7 +4,7 @@ import com.solo.common.core.constant.ErrorCode;
 
 /**
  * 全局错误码枚举
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/09/11 10:18
  * 人生若只如初见，何事秋风悲画扇
  **/

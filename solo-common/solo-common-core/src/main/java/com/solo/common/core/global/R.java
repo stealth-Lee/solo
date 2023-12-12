@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * 响应信息主体类
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/08/31 16:53
  * 人生若只如初见，何事秋风悲画扇
  **/

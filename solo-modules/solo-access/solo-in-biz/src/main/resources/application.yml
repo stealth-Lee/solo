@@ -1,11 +1,11 @@
 server:
   # 应用端口
-  port: 9301
+  port: 9101
 
 spring:
   application:
     # 应用名称
-    name: solo-codegen
+    name: solo-in
   profiles:
     # 环境配置
     active: @profiles.active@
@@ -24,27 +24,6 @@ spring:
     import:
       #        - optional:nacos:application-@profiles.active@.yml
       - optional:nacos:${spring.application.name}-@profiles.active@.yml
-
-  datasource:
-    url: jdbc:mysql://localhost:3306/solo-codegen
-    username: root
-    password: 123456
-
-mybatis-flex:
-  global-config:
-    # 逻辑删除数据存在标记值,默认值为 0
-    normal-value-of-logic-delete: 0
-    # 逻辑删除数据删除标记值,默认值为 1
-    deleted-value-of-logic-delete: 1
-
-codegen:
-  # 生成代码的默认作者
-  author: 十一
-  # 生成代码的尾巴注释
-  tail: 人生若只如初见，何事秋风悲画扇
-  # 生成代码的i18n默认语言包,多个用逗号分隔 例如: zh-CN,en,ja
-  languages: zh-CN,en,ja
-
 
 # Sa-Token配置
 sa-token:

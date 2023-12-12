@@ -1,5 +1,6 @@
 package com.solo.codegen.web;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.ZipUtil;
 import com.mybatisflex.codegen.entity.Table;
@@ -47,11 +48,13 @@ public class GenTableController {
      * @return 响应信息
      */
     @PostMapping
+    @SaCheckPermission("codegen-table-create")
     public R<Boolean> create(@Valid @RequestBody TableCreateReq req) {
         return R.success(genTableService.create(req));
     }
 
     @DeleteMapping("/{tableIds}")
+    @SaCheckPermission("codegen-table-delete")
     public R<Boolean> delete(@PathVariable Long[] tableIds) {
         genTableService.delete(tableIds);
         return R.success();
@@ -61,6 +64,7 @@ public class GenTableController {
      * 修改保存代码生成业务
      */
     @PutMapping
+    @SaCheckPermission("codegen-table-update")
     public R<Boolean> update(@Valid @RequestBody TableUpdateReq req) {
         genTableService.update(req);
         return R.success();
@@ -72,6 +76,7 @@ public class GenTableController {
      * @return 响应信息
      */
     @GetMapping("/{tableId}")
+    @SaCheckPermission("codegen-table-select")
     public R<TableGetResp> get(@PathVariable Long tableId) {
         return R.success(GenTableConvert.INSTANCE.convertGet(genTableService.getById(tableId)));
     }
@@ -82,6 +87,7 @@ public class GenTableController {
      * @return 响应信息
      */
     @GetMapping("/preview/{tableId}")
+    @SaCheckPermission("codegen-table-preview")
     public R<List<CodePreviewResp>> preview(@PathVariable Long tableId) {
         Map<String, String> codes = genTableService.generationCodes(tableId);
         List<CodePreviewResp> collect = codes.entrySet().stream().map(entry -> {
@@ -99,6 +105,7 @@ public class GenTableController {
      * @return 响应信息
      */
     @GetMapping("/list-simple/{sourceId}")
+    @SaCheckPermission("codegen-table-select")
     public R<List<TableListSimpleResp>> listSimple(@PathVariable Long sourceId) {
         List<Table> tableInfos = genTableService.selectListSimple(sourceId);
         return R.success(GenTableConvert.INSTANCE.convertListSimple(tableInfos));
@@ -111,6 +118,7 @@ public class GenTableController {
      * @return 响应信息
      */
     @GetMapping("/page")
+    @SaCheckPermission("codegen-table-select")
     public R<Page<TableListResp>> page(Page<TableListResp> page, TableQueryReq req) {
         Page<TableListResp> list = genTableService.pageAs(page, Wrappers.buildWhere(req), TableListResp.class);
         return R.success(list);
@@ -123,6 +131,7 @@ public class GenTableController {
      * @throws IOException io异常
      */
     @GetMapping("/generate-code/{tableId}")
+    @SaCheckPermission("codegen-table-generate-code")
     public void gen(@PathVariable Long tableId, HttpServletResponse response) throws IOException {
         // 生成代码
         Map<String, String> codes = genTableService.generationCodes(tableId);

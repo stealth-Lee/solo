@@ -1,5 +1,6 @@
 package com.solo.system.web;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.global.R;
 import com.solo.common.orm.core.query.Wrappers;
@@ -41,6 +42,7 @@ public class SysDictTypeController {
      * @return 响应信息
      */
     @PostMapping
+    @SaCheckPermission("system-dict-create")
     public R<Boolean> create(@Valid @RequestBody DictTypeCreateReq req) {
         SysDictType entity = SysDictTypeConvert.INSTANCE.convert(req);
         return R.success(sysDictTypeService.create(entity));
@@ -52,6 +54,7 @@ public class SysDictTypeController {
      * @return 响应信息
      */
     @DeleteMapping("/{typeId}")
+    @SaCheckPermission("system-dict-delete")
     public R<Boolean> delete(@PathVariable Long typeId) {
         return R.success(sysDictTypeService.delete(typeId));
     }
@@ -62,6 +65,7 @@ public class SysDictTypeController {
      * @return 响应信息
      */
     @PutMapping("/update-status")
+    @SaCheckPermission("system-dict-update-status")
     public R<Boolean> updateStatus(@Valid @RequestBody DictTypeUpdateStatusReq req) {
         SysDictType entity = SysDictTypeConvert.INSTANCE.convert(req);
         return R.success(sysDictTypeService.updateById(entity));
@@ -73,6 +77,7 @@ public class SysDictTypeController {
      * @return 响应信息
      */
     @PutMapping
+    @SaCheckPermission("system-dict-update")
     public R<Boolean> update(@Valid @RequestBody DictTypeUpdateReq req) {
         SysDictType entity = SysDictTypeConvert.INSTANCE.convert(req);
         return R.success(sysDictTypeService.update(entity));
@@ -84,6 +89,7 @@ public class SysDictTypeController {
      * @return 响应信息
      */
     @GetMapping("/{typeId}")
+    @SaCheckPermission("system-dict-select")
     public R<DictTypeGetResp> get(@PathVariable Long typeId) {
         return R.success(SysDictTypeConvert.INSTANCE.convertGet(sysDictTypeService.getById(typeId)));
     }
@@ -93,6 +99,7 @@ public class SysDictTypeController {
      * @return 响应信息
      */
     @GetMapping("/list-simple")
+    @SaCheckPermission("system-dict-select")
     public R<List<DictTypeListSimpleResp>> listSimple() {
         List<DictTypeListSimpleResp> list = sysDictTypeService.queryChain()
                 .where(SysDictTypeTable.Status.eq(GlobalStatus.NORMAL))
@@ -107,6 +114,7 @@ public class SysDictTypeController {
      * @return 响应信息
      */
     @GetMapping("/page")
+    @SaCheckPermission("system-dict-select")
     public R<Page<DictTypeListResp>> page(Page<DictTypeListResp> page, DictTypeQueryReq req) {
         Page<DictTypeListResp> list = sysDictTypeService.pageAs(page, Wrappers.buildWhere(req), DictTypeListResp.class);
         return R.success(list);

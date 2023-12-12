@@ -32,13 +32,6 @@ public class CorsConfig {
      */
     private static final String MAX_AGE = "18000L";
 
-    // 跨域配置
-    @Bean
-    public CorsResponseHeaderFilter corsResponseHeaderFilter() {
-        //解决geteway重复添加跨域请求头的问题：https://blog.csdn.net/xht555/article/details/89484091
-        return new CorsResponseHeaderFilter();
-    }
-
     @Bean
     public WebFilter corsFilter() {
         return (ServerWebExchange exchange, WebFilterChain chain) -> {

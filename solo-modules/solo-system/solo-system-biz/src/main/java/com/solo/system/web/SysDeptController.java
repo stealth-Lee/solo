@@ -1,5 +1,6 @@
 package com.solo.system.web;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.solo.common.core.global.R;
 import com.solo.common.orm.core.query.Wrappers;
@@ -37,6 +38,7 @@ public class SysDeptController {
      * @return 响应信息
      */
     @PostMapping
+    @SaCheckPermission("system-dept-create")
     public R<Boolean> create(@Valid @RequestBody DeptCreateReq req) {
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(req);
         return R.success(sysDeptService.create(sysDept));
@@ -48,6 +50,7 @@ public class SysDeptController {
      * @return 响应信息
      */
     @DeleteMapping("/{deptId}")
+    @SaCheckPermission("system-dept-delete")
     public R<Boolean> delete(@PathVariable Long deptId) {
         return R.success(sysDeptService.delete(deptId));
     }
@@ -58,6 +61,7 @@ public class SysDeptController {
      * @return 响应信息
      */
     @PutMapping
+    @SaCheckPermission("system-dept-update")
     public R<Boolean> update(@Valid @RequestBody DeptUpdateReq req) {
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(req);
         return R.success(sysDeptService.update(sysDept));
@@ -69,6 +73,7 @@ public class SysDeptController {
      * @return 响应信息
      */
     @GetMapping("/{deptId}")
+    @SaCheckPermission("system-dept-select")
     public R<DeptGetResp> get(@PathVariable Long deptId) {
         return R.success(SysDeptConvert.INSTANCE.convertGet(sysDeptService.getById(deptId)));
     }
@@ -78,6 +83,7 @@ public class SysDeptController {
      * @return 响应信息
      */
     @GetMapping("/list-simple")
+    @SaCheckPermission("system-dept-select")
     public R<List<DeptListSimpleResp>> listSimple() {
         return R.success(sysDeptService.listAs(DeptListSimpleResp.class));
     }
@@ -88,6 +94,7 @@ public class SysDeptController {
      * @return 响应信息
      */
     @GetMapping("/list")
+    @SaCheckPermission("system-dept-select")
     public R<List<DeptListResp>> list(DeptQueryReq req) {
         QueryWrapper queryWrapper = Wrappers.buildWhere(req);
         return R.success(sysDeptService.listAs(queryWrapper, DeptListResp.class));

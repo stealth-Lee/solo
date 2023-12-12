@@ -1,6 +1,6 @@
 server:
   # 应用端口
-  port: 9000
+  port: 9001
 
 spring:
   application:

@@ -1,5 +1,6 @@
 package com.solo.codegen.web;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.codegen.api.entity.GenDatasource;
 import com.solo.codegen.model.datasource.GenDatasourceConvert;
@@ -38,6 +39,7 @@ public class GenDatasourceController {
      * @return 响应信息
      */
     @PostMapping
+    @SaCheckPermission("codegen-datasource-create")
     public R<Boolean> create(@Valid @RequestBody DatasourceCreateReq req) {
         GenDatasource entity = GenDatasourceConvert.INSTANCE.convert(req);
         return R.success(genDatasourceService.create(entity));
@@ -49,6 +51,7 @@ public class GenDatasourceController {
      * @return 响应信息
      */
     @DeleteMapping("/{sourceIds}")
+    @SaCheckPermission("codegen-datasource-delete")
     public R<Boolean> delete(@PathVariable Long[] sourceIds) {
         return R.success(genDatasourceService.removeByIds(Arrays.asList(sourceIds)));
     }
@@ -59,6 +62,7 @@ public class GenDatasourceController {
      * @return 响应信息
      */
     @PutMapping
+    @SaCheckPermission("codegen-datasource-update")
     public R<Boolean> update(@Valid @RequestBody DatasourceUpdateReq req) {
         GenDatasource entity = GenDatasourceConvert.INSTANCE.convert(req);
         return R.success(genDatasourceService.update(entity));
@@ -70,6 +74,7 @@ public class GenDatasourceController {
      * @return 响应信息
      */
     @GetMapping("/{sourceId}")
+    @SaCheckPermission("codegen-datasource-select")
     public R<DatasourceGetResp> get(@PathVariable Long sourceId) {
         return R.success(GenDatasourceConvert.INSTANCE.convertGet(genDatasourceService.getById(sourceId)));
     }
@@ -79,6 +84,7 @@ public class GenDatasourceController {
      * @return 响应信息
      */
     @GetMapping("/list-simple")
+    @SaCheckPermission("codegen-datasource-select")
     public R<List<DatasourceListSimpleResp>> listSimple() {
         return R.success(genDatasourceService.listAs(DatasourceListSimpleResp.class));
     }
@@ -90,12 +96,19 @@ public class GenDatasourceController {
      * @return 响应信息
      */
     @GetMapping("/page")
+    @SaCheckPermission("codegen-datasource-select")
     public R<Page<DatasourceListResp>> page(Page<DatasourceListResp> page, DatasourceQueryReq req) {
         Page<DatasourceListResp> list = genDatasourceService.pageAs(page, Wrappers.buildWhere(req), DatasourceListResp.class);
         return R.success(list);
     }
 
-    @GetMapping("test/{sourceId}")
+    /**
+     * 测试连接
+     * @param sourceId 源 ID
+     * @return {@link R}<{@link Boolean}>
+     */
+    @GetMapping("/test/{sourceId}")
+    @SaCheckPermission("codegen-datasource-test")
     public R<Boolean> test(@PathVariable Long sourceId) {
         return R.success(genDatasourceService.test(sourceId));
     }

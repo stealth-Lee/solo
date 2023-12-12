@@ -123,7 +123,7 @@
         <pure-table
 #if ($table.tplType == 'TREE_TABLE')
           ref="tableRef"
-          row-key="menuId"
+          row-key="${primaryColumn.javaField}"
           default-expand-all
 #end
           align-whole="center"

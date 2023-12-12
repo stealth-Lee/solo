@@ -1,5 +1,6 @@
 package com.solo.system.web;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.solo.common.core.global.R;
@@ -44,6 +45,7 @@ public class SysDictDataController {
      * @return 响应信息
      */
     @PostMapping
+    @SaCheckPermission("system-dict-create")
     public R<Boolean> create(@Valid @RequestBody DictDataCreateReq req) {
         SysDictData entity = SysDictDataConvert.INSTANCE.convert(req);
         return R.success(sysDictDataService.save(entity));
@@ -55,6 +57,7 @@ public class SysDictDataController {
      * @return 响应信息
      */
     @DeleteMapping("/{dataIds}")
+    @SaCheckPermission("system-dict-delete")
     public R<Boolean> delete(@PathVariable Long[] dataIds) {
         return R.success(sysDictDataService.removeByIds(Arrays.asList(dataIds)));
     }
@@ -65,6 +68,7 @@ public class SysDictDataController {
      * @return 响应信息
      */
     @PutMapping("/update-status")
+    @SaCheckPermission("system-dict-update-status")
     public R<Boolean> updateStatus(@Valid @RequestBody DictDataUpdateStatusReq req) {
         SysDictData entity = SysDictDataConvert.INSTANCE.convert(req);
         return R.success(sysDictDataService.updateById(entity));
@@ -76,6 +80,7 @@ public class SysDictDataController {
      * @return 响应信息
      */
     @PutMapping
+    @SaCheckPermission("system-dict-update")
     public R<Boolean> update(@Valid @RequestBody DictDataUpdateReq req) {
         SysDictData entity = SysDictDataConvert.INSTANCE.convert(req);
         return R.success(sysDictDataService.updateById(entity));
@@ -87,7 +92,7 @@ public class SysDictDataController {
      * @return 响应信息
      */
     @GetMapping("/code/{code}")
-    public R<List<DictDataListSimpleResp>> selectByCode(@PathVariable String code) {
+    public R<List<DictDataListSimpleResp>> selectByCode(@PathVariable("code") String code) {
         QueryWrapper queryWrapper = QueryWrapper.create()
                 .select(SysDictDataTable.AllColumns,
                         SysDictTypeTable.Type)
@@ -105,7 +110,8 @@ public class SysDictDataController {
      * @return 响应信息
      */
     @GetMapping("/{dataId}")
-    public R<DictDataGetResp> get(@PathVariable Long dataId) {
+    @SaCheckPermission("system-dict-select")
+    public R<DictDataGetResp> get(@PathVariable("dataId") Long dataId) {
         return R.success(SysDictDataConvert.INSTANCE.convertGet(sysDictDataService.getById(dataId)));
     }
 
@@ -116,6 +122,7 @@ public class SysDictDataController {
      * @return 响应信息
      */
     @GetMapping("/page")
+    @SaCheckPermission("system-dict-select")
     public R<Page<DictDataListResp>> page(Page<DictDataListResp> page, DictDataQueryReq req) {
         Page<DictDataListResp> list = sysDictDataService.pageAs(page, Wrappers.buildWhere(req), DictDataListResp.class);
         return R.success(list);

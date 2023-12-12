@@ -1,14 +1,12 @@
 package com.solo.gateway.filter;
 
 import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
 import cn.dev33.satoken.reactor.filter.SaReactorFilter;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import com.alibaba.fastjson2.JSON;
 import com.solo.common.core.global.R;
-import com.solo.common.core.utils.StringUtils;
 import com.solo.gateway.properties.IgnoreWhiteProperties;
 import com.solo.satoken.utils.LoginHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +16,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 
 /**
  * [Sa-Token 权限认证] 过滤器
- *
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/11/24 11:00
  * 人生若只如初见，何事秋风悲画扇
  **/
@@ -51,13 +48,13 @@ public class AuthFilter {
                                 ServerHttpRequest request = SaReactorSyncHolder.getContext().getRequest();
                                 String headerCid = request.getHeaders().getFirst(LoginHelper.CLIENT_KEY);
                                 String paramCid = request.getQueryParams().getFirst(LoginHelper.CLIENT_KEY);
-                                String clientId = StpUtil.getExtra(LoginHelper.CLIENT_KEY).toString();
-                                if (!StringUtils.equalsAny(clientId, headerCid, paramCid)) {
-                                    // token 无效
-                                    throw NotLoginException.newInstance(StpUtil.getLoginType(),
-                                            "-100", "客户端ID与Token不匹配",
-                                            StpUtil.getTokenValue());
-                                }
+//                                String clientId = StpUtil.getExtra(LoginHelper.CLIENT_KEY).toString();
+//                                if (!StringUtils.equalsAny(clientId, headerCid, paramCid)) {
+//                                    // token 无效
+//                                    throw NotLoginException.newInstance(StpUtil.getLoginType(),
+//                                            "-100", "客户端ID与Token不匹配",
+//                                            StpUtil.getTokenValue());
+//                                }
 
                                 // 有效率影响 用于临时测试
                                 // if (log.isDebugEnabled()) {
@@ -66,6 +63,7 @@ public class AuthFilter {
                                 // }
                             });
                 }).setError(e -> {
+                    e.printStackTrace();
                     SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
                     return JSON.toJSONString(R.failed("认证失败，无法访问系统资源"));
                 });

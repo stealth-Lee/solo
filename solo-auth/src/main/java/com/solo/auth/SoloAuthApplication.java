@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * 认证中心启动类
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/11/24 11:16
  * 人生若只如初见，何事秋风悲画扇
  **/

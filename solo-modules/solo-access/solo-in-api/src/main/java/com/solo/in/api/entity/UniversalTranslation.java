@@ -2,6 +2,12 @@ package com.solo.in.api.entity;
 
 import lombok.Data;
 
+/**
+ * 通用翻译实体类
+ * @author 十一
+ * @since 2023/12/11 17:28
+ * 人生若只如初见，何事秋风悲画扇
+ **/
 @Data
 public class UniversalTranslation {
 
