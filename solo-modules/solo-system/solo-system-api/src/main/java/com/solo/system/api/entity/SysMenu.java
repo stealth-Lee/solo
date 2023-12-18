@@ -3,7 +3,7 @@ package com.solo.system.api.entity;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
-import com.solo.common.orm.base.entity.BasicEntity;
+import com.solo.common.core.base.entity.BasicEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -30,7 +30,7 @@ public class SysMenu extends BasicEntity {
     private Long parentId;
 
     /**
-     * 菜单类型[M:菜单 B:按钮]
+     * 菜单类型[D:目录 M:菜单 B:按钮]
      */
     private String type;
 

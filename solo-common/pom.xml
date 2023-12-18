@@ -21,5 +21,6 @@
         <module>solo-common-excel</module>
         <module>solo-common-satoken</module>
         <module>solo-common-security</module>
+        <module>solo-common-logger</module>
     </modules>
 </project>

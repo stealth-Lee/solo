@@ -4,7 +4,7 @@ import com.mybatisflex.codegen.entity.Table;
 import com.solo.codegen.api.entity.GenTable;
 import com.solo.codegen.model.table.req.TableCreateReq;
 import com.solo.codegen.model.table.req.TableUpdateReq;
-import com.solo.common.orm.base.service.BasicService;
+import com.solo.common.core.base.service.BasicService;
 
 import java.util.List;
 import java.util.Map;

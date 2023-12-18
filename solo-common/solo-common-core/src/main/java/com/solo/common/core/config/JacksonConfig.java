@@ -20,6 +20,7 @@
  */
 package com.solo.common.core.config;
 
+import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
@@ -33,7 +34,10 @@ import org.springframework.context.annotation.Bean;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Jackson配置类
@@ -50,6 +54,9 @@ public class JacksonConfig {
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer customizer() {
         return builder -> {
+            builder.locale(Locale.CHINA);
+            builder.timeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
+            builder.simpleDateFormat(DatePattern.NORM_DATETIME_PATTERN);
             // 序列化
             builder.serializerByType(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
             builder.serializerByType(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));

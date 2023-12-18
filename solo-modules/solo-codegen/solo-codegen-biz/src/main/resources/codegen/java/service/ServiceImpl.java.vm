@@ -3,7 +3,7 @@ package ${table.packageName}.service.impl;
 import ${table.packageName}.api.entity.${table.className};
 import ${table.packageName}.mapper.${table.className}Mapper;
 import ${table.packageName}.service.${table.className}Service;
-import com.solo.common.orm.base.service.impl.BasicServiceImpl;
+import com.solo.common.core.base.service.impl.BasicServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

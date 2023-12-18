@@ -13,6 +13,23 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-common-logger</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-common-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-common-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-system-api</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
@@ -31,16 +48,5 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.solo</groupId>
-            <artifactId>solo-common-security</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.solo</groupId>
-            <artifactId>solo-system-api</artifactId>
-        </dependency>
-
     </dependencies>
 </project>

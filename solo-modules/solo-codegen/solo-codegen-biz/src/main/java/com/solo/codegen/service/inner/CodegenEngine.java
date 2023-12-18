@@ -70,6 +70,7 @@ public class CodegenEngine {
         dict.set("modelClassName", modelClassName);
         dict.set("basicEntity", CodegenBuilder.BASIC_ENTITY_FIELDS);
         dict.set("StringUtils", new StringUtils());
+        dict.set("i18nBusinessName", StringUtils.toCamelCase(table.getBusinessName(), Symbols.DOT_CHAT));
         for (Template template : Template.values()) {
             switch (template) {
                 case CONSTANT -> {
@@ -102,7 +103,6 @@ public class CodegenEngine {
                         });
                         dict.set("i18nColumns", columns);
                         dict.set("i18nFunctionName", handelLanguage(language, table.getFunctionName()));
-                        dict.set("i18nBusinessName", StringUtils.toCamelCase(table.getBusinessName(), Symbols.DOT_CHAT));
                         dict.set("i18nInputTip", StringUtils.replaceLast(handelLanguage(language, "请输入996"), "996", ""));
                         dict.set("i18nSelectTip", StringUtils.replaceLast(handelLanguage(language, "请选择996"), "996", ""));
                         dict.set("i18nNotNullMessage", StringUtils.replaceFirst(handelLanguage(language, "996不能为空"), "996", ""));

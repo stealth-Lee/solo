@@ -2,7 +2,8 @@ package com.solo.common.orm.listener;
 
 import com.mybatisflex.annotation.InsertListener;
 import com.mybatisflex.annotation.UpdateListener;
-import com.solo.common.orm.base.entity.BasicEntity;
+import com.solo.common.core.base.entity.BasicEntity;
+import com.solo.satoken.utils.LoginHelper;
 
 import java.time.LocalDateTime;
 
@@ -22,7 +23,7 @@ public class SoloFlexListener implements InsertListener, UpdateListener {
     public void onInsert(Object entity) {
         BasicEntity basicEntity = (BasicEntity) entity;
         basicEntity.setDeleted(false);
-        basicEntity.setCreateBy("admin");
+        basicEntity.setCreateBy(LoginHelper.getUserId().toString());
         basicEntity.setCreateTime(LocalDateTime.now());
     }
 
@@ -33,7 +34,7 @@ public class SoloFlexListener implements InsertListener, UpdateListener {
     @Override
     public void onUpdate(Object entity) {
         BasicEntity basicEntity = (BasicEntity) entity;
-        basicEntity.setUpdateBy("admin");
+        basicEntity.setUpdateBy(LoginHelper.getUserId().toString());
         basicEntity.setUpdateTime(LocalDateTime.now());
     }
 

@@ -66,7 +66,7 @@
 
         <lombok.version>1.18.30</lombok.version>
         <fastjson2.version>2.0.41</fastjson2.version>
-        <hutool.version>5.8.21</hutool.version>
+        <hutool.version>5.8.23</hutool.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <easyexcel.version>3.3.2</easyexcel.version>
 
@@ -231,6 +231,12 @@
             <dependency>
                 <groupId>com.solo</groupId>
                 <artifactId>solo-common-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!-- solo 日志包 -->
+            <dependency>
+                <groupId>com.solo</groupId>
+                <artifactId>solo-common-logger</artifactId>
                 <version>${revision}</version>
             </dependency>
             <!-- solo orm扩展封装包 -->

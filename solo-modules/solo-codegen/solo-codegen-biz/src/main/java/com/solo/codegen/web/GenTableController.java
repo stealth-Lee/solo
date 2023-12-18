@@ -76,7 +76,7 @@ public class GenTableController {
      * @return 响应信息
      */
     @GetMapping("/{tableId}")
-    @SaCheckPermission("codegen-table-select")
+    @SaCheckPermission("codegen-table-query")
     public R<TableGetResp> get(@PathVariable Long tableId) {
         return R.success(GenTableConvert.INSTANCE.convertGet(genTableService.getById(tableId)));
     }
@@ -105,7 +105,7 @@ public class GenTableController {
      * @return 响应信息
      */
     @GetMapping("/list-simple/{sourceId}")
-    @SaCheckPermission("codegen-table-select")
+    @SaCheckPermission("codegen-table-query")
     public R<List<TableListSimpleResp>> listSimple(@PathVariable Long sourceId) {
         List<Table> tableInfos = genTableService.selectListSimple(sourceId);
         return R.success(GenTableConvert.INSTANCE.convertListSimple(tableInfos));
@@ -118,7 +118,7 @@ public class GenTableController {
      * @return 响应信息
      */
     @GetMapping("/page")
-    @SaCheckPermission("codegen-table-select")
+    @SaCheckPermission("codegen-table-query")
     public R<Page<TableListResp>> page(Page<TableListResp> page, TableQueryReq req) {
         Page<TableListResp> list = genTableService.pageAs(page, Wrappers.buildWhere(req), TableListResp.class);
         return R.success(list);

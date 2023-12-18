@@ -21,10 +21,5 @@
             <groupId>com.solo</groupId>
             <artifactId>solo-common-core</artifactId>
         </dependency>
-        <!-- Http客户端工具 -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-http</artifactId>
-        </dependency>
     </dependencies>
 </project>

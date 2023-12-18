@@ -1,6 +1,6 @@
 package com.solo.system.service;
 
-import com.solo.common.orm.base.service.BasicService;
+import com.solo.common.core.base.service.BasicService;
 import com.solo.system.api.entity.SysConfig;
 import com.solo.system.model.config.req.ConfigQueryReq;
 import jakarta.servlet.http.HttpServletResponse;

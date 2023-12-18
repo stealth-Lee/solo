@@ -1,7 +1,7 @@
 package com.solo.system.service;
 
 import cn.hutool.core.lang.tree.Tree;
-import com.solo.common.orm.base.service.BasicService;
+import com.solo.common.core.base.service.BasicService;
 import com.solo.system.api.entity.SysMenu;
 
 import java.util.List;

@@ -85,7 +85,7 @@ public class SysRoleController {
      * @return 响应信息
      */
     @GetMapping("/{roleId}")
-    @SaCheckPermission("system-role-select")
+    @SaCheckPermission("system-role-query")
     public R<RoleGetResp> get(@PathVariable("roleId") Long roleId) {
         return R.success(SysRoleConvert.INSTANCE.convertGet(sysRoleService.getById(roleId)));
     }
@@ -97,7 +97,7 @@ public class SysRoleController {
      * @return 响应信息
      */
     @GetMapping("/page")
-    @SaCheckPermission("system-role-select")
+    @SaCheckPermission("system-role-query")
     public R<Page<RoleListResp>> page(Page<RoleListResp> page, RoleQueryReq req) {
         Page<RoleListResp> list = sysRoleService.pageAs(page, Wrappers.buildWhere(req), RoleListResp.class);
         return R.success(list);

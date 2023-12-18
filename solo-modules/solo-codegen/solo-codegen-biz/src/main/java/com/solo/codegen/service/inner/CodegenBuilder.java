@@ -13,7 +13,7 @@ import com.solo.codegen.api.entity.GenColumn;
 import com.solo.codegen.api.entity.GenTable;
 import com.solo.common.core.constant.Symbols;
 import com.solo.common.core.utils.StringUtils;
-import com.solo.common.orm.base.entity.BasicEntity;
+import com.solo.common.core.base.entity.BasicEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

@@ -10,6 +10,7 @@ import com.solo.system.api.SysRoleApi;
 import com.solo.system.api.entity.SysMenu;
 import com.solo.system.model.menu.SysMenuConvert;
 import com.solo.system.model.menu.req.MenuCreateReq;
+import com.solo.system.model.menu.resp.MenuSimpleResp;
 import com.solo.system.model.menu.req.MenuQueryReq;
 import com.solo.system.model.menu.req.MenuUpdateReq;
 import com.solo.system.model.menu.resp.MenuGetResp;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.solo.system.api.entity.table.SysMenuTableDef.SysMenuTable;
 
 /**
  * 菜单控制器
@@ -79,9 +82,24 @@ public class SysMenuController {
      * @return 响应信息
      */
     @GetMapping("/{menuId}")
-    @SaCheckPermission("system-menu-select")
+    @SaCheckPermission("system-menu-query")
     public R<MenuGetResp> get(@PathVariable Long menuId) {
         return R.success(SysMenuConvert.INSTANCE.convertGet(sysMenuService.getById(menuId)));
+    }
+
+    /**
+     * 查询菜单列表精简信息
+     * @return 响应信息
+     */
+    @GetMapping("/list-simple")
+    @SaCheckPermission("system-menu-query")
+    public R<List<MenuSimpleResp>> listSimple() {
+        return R.success(
+                sysMenuService.queryChain()
+                 // TODO 这里的类型需要改成枚举
+                .where(SysMenuTable.Type.in("D", "M"))
+                .listAs(MenuSimpleResp.class)
+        );
     }
 
     /**
@@ -90,7 +108,7 @@ public class SysMenuController {
      * @return 响应信息
      */
     @GetMapping("/list")
-    @SaCheckPermission("system-menu-select")
+    @SaCheckPermission("system-menu-query")
     public R<List<MenuListResp>> list(MenuQueryReq req) {
         QueryWrapper queryWrapper = Wrappers.buildWhere(req);
         return R.success(sysMenuService.listAs(queryWrapper, MenuListResp.class));

@@ -89,7 +89,7 @@ public class SysDictTypeController {
      * @return 响应信息
      */
     @GetMapping("/{typeId}")
-    @SaCheckPermission("system-dict-select")
+    @SaCheckPermission("system-dict-query")
     public R<DictTypeGetResp> get(@PathVariable Long typeId) {
         return R.success(SysDictTypeConvert.INSTANCE.convertGet(sysDictTypeService.getById(typeId)));
     }
@@ -99,7 +99,7 @@ public class SysDictTypeController {
      * @return 响应信息
      */
     @GetMapping("/list-simple")
-    @SaCheckPermission("system-dict-select")
+    @SaCheckPermission("system-dict-query")
     public R<List<DictTypeListSimpleResp>> listSimple() {
         List<DictTypeListSimpleResp> list = sysDictTypeService.queryChain()
                 .where(SysDictTypeTable.Status.eq(GlobalStatus.NORMAL))
@@ -114,7 +114,7 @@ public class SysDictTypeController {
      * @return 响应信息
      */
     @GetMapping("/page")
-    @SaCheckPermission("system-dict-select")
+    @SaCheckPermission("system-dict-query")
     public R<Page<DictTypeListResp>> page(Page<DictTypeListResp> page, DictTypeQueryReq req) {
         Page<DictTypeListResp> list = sysDictTypeService.pageAs(page, Wrappers.buildWhere(req), DictTypeListResp.class);
         return R.success(list);

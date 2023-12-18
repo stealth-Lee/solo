@@ -6,7 +6,7 @@ import com.mybatisflex.annotation.Table;
 import com.solo.codegen.api.constant.column.FormType;
 import com.solo.codegen.api.constant.column.JavaType;
 import com.solo.codegen.api.constant.column.QueryMode;
-import com.solo.common.orm.base.entity.BasicEntity;
+import com.solo.common.core.base.entity.BasicEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

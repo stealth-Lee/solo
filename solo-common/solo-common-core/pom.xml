@@ -32,6 +32,18 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!-- mybatis-flex -->
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis-spring</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!--server-api-->
         <dependency>
             <groupId>jakarta.servlet</groupId>
@@ -64,9 +76,15 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-json</artifactId>
         </dependency>
+        <!-- Hutool扩展包：包括模板引擎封装工具类 Servlet封装 邮件 二维码等 https://doc.hutool.cn/module/extra/ -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-extra</artifactId>
+        </dependency>
+        <!-- Hutool HTTP工具 https://doc.hutool.cn/module/http/ -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-http</artifactId>
         </dependency>
     </dependencies>
 </project>

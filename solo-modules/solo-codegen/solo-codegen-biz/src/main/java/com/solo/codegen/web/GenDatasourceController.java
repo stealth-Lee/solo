@@ -74,7 +74,7 @@ public class GenDatasourceController {
      * @return 响应信息
      */
     @GetMapping("/{sourceId}")
-    @SaCheckPermission("codegen-datasource-select")
+    @SaCheckPermission("codegen-datasource-query")
     public R<DatasourceGetResp> get(@PathVariable Long sourceId) {
         return R.success(GenDatasourceConvert.INSTANCE.convertGet(genDatasourceService.getById(sourceId)));
     }
@@ -84,7 +84,7 @@ public class GenDatasourceController {
      * @return 响应信息
      */
     @GetMapping("/list-simple")
-    @SaCheckPermission("codegen-datasource-select")
+    @SaCheckPermission("codegen-datasource-query")
     public R<List<DatasourceListSimpleResp>> listSimple() {
         return R.success(genDatasourceService.listAs(DatasourceListSimpleResp.class));
     }
@@ -96,7 +96,7 @@ public class GenDatasourceController {
      * @return 响应信息
      */
     @GetMapping("/page")
-    @SaCheckPermission("codegen-datasource-select")
+    @SaCheckPermission("codegen-datasource-query")
     public R<Page<DatasourceListResp>> page(Page<DatasourceListResp> page, DatasourceQueryReq req) {
         Page<DatasourceListResp> list = genDatasourceService.pageAs(page, Wrappers.buildWhere(req), DatasourceListResp.class);
         return R.success(list);

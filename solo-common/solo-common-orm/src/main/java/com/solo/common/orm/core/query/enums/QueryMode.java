@@ -46,6 +46,12 @@ public enum QueryMode {
     LE,
 
     /**
+     * 介于 BETWEEN 值1 AND 值2
+     * 例: between("age", 18, 30)--->age between 18 and 30
+     */
+    BETWEEN,
+
+    /**
      * LIKE '%值%'
      * 例: like("name", "王")--->name like '%王%'
      */

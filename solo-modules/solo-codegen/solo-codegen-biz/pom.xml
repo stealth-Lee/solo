@@ -14,6 +14,27 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-common-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-common-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-in-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-codegen-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-system-api</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
@@ -48,19 +69,6 @@
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.solo</groupId>
-            <artifactId>solo-in-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.solo</groupId>
-            <artifactId>solo-codegen-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.solo</groupId>
-            <artifactId>solo-system-api</artifactId>
         </dependency>
     </dependencies>
 

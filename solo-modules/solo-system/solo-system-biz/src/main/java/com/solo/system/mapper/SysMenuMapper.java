@@ -1,7 +1,7 @@
 package com.solo.system.mapper;
 
 import com.solo.system.api.entity.SysMenu;
-import com.solo.common.orm.base.mapper.BasicMapper;
+import com.solo.common.core.base.mapper.BasicMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -10,50 +10,50 @@
 #foreach ($column in $columns)
   #if ((${column.isCreate} || ${column.isUpdate}) && !${column.isPk})
     #if ($column.FormType == 'INPUT')
-      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
+      <el-form-item :label="$t('${i18nBusinessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-input
           v-model="formModel.${column.javaField}"
-          :placeholder="$t('${table.businessName}.tip.${column.javaField}')"
+          :placeholder="$t('${i18nBusinessName}.tip.${column.javaField}')"
           clearable
         />
       </el-form-item>
     #elseif ($column.FormType == 'NUMBER')
-      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
+      <el-form-item :label="$t('${i18nBusinessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-input-number
           v-model="formModel.${column.javaField}"
-          :placeholder="$t('${table.businessName}.tip.${column.javaField}')"
+          :placeholder="$t('${i18nBusinessName}.tip.${column.javaField}')"
           class="!w-[100%]"
         />
       </el-form-item>
     #elseif ($column.FormType == 'TEXTAREA')
-      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
+      <el-form-item :label="$t('${i18nBusinessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-input
           v-model="formModel.${column.javaField}"
-          :placeholder="$t('${table.businessName}.tip.${column.javaField}')"
+          :placeholder="$t('${i18nBusinessName}.tip.${column.javaField}')"
           type="textarea"
         />
       </el-form-item>
-    #elseif ($column.FormType == 'SELECT' && ${column.code})
-      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
+    #elseif ($column.FormType == 'SELECT' && ${column.dictCode})
+      <el-form-item :label="$t('${i18nBusinessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-select
           v-model="formModel.${column.javaField}"
-          :placeholder="$t('${table.businessName}.tip.${column.javaField}')"
+          :placeholder="$t('${i18nBusinessName}.tip.${column.javaField}')"
           clearable
           class="!w-[100%]"
         >
           <el-option
-            v-for="dict in ${column.code}"
+            v-for="dict in ${column.dictCode}"
             :key="dict.value"
             :label="dict.label"
             :value="dict.value"
           />
         </el-select>
       </el-form-item>
-    #elseif ($column.FormType == 'RADIO' && ${column.code})
-      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
+    #elseif ($column.FormType == 'RADIO' && ${column.dictCode})
+      <el-form-item :label="$t('${i18nBusinessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-radio-group v-model="formModel.${column.javaField}">
           <el-radio-button
-            v-for="(item, index) in ${column.code}"
+            v-for="(item, index) in ${column.dictCode}"
             :label="item.value"
             :key="index"
             >{{ item.label }}
@@ -61,7 +61,7 @@
         </el-radio-group>
       </el-form-item>
     #elseif ($column.FormType == 'SWITCH')
-      <el-form-item :label="$t('${table.businessName}.column.${column.javaField}')" prop="${column.javaField}">
+      <el-form-item :label="$t('${i18nBusinessName}.column.${column.javaField}')" prop="${column.javaField}">
         <el-switch
           v-model="formModel.${column.javaField}"
           active-value="1"
@@ -93,11 +93,11 @@ defineOptions({ name: "${table.className}Form" });
 #if ($dictColumns.size() > 0)
 const {
   #foreach ($column in $dictColumns)
-  ${column.code}#if ($foreach.last)#else,#end
+  ${column.dictCode}#if ($foreach.last)#else,#end
   #end
 } = useDict(
   #foreach ($column in $dictColumns)
-  "${column.code}"#if ($foreach.last)#else,#end
+  "${column.dictCode}"#if ($foreach.last)#else,#end
   #end
 );
 #end
@@ -119,7 +119,7 @@ const formModel = reactive({
 const formRules = reactive({
 #foreach ($column in $columns)
   #if (($column.isCreate || $column.isUpdate) && !${column.isPk} && ${column.isRequired})
-  ${column.javaField}: [{ required: true, message: t("${table.businessName}.required.${column.javaField}"), trigger: "blur" }]#if ($foreach.last)#else,#end
+  ${column.javaField}: [{ required: true, message: t("${i18nBusinessName}.required.${column.javaField}"), trigger: "blur" }]#if ($foreach.last)#else,#end
   #end
 #end
 });

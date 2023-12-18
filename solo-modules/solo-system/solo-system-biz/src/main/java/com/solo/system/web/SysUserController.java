@@ -3,6 +3,8 @@ package com.solo.system.web;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.global.R;
+import com.solo.common.logger.annotation.Logger;
+import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
 import com.solo.system.api.entity.SysUser;
 import com.solo.system.model.user.SysUserConvert;
@@ -29,12 +31,13 @@ public class SysUserController {
     private SysUserService sysUserService;
 
     /**
-     * 新增用户
+     * 创建用户
      * @param req 用户新增对象
      * @return 响应信息
      */
     @PostMapping
     @SaCheckPermission("system-user-create")
+    @Logger(value = "创建用户", type = LoggerType.CREATE)
     public R<Boolean> create(@Valid @RequestBody UserCreateReq req) {
         SysUser entity = SysUserConvert.INSTANCE.convert(req);
         return R.success(sysUserService.create(entity));
@@ -47,6 +50,7 @@ public class SysUserController {
      */
     @DeleteMapping("/{userId}")
     @SaCheckPermission("system-user-delete")
+    @Logger(value = "删除用户", type = LoggerType.DELETE)
     public R<Boolean> delete(@PathVariable Long userId) {
         return R.success(sysUserService.removeById(userId));
     }
@@ -58,18 +62,20 @@ public class SysUserController {
      */
     @PutMapping
     @SaCheckPermission("system-user-update")
+    @Logger(value = "更新用户", type = LoggerType.UPDATE)
     public R<Boolean> update(@Valid @RequestBody UserUpdateReq req) {
         SysUser entity = SysUserConvert.INSTANCE.convert(req);
         return R.success(sysUserService.update(entity));
     }
 
     /**
-     * 获取用户
+     * 获取用户信息
      * @param userId 用户id
      * @return 响应信息
      */
     @GetMapping("/{userId}")
-    @SaCheckPermission("system-user-select")
+    @SaCheckPermission("system-user-query")
+    @Logger(value = "获取用户信息", type = LoggerType.QUERY)
     public R<UserGetResp> get(@PathVariable Long userId) {
         return R.success(SysUserConvert.INSTANCE.convertGet(sysUserService.getById(userId)));
     }
@@ -81,7 +87,8 @@ public class SysUserController {
      * @return 响应信息
      */
     @GetMapping("/page")
-    @SaCheckPermission("system-user-select")
+    @SaCheckPermission("system-user-query")
+    @Logger(value = "分页查询用户列表", type = LoggerType.QUERY)
     public R<Page<SysUser>> page(Page<SysUser> page, UserQueryReq req) {
         Page<SysUser> list = sysUserService.page(page, Wrappers.buildWhere(req));
         return R.success(list);

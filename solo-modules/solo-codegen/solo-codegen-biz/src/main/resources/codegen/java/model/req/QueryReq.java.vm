@@ -1,8 +1,35 @@
 package ${table.packageName}.model.${table.businessName}.req;
 
+#foreach ($column in $columns)
+    #if (${column.isQuery})
+        #if ($column.queryMode != 'EQ')
+            #set ($isQueryMode = 'import com.solo.common.orm.core.query.enums.QueryMode;')
+        #end
+        #if($column.javaType == 'LOCAL_DATE_TIME')
+            #set ($isLocalDateTime = 'import java.time.LocalDateTime;')
+        #elseif ($column.javaType == 'LOCAL_DATE')
+            #set ($isLocalDate = 'import java.time.LocalDate;')
+        #elseif ($column.javaType == 'LOCAL_TIME')
+            #set ($isLocalTime = 'import java.time.LocalTime;')
+        #end
+    #end
+#end
 import com.solo.common.orm.core.query.anno.Query;
 import com.solo.common.orm.core.query.anno.Wrappers;
+#if ("$!isQueryMode" != "")
+${isQueryMode}
+#end
 import lombok.Data;
+
+#if ("$!isLocalDate" != "")
+${isLocalDate}
+#end
+#if ("$!isLocalDateTime" != "")
+${isLocalDateTime}
+#end
+#if ("$!isLocalTime" != "")
+${isLocalTime}
+#end
 
 /**
  * ${table.functionName}查询对象 req
@@ -26,16 +53,11 @@ public class ${modelClassName}QueryReq {
     private ${column.javaType.getValue()} ${column.javaField};
     #elseif ($column.queryMode == 'BETWEEN')
     /**
-     * 开始${column.javaComment}
+     * ${column.javaComment}区间[开始时间,结束时间]
      */
-    @Query(mode = QueryMode.GE, value = "${column.name}")
-    private ${column.javaType.getValue()} start${StringUtils.upperFirst(${column.javaField})};
+    @Query(mode = QueryMode.BETWEEN)
+    private ${column.javaType.getValue()}[] ${column.javaField};
 
-    /**
-     * 结束${column.javaComment}
-     */
-    @Query(mode = QueryMode.LE, value = "${column.name}")
-    private ${column.javaType.getValue()} end${StringUtils.upperFirst(${column.javaField})};
     #else
     /**
      * ${column.javaComment}

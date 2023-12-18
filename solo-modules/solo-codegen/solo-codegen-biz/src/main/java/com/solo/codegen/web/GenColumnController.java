@@ -32,7 +32,7 @@ public class GenColumnController {
      * @return 响应信息
      */
     @GetMapping("/{tableId}")
-    @SaCheckPermission("codegen-table-select")
+    @SaCheckPermission("codegen-table-query")
     public R<List<ColumnListResp>> listSimple(@PathVariable String tableId) {
         return R.success(genColumnService.queryChain().where(GenColumnTable.TableId.eq(tableId)).listAs(ColumnListResp.class));
     }

@@ -11,7 +11,7 @@ import com.solo.system.model.dept.req.DeptQueryReq;
 import com.solo.system.model.dept.req.DeptUpdateReq;
 import com.solo.system.model.dept.resp.DeptGetResp;
 import com.solo.system.model.dept.resp.DeptListResp;
-import com.solo.system.model.dept.resp.DeptListSimpleResp;
+import com.solo.system.model.dept.resp.DeptSimpleResp;
 import com.solo.system.service.SysDeptService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -73,7 +73,7 @@ public class SysDeptController {
      * @return 响应信息
      */
     @GetMapping("/{deptId}")
-    @SaCheckPermission("system-dept-select")
+    @SaCheckPermission("system-dept-query")
     public R<DeptGetResp> get(@PathVariable Long deptId) {
         return R.success(SysDeptConvert.INSTANCE.convertGet(sysDeptService.getById(deptId)));
     }
@@ -83,9 +83,9 @@ public class SysDeptController {
      * @return 响应信息
      */
     @GetMapping("/list-simple")
-    @SaCheckPermission("system-dept-select")
-    public R<List<DeptListSimpleResp>> listSimple() {
-        return R.success(sysDeptService.listAs(DeptListSimpleResp.class));
+    @SaCheckPermission("system-dept-query")
+    public R<List<DeptSimpleResp>> listSimple() {
+        return R.success(sysDeptService.listAs(DeptSimpleResp.class));
     }
 
     /**
@@ -94,7 +94,7 @@ public class SysDeptController {
      * @return 响应信息
      */
     @GetMapping("/list")
-    @SaCheckPermission("system-dept-select")
+    @SaCheckPermission("system-dept-query")
     public R<List<DeptListResp>> list(DeptQueryReq req) {
         QueryWrapper queryWrapper = Wrappers.buildWhere(req);
         return R.success(sysDeptService.listAs(queryWrapper, DeptListResp.class));

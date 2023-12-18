@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.solo</groupId>
-            <artifactId>solo-system-api</artifactId>
+            <artifactId>solo-common-rpc</artifactId>
         </dependency>
     </dependencies>
 </project>

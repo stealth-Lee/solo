@@ -1,5 +1,6 @@
 package com.solo.system.model.dict.data.req;
 
+import com.solo.system.api.constant.dict.TagType;
 import com.solo.system.api.constant.global.GlobalStatus;
 import lombok.Data;
 
@@ -31,6 +32,16 @@ public class DictDataUpdateReq {
      * 字典标签
      */
     private String label;
+
+    /**
+     * 标签类型
+     */
+    private TagType tagType;
+
+    /**
+     * 标签样式
+     */
+    private String tagClass;
 
     /**
      * 字典排序

@@ -23,5 +23,9 @@
             <groupId>com.solo</groupId>
             <artifactId>solo-in-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-common-security</artifactId>
+        </dependency>
     </dependencies>
 </project>

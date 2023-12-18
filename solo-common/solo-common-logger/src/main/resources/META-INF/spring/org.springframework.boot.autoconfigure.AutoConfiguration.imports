@@ -1,0 +1,2 @@
+com.solo.common.logger.aspect.LoggerAspect
+com.solo.common.logger.listener.LoggerListener

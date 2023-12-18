@@ -2,6 +2,9 @@ package com.solo.in.api.entity;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * 通用翻译实体类
  * @author 十一
@@ -9,7 +12,10 @@ import lombok.Data;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Data
-public class UniversalTranslation {
+public class UniversalTranslation implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * 翻译源语言,可设置为auto

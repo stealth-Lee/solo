@@ -4,7 +4,7 @@ import com.mybatisflex.core.FlexGlobalConfig;
 import com.mybatisflex.core.mybatis.FlexConfiguration;
 import com.mybatisflex.spring.boot.ConfigurationCustomizer;
 import com.mybatisflex.spring.boot.MyBatisFlexCustomizer;
-import com.solo.common.orm.base.entity.BasicEntity;
+import com.solo.common.core.base.entity.BasicEntity;
 import com.solo.common.orm.listener.SoloFlexListener;
 import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

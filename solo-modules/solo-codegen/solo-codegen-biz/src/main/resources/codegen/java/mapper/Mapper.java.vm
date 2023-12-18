@@ -1,7 +1,8 @@
 package ${table.packageName}.mapper;
 
 import ${table.packageName}.api.entity.${table.className};
-import com.solo.common.orm.base.mapper.BasicMapper;
+import com.solo.common.core.base.mapper.BasicMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * ${table.functionName} Mapper
@@ -11,6 +12,7 @@ import com.solo.common.orm.base.mapper.BasicMapper;
  * ${table.classTail}
 #end
  **/
+@Mapper
 public interface ${table.className}Mapper extends BasicMapper<${table.className}> {
 
 }

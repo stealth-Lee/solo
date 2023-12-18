@@ -1,6 +1,6 @@
 package com.solo.common.orm.core.converter;
 
-import com.solo.common.orm.base.enums.BasicDict;
+import com.solo.common.core.base.enums.BasicDict;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 

@@ -2,7 +2,7 @@ package com.solo.system.api.constant.global;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.mybatisflex.annotation.EnumValue;
-import com.solo.common.orm.base.enums.BasicDict;
+import com.solo.common.core.base.enums.BasicDict;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

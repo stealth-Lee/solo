@@ -49,7 +49,7 @@ export const getting = (${primaryColumn.javaField}: ${type}) => {
   return http.get<${modelClassName}Req>(baseUrlApi("/${table.moduleName}/${businessName}/" + ${primaryColumn.javaField}));
 };
 
-#if ($table.tplType == 'TREE_TABLE')
+#if ($table.tplType != 'TREE_TABLE')
 // 获取${table.functionName}信息分页列表
 export const paging = (params?: object) => {
   return http.get<${modelClassName}Req>(baseUrlApi("/${table.moduleName}/${businessName}/page"), { params });

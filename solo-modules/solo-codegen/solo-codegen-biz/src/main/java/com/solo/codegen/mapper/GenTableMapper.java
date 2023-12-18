@@ -1,7 +1,7 @@
 package com.solo.codegen.mapper;
 
 import com.solo.codegen.api.entity.GenTable;
-import com.solo.common.orm.base.mapper.BasicMapper;
+import com.solo.common.core.base.mapper.BasicMapper;
 
 /**
  * 代码生成业务表Mapper接口

@@ -1,7 +1,7 @@
 package com.solo.codegen.service;
 
 import com.solo.codegen.api.entity.GenDatasource;
-import com.solo.common.orm.base.service.BasicService;
+import com.solo.common.core.base.service.BasicService;
 
 /**
  * 代码生成数据源Service接口类

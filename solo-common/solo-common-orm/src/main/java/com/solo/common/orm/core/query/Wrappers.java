@@ -70,6 +70,15 @@ public class Wrappers {
             case GE -> column.ge(fieldValue);
             case LT -> column.lt(fieldValue);
             case LE -> column.le(fieldValue);
+            case BETWEEN -> {
+                try {
+                    Object[] values = (Object[]) fieldValue;
+                    yield column.between(values[0], values[1]);
+                } catch (Exception e) {
+                    // TODO 这里异常优化一下
+                    throw new RuntimeException("BETWEEN 模式下，字段值必须为数组");
+                }
+            }
             case LIKE -> column.like(fieldValue);
             case NOT_LIKE -> column.notLike(fieldValue);
             case LIKE_LEFT -> column.likeLeft(fieldValue);

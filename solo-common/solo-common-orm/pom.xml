@@ -13,14 +13,16 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.mybatis-flex</groupId>
-			<artifactId>mybatis-flex-spring-boot-starter</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.mybatis</groupId>
-					<artifactId>mybatis-spring</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>com.solo</groupId>
+			<artifactId>solo-common-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.solo</groupId>
+			<artifactId>solo-common-rpc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.solo</groupId>
+			<artifactId>solo-common-satoken</artifactId>
 		</dependency>
 
 		<!-- 解决SpringBoot3.2.0和mybatis不兼容，启动报错Invalid value type for attribute ‘factoryBeanObjectType‘: java.lang.String  -->
@@ -56,16 +58,6 @@
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.solo</groupId>
-			<artifactId>solo-common-core</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.solo</groupId>
-			<artifactId>solo-common-rpc</artifactId>
 		</dependency>
 	</dependencies>
 

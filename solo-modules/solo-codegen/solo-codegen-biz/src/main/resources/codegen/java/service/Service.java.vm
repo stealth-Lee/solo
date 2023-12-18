@@ -1,7 +1,7 @@
 package ${table.packageName}.service;
 
 import ${table.packageName}.api.entity.${table.className};
-import com.solo.common.orm.base.service.BasicService;
+import com.solo.common.core.base.service.BasicService;
 
 /**
  * ${table.functionName} Service

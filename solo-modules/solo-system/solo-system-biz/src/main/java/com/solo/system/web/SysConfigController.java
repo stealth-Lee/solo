@@ -78,13 +78,13 @@ public class SysConfigController {
      * @return 响应信息
      */
     @GetMapping("/{configId}")
-    @SaCheckPermission("system-config-select")
+    @SaCheckPermission("system-config-query")
     public R<ConfigGetResp> get(@PathVariable Long configId) {
         return R.success(SysConfigConvert.INSTANCE.convertGet(sysConfigService.getById(configId)));
     }
 
     @GetMapping("/key/{key}")
-    @SaCheckPermission("system-config-select")
+    @SaCheckPermission("system-config-query")
     public R<SysConfig> selectConfigByKey(@PathVariable String key) {
         return R.success(sysConfigService.queryChain().where(SysConfigTable.Key.eq(key)).one());
     }
@@ -97,7 +97,7 @@ public class SysConfigController {
      */
     @Runtime
     @GetMapping("/page")
-    @SaCheckPermission("system-config-select")
+    @SaCheckPermission("system-config-query")
     public R<Page<ConfigListResp>> page(Page<ConfigListResp> page, ConfigQueryReq req) {
         Page<ConfigListResp> list = sysConfigService.pageAs(page, Wrappers.buildWhere(req), ConfigListResp.class);
         return R.success(list);

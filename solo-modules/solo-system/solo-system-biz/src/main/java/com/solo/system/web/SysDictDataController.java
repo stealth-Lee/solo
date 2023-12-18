@@ -110,7 +110,7 @@ public class SysDictDataController {
      * @return 响应信息
      */
     @GetMapping("/{dataId}")
-    @SaCheckPermission("system-dict-select")
+    @SaCheckPermission("system-dict-query")
     public R<DictDataGetResp> get(@PathVariable("dataId") Long dataId) {
         return R.success(SysDictDataConvert.INSTANCE.convertGet(sysDictDataService.getById(dataId)));
     }
@@ -122,7 +122,7 @@ public class SysDictDataController {
      * @return 响应信息
      */
     @GetMapping("/page")
-    @SaCheckPermission("system-dict-select")
+    @SaCheckPermission("system-dict-query")
     public R<Page<DictDataListResp>> page(Page<DictDataListResp> page, DictDataQueryReq req) {
         Page<DictDataListResp> list = sysDictDataService.pageAs(page, Wrappers.buildWhere(req), DictDataListResp.class);
         return R.success(list);
