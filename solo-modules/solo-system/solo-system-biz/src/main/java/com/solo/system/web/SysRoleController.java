@@ -3,6 +3,8 @@ package com.solo.system.web;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.global.R;
+import com.solo.common.logger.annotation.Logger;
+import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
 import com.solo.system.api.entity.SysRole;
 import com.solo.system.model.role.SysRoleConvert;
@@ -39,6 +41,7 @@ public class SysRoleController {
      */
     @PostMapping
     @SaCheckPermission("system-role-create")
+    @Logger(value = "新增角色", type = LoggerType.CREATE)
     public R<Boolean> create(@Valid @RequestBody RoleCreateReq req) {
         SysRole entity = SysRoleConvert.INSTANCE.convert(req);
         return R.success(sysRoleService.create(entity));
@@ -51,6 +54,7 @@ public class SysRoleController {
      */
     @DeleteMapping("/{roleIds}")
     @SaCheckPermission("system-role-delete")
+    @Logger(value = "删除角色", type = LoggerType.DELETE)
     public R<Boolean> delete(@PathVariable Long[] roleIds) {
         return R.success(sysRoleService.removeByIds(Arrays.asList(roleIds)));
     }
@@ -62,6 +66,7 @@ public class SysRoleController {
      */
     @PutMapping
     @SaCheckPermission("system-role-update")
+    @Logger(value = "更新角色", type = LoggerType.UPDATE)
     public R<Boolean> update(@Valid @RequestBody RoleUpdateReq req) {
         SysRole entity = SysRoleConvert.INSTANCE.convert(req);
         return R.success(sysRoleService.update(entity));
@@ -74,6 +79,7 @@ public class SysRoleController {
      */
     @PutMapping("/update-status")
     @SaCheckPermission("system-role-update")
+    @Logger(value = "角色状态切换", type = LoggerType.UPDATE)
     public R<Boolean> updateStatus(@Valid @RequestBody RoleUpdateStatusReq req) {
         SysRole entity = SysRoleConvert.INSTANCE.convert(req);
         return R.success(sysRoleService.updateById(entity));

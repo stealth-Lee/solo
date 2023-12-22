@@ -43,6 +43,11 @@ public class GenColumn extends BasicEntity {
     private String type;
 
     /**
+     * 列长度
+     */
+    private Integer length;
+
+    /**
      * 列排序
      */
     private Integer sort;

@@ -3,6 +3,8 @@ package com.solo.system.web;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.solo.common.core.global.R;
+import com.solo.common.logger.annotation.Logger;
+import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
 import com.solo.system.api.entity.SysDept;
 import com.solo.system.model.dept.SysDeptConvert;
@@ -39,6 +41,7 @@ public class SysDeptController {
      */
     @PostMapping
     @SaCheckPermission("system-dept-create")
+    @Logger(value = "创建部门", type = LoggerType.CREATE)
     public R<Boolean> create(@Valid @RequestBody DeptCreateReq req) {
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(req);
         return R.success(sysDeptService.create(sysDept));
@@ -51,6 +54,7 @@ public class SysDeptController {
      */
     @DeleteMapping("/{deptId}")
     @SaCheckPermission("system-dept-delete")
+    @Logger(value = "删除部门", type = LoggerType.DELETE)
     public R<Boolean> delete(@PathVariable Long deptId) {
         return R.success(sysDeptService.delete(deptId));
     }
@@ -62,6 +66,7 @@ public class SysDeptController {
      */
     @PutMapping
     @SaCheckPermission("system-dept-update")
+    @Logger(value = "更新部门", type = LoggerType.UPDATE)
     public R<Boolean> update(@Valid @RequestBody DeptUpdateReq req) {
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(req);
         return R.success(sysDeptService.update(sysDept));

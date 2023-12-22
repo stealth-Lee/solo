@@ -1,5 +1,6 @@
 package com.solo.system.model.role.req;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,6 +17,7 @@ public class RoleUpdateReq extends RoleCreateReq {
     /**
      * 角色id
      */
+    @NotNull(message = "{role.required.roleId}")
     private Long roleId;
 
 }

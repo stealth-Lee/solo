@@ -80,7 +80,11 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenuMapper, SysMenu>
             meta.put(Meta.SHOW_LINK, menu.getVisible());
             meta.put(Meta.SHOW_PARENT, true);
             meta.put(Meta.ROLES, null);
-            meta.put(Meta.AUTHS, null);
+            List<String> auths = QueryChain.of(mapper).select(SysMenuTable.Permission).from(SysMenuTable)
+                    .where(SysMenuTable.ParentId.eq(menu.getMenuId()))
+                    // TODO 此处修改成枚举
+                    .and(SysMenuTable.Type.eq("B")).listAs(String.class);
+            meta.put(Meta.AUTHS, auths);
             meta.put(Meta.KEEP_ALIVE, menu.getKeepAlive());
             meta.put(Meta.FRAME_SRC, null);
             meta.put(Meta.FRAME_LOADING, null);

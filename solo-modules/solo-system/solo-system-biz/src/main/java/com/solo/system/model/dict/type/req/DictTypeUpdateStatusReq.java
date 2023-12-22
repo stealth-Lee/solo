@@ -12,17 +12,16 @@ import lombok.Data;
  **/
 @Data
 public class DictTypeUpdateStatusReq {
-
     /**
      * 字典类型id
      */
-    @NotNull(message = "字典类型id不能为空")
+    @NotNull(message = "{dictType.required.typeId}")
     private Long typeId;
 
     /**
      * 状态[0停用 1正常]
      */
-    @NotNull(message = "状态[0停用 1正常]不能为空")
+    @NotNull(message = "{dictType.required.status}")
     private GlobalStatus status;
 
 }

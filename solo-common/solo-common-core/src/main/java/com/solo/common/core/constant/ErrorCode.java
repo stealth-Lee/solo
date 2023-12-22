@@ -1,5 +1,7 @@
 package com.solo.common.core.constant;
 
+import com.solo.common.core.utils.MessageUtils;
+
 /**
  * 错误代码接口
  * @author 十一
@@ -14,13 +16,15 @@ public interface ErrorCode {
     Integer code();
 
     /**
-     * 消息提示
-     */
-    String message();
-
-    /**
-     * i18n资源文件的key TODO 未实现
+     * i18n资源文件的key
      */
     String i18nKey();
+
+    /**
+     * i18n资源文件的value
+     */
+    default String message() {
+        return MessageUtils.getMessage(i18nKey());
+    }
 
 }

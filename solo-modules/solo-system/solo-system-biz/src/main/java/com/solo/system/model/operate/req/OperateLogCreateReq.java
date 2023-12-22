@@ -1,5 +1,7 @@
 package com.solo.system.model.operate.req;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -14,6 +16,8 @@ public class OperateLogCreateReq {
     /**
      * 日志标题
      */
+    @NotEmpty(message = "{operateLog.requ.title}")
+    @Size(message = "{operateLog.size.title}", max = 32)
     private String title;
 
     /**

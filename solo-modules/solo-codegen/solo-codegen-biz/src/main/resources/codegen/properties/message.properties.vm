@@ -1,0 +1,19 @@
+#foreach ($column in $i18nColumns)
+#if ($column.isList || $column.isQuery || $column.isCreate || $column.isUpdate)
+${i18nBusinessName}.column.${column.javaField}=${column.javaComment}
+#end
+#end
+
+#foreach ($column in $i18nColumns)
+#if (($column.isCreate || $column.isUpdate) && $column.isRequired)
+${i18nBusinessName}.required.${column.javaField}=${column.javaComment}${i18nNotNullMessage}
+#end
+#end
+
+#foreach ($column in $i18nColumns)
+#if (($column.isList || $column.isQuery || $column.isCreate || $column.isUpdate) && !$column.isPk)
+#if ($column.javaType == 'STRING')
+${i18nBusinessName}.size.${column.javaField}=${column.javaComment}${i18nSize}
+#end
+#end
+#end

@@ -1,5 +1,6 @@
 package com.solo.system.model.user.req;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,6 +17,7 @@ public class UserUpdateReq extends UserCreateReq {
     /**
      * 用户id
      */
+    @NotNull(message = "{user.required.userId}")
     private Long userId;
 
 }

@@ -1,6 +1,7 @@
 package com.solo.system.model.dept.req;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -17,31 +18,32 @@ public class DeptCreateReq {
     /**
      * 父级部门id
      */
+    @NotNull(message = "{dept.required.parentId}")
     private Long parentId;
 
     /**
      * 部门名称
      */
-    @NotBlank(message = "部门名称不能为空")
-    @Size(max = 32, message = "部门名称长度不能超过32个字符")
+    @NotEmpty(message = "{dept.required.name}")
+    @Size(message = "{dept.size.name}", max = 32)
     private String name;
 
     /**
      * 部门编码
      */
-    @NotBlank(message = "部门编码不能为空")
-    @Size(max = 32, message = "部门编码长度不能超过32个字符")
+    @NotBlank(message = "{dept.required.code}")
+    @Size(message = "{dept.size.code}", max = 32)
     private String code;
 
     /**
      * 部门排序
      */
-    @NotNull(message = "部门排序不能为空")
     private Integer sort;
 
     /**
      * 备注
      */
+    @Size(message = "{dept.size.remark}", max = 512)
     private String remark;
 
 }

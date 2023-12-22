@@ -4,6 +4,8 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.solo.common.core.global.R;
+import com.solo.common.logger.annotation.Logger;
+import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
 import com.solo.system.api.constant.global.GlobalStatus;
 import com.solo.system.api.entity.SysDictData;
@@ -46,6 +48,7 @@ public class SysDictDataController {
      */
     @PostMapping
     @SaCheckPermission("system-dict-create")
+    @Logger(value = "新增字典数据", type = LoggerType.CREATE)
     public R<Boolean> create(@Valid @RequestBody DictDataCreateReq req) {
         SysDictData entity = SysDictDataConvert.INSTANCE.convert(req);
         return R.success(sysDictDataService.save(entity));
@@ -58,6 +61,7 @@ public class SysDictDataController {
      */
     @DeleteMapping("/{dataIds}")
     @SaCheckPermission("system-dict-delete")
+    @Logger(value = "删除字典数据", type = LoggerType.DELETE)
     public R<Boolean> delete(@PathVariable Long[] dataIds) {
         return R.success(sysDictDataService.removeByIds(Arrays.asList(dataIds)));
     }
@@ -69,6 +73,7 @@ public class SysDictDataController {
      */
     @PutMapping("/update-status")
     @SaCheckPermission("system-dict-update-status")
+    @Logger(value = "字典数据状态切换", type = LoggerType.UPDATE)
     public R<Boolean> updateStatus(@Valid @RequestBody DictDataUpdateStatusReq req) {
         SysDictData entity = SysDictDataConvert.INSTANCE.convert(req);
         return R.success(sysDictDataService.updateById(entity));
@@ -81,6 +86,7 @@ public class SysDictDataController {
      */
     @PutMapping
     @SaCheckPermission("system-dict-update")
+    @Logger(value = "更新字典数据", type = LoggerType.UPDATE)
     public R<Boolean> update(@Valid @RequestBody DictDataUpdateReq req) {
         SysDictData entity = SysDictDataConvert.INSTANCE.convert(req);
         return R.success(sysDictDataService.updateById(entity));

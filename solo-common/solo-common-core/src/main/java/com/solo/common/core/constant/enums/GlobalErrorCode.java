@@ -10,39 +10,32 @@ import com.solo.common.core.constant.ErrorCode;
  **/
 public enum GlobalErrorCode implements ErrorCode {
 
-    SUCCESS(0, "操作成功", "success"),
-    FAILED(1, "操作失败", "failed"),
+    SUCCESS(0, "success"),
+    FAILED(1, "failed"),
 
     // 客户端错误
-    BAD_REQUEST(400, "非法请求", "bad_request"),
-    UNAUTHORIZED(401, "认证失败", "unauthorized"),
-    FORBIDDEN(403, "没有访问权限", "forbidden"),
-    NOT_FOUND(404, "请求未找到", "not_found"),
-    METHOD_NOT_ALLOWED(405, "请求方法不正确", "method_not_allowed"),
-    REQUEST_TIME_OUT(408, "请求超时", "request_time_out"),
+    BAD_REQUEST(400, "badRequest"),
+    UNAUTHORIZED(401, "unauthorized"),
+    FORBIDDEN(403, "forbidden"),
+    NOT_FOUND(404, "notFound"),
+    METHOD_NOT_ALLOWED(405, "methodNotAllowed"),
+    REQUEST_TIME_OUT(408, "requestTimeOut"),
 
     //
-    ERROR(500, "系统异常", "error");
+    ERROR(500, "error");
 
     private final Integer code;
-    private final String message;
     private final String i18nKey;
 
 
-    GlobalErrorCode(Integer code, String message, String i18nKey) {
+    GlobalErrorCode(Integer code, String i18nKey) {
         this.code = code;
-        this.message = message;
         this.i18nKey = i18nKey;
     }
 
     @Override
     public Integer code() {
         return this.code;
-    }
-
-    @Override
-    public String message() {
-        return this.message;
     }
 
     @Override

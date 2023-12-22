@@ -10,6 +10,7 @@ import com.solo.system.api.entity.SysUser;
 import com.solo.system.model.user.SysUserConvert;
 import com.solo.system.model.user.req.UserCreateReq;
 import com.solo.system.model.user.req.UserQueryReq;
+import com.solo.system.model.user.req.UserResetPasswordReq;
 import com.solo.system.model.user.req.UserUpdateReq;
 import com.solo.system.model.user.resp.UserGetResp;
 import com.solo.system.service.SysUserService;
@@ -56,6 +57,19 @@ public class SysUserController {
     }
 
     /**
+     * 重置密码
+     * @param req 重置密码对象
+     * @return 响应信息
+     */
+    @PutMapping("/reset-password")
+    @SaCheckPermission("system-user-reset-password")
+    @Logger(value = "重置密码", type = LoggerType.UPDATE)
+    public R<Boolean> resetPassword(@Valid @RequestBody UserResetPasswordReq req) {
+        sysUserService.resetPassword(req);
+        return R.success(true);
+    }
+
+    /**
      * 更新用户
      * @param req 用户更新对象
      * @return 响应信息
@@ -75,7 +89,6 @@ public class SysUserController {
      */
     @GetMapping("/{userId}")
     @SaCheckPermission("system-user-query")
-    @Logger(value = "获取用户信息", type = LoggerType.QUERY)
     public R<UserGetResp> get(@PathVariable Long userId) {
         return R.success(SysUserConvert.INSTANCE.convertGet(sysUserService.getById(userId)));
     }
@@ -88,7 +101,6 @@ public class SysUserController {
      */
     @GetMapping("/page")
     @SaCheckPermission("system-user-query")
-    @Logger(value = "分页查询用户列表", type = LoggerType.QUERY)
     public R<Page<SysUser>> page(Page<SysUser> page, UserQueryReq req) {
         Page<SysUser> list = sysUserService.page(page, Wrappers.buildWhere(req));
         return R.success(list);

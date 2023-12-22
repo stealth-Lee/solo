@@ -1,5 +1,6 @@
 package com.solo.system.model.dict.type.req;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,6 +17,7 @@ public class DictTypeUpdateReq extends DictTypeCreateReq {
         /**
         * 字典类型id
         */
+        @NotNull(message = "{dictType.required.typeId}")
         private Long typeId;
 
 }

@@ -34,4 +34,9 @@ public class Symbols {
      * 冒号
      */
     public static final String COLON = ":";
+
+    /**
+     * 连接符
+     */
+    public static final String HYPHEN = "-";
 }

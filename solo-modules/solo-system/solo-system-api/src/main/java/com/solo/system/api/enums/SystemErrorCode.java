@@ -13,23 +13,16 @@ public enum SystemErrorCode implements ErrorCode {
     ;
 
     private final Integer code;
-    private final String message;
     private final String i18nKey;
 
-    SystemErrorCode(Integer code, String message, String i18nKey) {
+    SystemErrorCode(Integer code, String i18nKey) {
         this.code = code;
-        this.message = message;
         this.i18nKey = i18nKey;
     }
 
     @Override
     public Integer code() {
         return this.code;
-    }
-
-    @Override
-    public String message() {
-        return this.message;
     }
 
     @Override

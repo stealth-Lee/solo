@@ -1,3 +1,4 @@
+#set ($auth = "${table.moduleName}-${StringUtils.replace(${table.businessName}, '.', '-')}-")
 <template>
   <div class="main">
     <!-- 搜索工作栏 -->
@@ -92,6 +93,7 @@
       <el-form-item>
         <el-tooltip :content="$t('buttons.common.search')" placement="top">
           <el-button
+            v-auth="['${auth}query']"
             :icon="useRenderIcon('ep:search')"
             :loading="props.loading"
             @click="handleQuery"
@@ -120,6 +122,7 @@
     >
       <template #buttons>
         <el-button
+          v-auth="['${auth}create']"
           type="primary"
           :icon="useRenderIcon('ep:plus')"
           @click="handleCreate()"
@@ -128,6 +131,7 @@
           {{ t("buttons.common.create") }}
         </el-button>
         <el-button
+          v-auth="['${auth}update']"
           type="success"
           :icon="useRenderIcon('ep:edit-pen')"
           @click="handleUpdate()"
@@ -144,6 +148,7 @@
         >
           <template #reference>
             <el-button
+              v-auth="['${auth}delete']"
               type="danger"
               :icon="useRenderIcon('ep:delete')"
               :disabled="props.multiple"
@@ -154,6 +159,7 @@
           </template>
         </el-popconfirm>
         <el-button
+          v-auth="['${auth}import']"
           type="info"
           :icon="useRenderIcon('ep:upload')"
           @click="handleUpdate()"
@@ -162,6 +168,7 @@
           {{ t("buttons.common.import") }}
         </el-button>
         <el-button
+          v-auth="['${auth}export']"
           type="warning"
           :icon="useRenderIcon('ep:download')"
           @click="handleUpdate()"
@@ -199,6 +206,7 @@
         >
           <template #operation="{ row }">
             <el-button
+              v-auth="['${auth}update']"
               class="reset-margin"
               link
               type="primary"
@@ -216,6 +224,7 @@
             >
               <template #reference>
                 <el-button
+                  v-auth="['${auth}delete']"
                   class="reset-margin"
                   link
                   type="danger"

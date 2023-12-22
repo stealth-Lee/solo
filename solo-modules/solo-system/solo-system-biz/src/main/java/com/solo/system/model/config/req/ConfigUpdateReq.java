@@ -1,5 +1,6 @@
 package com.solo.system.model.config.req;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -9,36 +10,12 @@ import lombok.Data;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Data
-public class ConfigUpdateReq {
+public class ConfigUpdateReq extends ConfigCreateReq {
 
     /**
      * 配置id
      */
+    @NotNull(message = "{config.required.configId}")
     private Long configId;
-
-    /**
-     * 配置名称
-     */
-    private String name;
-
-    /**
-     * 配置键
-     */
-    private String key;
-
-    /**
-     * 配置值
-     */
-    private String value;
-
-    /**
-     * 系统标识[0:否 1:是]
-     */
-    private Boolean isSys;
-
-    /**
-     * 备注
-     */
-    private String remark;
 
 }

@@ -26,7 +26,7 @@ public class LoggerListener {
         SysOperateLog sysLog = (SysOperateLog) event.getSource();
         long id = Thread.currentThread().getId();
         System.out.println("监听到日志操作事件：" + sysLog + " 线程id：" + id);
-        //将日志信息保存到数据库...
+        //将日志信息保存到数据库... TODO
         int save = sysOperateLogApi.save(sysLog);
     }
 

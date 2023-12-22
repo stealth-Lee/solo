@@ -33,4 +33,9 @@ public class FileSuffix {
      */
     public static final String YML = ".yml";
 
+    /**
+     * properties文件后缀
+     */
+    public static final String PROPERTIES = ".properties";
+
 }

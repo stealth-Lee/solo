@@ -3,6 +3,8 @@ package com.solo.system.web;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.global.R;
+import com.solo.common.logger.annotation.Logger;
+import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
 import com.solo.system.api.constant.global.GlobalStatus;
 import com.solo.system.api.entity.SysDictType;
@@ -43,6 +45,7 @@ public class SysDictTypeController {
      */
     @PostMapping
     @SaCheckPermission("system-dict-create")
+    @Logger(value = "新增字典类型", type = LoggerType.CREATE)
     public R<Boolean> create(@Valid @RequestBody DictTypeCreateReq req) {
         SysDictType entity = SysDictTypeConvert.INSTANCE.convert(req);
         return R.success(sysDictTypeService.create(entity));
@@ -55,6 +58,7 @@ public class SysDictTypeController {
      */
     @DeleteMapping("/{typeId}")
     @SaCheckPermission("system-dict-delete")
+    @Logger(value = "删除字典类型", type = LoggerType.DELETE)
     public R<Boolean> delete(@PathVariable Long typeId) {
         return R.success(sysDictTypeService.delete(typeId));
     }
@@ -66,6 +70,7 @@ public class SysDictTypeController {
      */
     @PutMapping("/update-status")
     @SaCheckPermission("system-dict-update-status")
+    @Logger(value = "字典类型状态切换", type = LoggerType.UPDATE)
     public R<Boolean> updateStatus(@Valid @RequestBody DictTypeUpdateStatusReq req) {
         SysDictType entity = SysDictTypeConvert.INSTANCE.convert(req);
         return R.success(sysDictTypeService.updateById(entity));
@@ -78,6 +83,7 @@ public class SysDictTypeController {
      */
     @PutMapping
     @SaCheckPermission("system-dict-update")
+    @Logger(value = "更新字典类型", type = LoggerType.UPDATE)
     public R<Boolean> update(@Valid @RequestBody DictTypeUpdateReq req) {
         SysDictType entity = SysDictTypeConvert.INSTANCE.convert(req);
         return R.success(sysDictTypeService.update(entity));

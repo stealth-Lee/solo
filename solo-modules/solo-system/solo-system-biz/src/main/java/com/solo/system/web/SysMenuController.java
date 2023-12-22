@@ -4,6 +4,8 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.lang.tree.Tree;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.solo.common.core.global.R;
+import com.solo.common.logger.annotation.Logger;
+import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
 import com.solo.satoken.utils.LoginHelper;
 import com.solo.system.api.SysRoleApi;
@@ -48,6 +50,7 @@ public class SysMenuController {
      */
     @PostMapping
     @SaCheckPermission("system-menu-create")
+    @Logger(value = "新增菜单", type = LoggerType.CREATE)
     public R<Boolean> create(@Valid @RequestBody MenuCreateReq req) {
         SysMenu entity = SysMenuConvert.INSTANCE.convert(req);
         return R.success(sysMenuService.save(entity));
@@ -60,6 +63,7 @@ public class SysMenuController {
      */
     @DeleteMapping("/{menuIds}")
     @SaCheckPermission("system-menu-delete")
+    @Logger(value = "删除菜单", type = LoggerType.DELETE)
     public R<Boolean> delete(@PathVariable Long[] menuIds) {
         return R.success(sysMenuService.removeByIds(Arrays.asList(menuIds)));
     }
@@ -71,6 +75,7 @@ public class SysMenuController {
      */
     @PutMapping
     @SaCheckPermission("system-menu-update")
+    @Logger(value = "更新菜单", type = LoggerType.UPDATE)
     public R<Boolean> update(@Valid @RequestBody MenuUpdateReq req) {
         SysMenu entity = SysMenuConvert.INSTANCE.convert(req);
         return R.success(sysMenuService.updateById(entity));

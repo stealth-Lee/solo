@@ -3,6 +3,7 @@ package ${table.packageName}.web;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.global.R;
+import com.solo.common.logger.annotation.Logger;
 import com.solo.common.orm.core.query.Wrappers;
 import ${table.packageName}.api.entity.${table.className};
 import ${table.packageName}.model.${table.businessName}.${table.className}Convert;
@@ -45,6 +46,7 @@ public class ${table.className}Controller {
      */
     @PostMapping
     @SaCheckPermission("${table.moduleName}-${businessName}-create")
+    @Logger(value = "新增${table.functionName}", type = LoggerType.CREATE)
     public R<Boolean> create(@Valid @RequestBody ${modelClassName}CreateReq req) {
         ${table.className} entity = ${table.className}Convert.INSTANCE.convert(req);
         return R.success(${className}Service.save(entity));
@@ -57,6 +59,7 @@ public class ${table.className}Controller {
      */
     @DeleteMapping("/{${primaryColumn.javaField}s}")
     @SaCheckPermission("${table.moduleName}-${businessName}-delete")
+    @Logger(value = "删除${table.functionName}", type = LoggerType.DELETE)
     public R<Boolean> delete(@PathVariable Long[] ${primaryColumn.javaField}s) {
         return R.success(${className}Service.removeByIds(Arrays.asList(${primaryColumn.javaField}s)));
     }
@@ -69,6 +72,7 @@ public class ${table.className}Controller {
      */
     @PutMapping("/update-status")
     @SaCheckPermission("${table.moduleName}-${businessName}-update-status")
+    @Logger(value = "${table.functionName}状态切换", type = LoggerType.UPDATE)
     public R<Boolean> updateStatus(@Valid @RequestBody ${modelClassName}UpdateStatusReq req) {
         ${table.className} entity = ${table.className}Convert.INSTANCE.convert(req);
         return R.success(${className}Service.updateById(entity));
@@ -82,6 +86,7 @@ public class ${table.className}Controller {
      */
     @PutMapping
     @SaCheckPermission("${table.moduleName}-${businessName}-update")
+    @Logger(value = "更新${table.functionName}", type = LoggerType.UPDATE)
     public R<Boolean> update(@Valid @RequestBody ${modelClassName}UpdateReq req) {
         ${table.className} entity = ${table.className}Convert.INSTANCE.convert(req);
         return R.success(${className}Service.updateById(entity));

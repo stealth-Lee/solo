@@ -16,13 +16,13 @@ public class DictDataUpdateStatusReq {
     /**
      * 字典数据id
      */
-    @NotNull(message = "字典数据id不能为空")
+    @NotNull(message = "{dictData.required.dataId}")
     private Long dataId;
 
     /**
      * 状态[0禁用 1正常]
      */
-    @NotNull(message = "状态[0禁用 1正常]不能为空")
+    @NotNull(message = "{dictData.required.status}")
     private GlobalStatus status;
 
 }

@@ -103,6 +103,7 @@ public class CodegenBuilder {
             genColumn.setTableId(tableId);
             genColumn.setName(column.getName());
             genColumn.setType(column.getRawType() + "(" + column.getRawLength() + ")");
+            genColumn.setLength(column.getRawLength());
             genColumn.setSort(index++);
             genColumn.setJavaType(StringUtils.isNotBlank(column.getPropertyType())
                     ? EnumUtil.getBy(JavaType::getValue, StringUtils.subAfter(column.getPropertyType(), Symbols.DOT, true))

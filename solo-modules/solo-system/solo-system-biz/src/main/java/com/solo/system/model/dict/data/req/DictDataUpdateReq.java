@@ -1,8 +1,8 @@
 package com.solo.system.model.dict.data.req;
 
-import com.solo.system.api.constant.dict.TagType;
-import com.solo.system.api.constant.global.GlobalStatus;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 字典数据修改对象
@@ -11,51 +11,13 @@ import lombok.Data;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Data
-public class DictDataUpdateReq {
+@EqualsAndHashCode(callSuper = true)
+public class DictDataUpdateReq extends DictDataCreateReq {
 
     /**
      * 字典数据id
      */
+    @NotNull(message = "{dictData.required.dataId}")
     private Long dataId;
-
-    /**
-     * 字典编码
-     */
-    private String code;
-
-    /**
-     * 字典键值
-     */
-    private String value;
-
-    /**
-     * 字典标签
-     */
-    private String label;
-
-    /**
-     * 标签类型
-     */
-    private TagType tagType;
-
-    /**
-     * 标签样式
-     */
-    private String tagClass;
-
-    /**
-     * 字典排序
-     */
-    private Integer dictSort;
-
-    /**
-     * 状态[0禁用 1正常]
-     */
-    private GlobalStatus status;
-
-    /**
-     * 备注
-     */
-    private String remark;
 
 }

@@ -16,13 +16,13 @@ public class RoleUpdateStatusReq {
     /**
      * 角色id
      */
-    @NotNull(message = "角色编号不能为空")
+    @NotNull(message = "{role.required.roleId}")
     private Long roleId;
 
     /**
      * 状态
      */
-    @NotNull(message = "角色状态不能为空")
+    @NotNull(message = "{role.required.status}")
     private GlobalStatus status;
 
 }

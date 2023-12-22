@@ -1,9 +1,28 @@
+#foreach ($column in $columns)
+    #if ($column.isCreate)
+        #if ($column.isRequired)
+            #if ($column.javaType == 'STRING')
+                #set ($importNotEmpty = 'import jakarta.validation.constraints.NotEmpty;')
+            #else
+                #set ($importNotNull = 'import jakarta.validation.constraints.NotNull;')
+            #end
+        #end
+        #if ($column.javaType == 'STRING')
+            #set ($importSize = 'import jakarta.validation.constraints.Size;')
+        #end
+    #end
+#end
 package ${table.packageName}.model.${table.businessName}.req;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+#if ("$!importNotEmpty" != "")
+${importNotEmpty}
+#end
+#if ("$!importNotNull" != "")
+${importNotNull}
+#end
+#if ("$!importSize" != "")
+${importSize}
+#end
 import lombok.Data;
 
 /**
@@ -22,6 +41,16 @@ public class ${modelClassName}UpdateReq {
     /**
      * ${column.javaComment}
      */
+    #if ($column.isRequired)
+    #if ($column.javaType == 'STRING')
+    @NotEmpty(message = "{${i18nBusinessName}.required.${column.javaField}}")
+    #else
+    @NotNull(message = "{${i18nBusinessName}.required.${column.javaField}}")
+    #end
+    #end
+    #if ($column.javaType == 'STRING')
+    @Size(message = "{${i18nBusinessName}.size.${column.javaField}}", max = ${column.length})
+    #end
     private ${column.javaType.getValue()} ${column.javaField};
 
     #end

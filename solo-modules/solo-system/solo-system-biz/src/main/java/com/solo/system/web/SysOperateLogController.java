@@ -3,6 +3,8 @@ package com.solo.system.web;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.global.R;
+import com.solo.common.logger.annotation.Logger;
+import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
 import com.solo.system.model.operate.SysOperateLogConvert;
 import com.solo.system.model.operate.req.OperateLogQueryReq;
@@ -34,6 +36,7 @@ public class SysOperateLogController {
      */
     @DeleteMapping("/{operateIds}")
     @SaCheckPermission("system-operate-log-delete")
+    @Logger(value = "删除操作日志", type = LoggerType.DELETE)
     public R<Boolean> delete(@PathVariable Long[] operateIds) {
         return R.success(sysOperateLogService.removeByIds(Arrays.asList(operateIds)));
     }

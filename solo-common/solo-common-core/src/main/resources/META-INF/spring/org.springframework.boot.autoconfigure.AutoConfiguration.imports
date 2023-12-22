@@ -1,2 +1,3 @@
 com.solo.common.core.config.JacksonConfig
 com.solo.common.core.config.WebMvcConfig
+com.solo.common.core.config.I18nConfig

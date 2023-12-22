@@ -4,6 +4,9 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.aop.annotation.Runtime;
 import com.solo.common.core.global.R;
+import com.solo.common.core.utils.MessageUtils;
+import com.solo.common.logger.annotation.Logger;
+import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
 import com.solo.system.api.entity.SysConfig;
 import com.solo.system.model.config.SysConfigConvert;
@@ -44,6 +47,7 @@ public class SysConfigController {
      */
     @PostMapping
     @SaCheckPermission("system-config-create")
+    @Logger(value = "创建系统配置", type = LoggerType.CREATE)
     public R<Boolean> create(@Valid @RequestBody ConfigCreateReq req) {
         SysConfig entity = SysConfigConvert.INSTANCE.convert(req);
         return R.success(sysConfigService.save(entity));
@@ -56,6 +60,7 @@ public class SysConfigController {
      */
     @SaCheckPermission("system-config-delete")
     @DeleteMapping("/{configIds}")
+    @Logger(value = "删除系统配置", type = LoggerType.DELETE)
     public R<Boolean> delete(@PathVariable Long[] configIds) {
         return R.success(sysConfigService.removeByIds(Arrays.asList(configIds)));
     }
@@ -67,6 +72,7 @@ public class SysConfigController {
      */
     @PutMapping
     @SaCheckPermission("system-config-update")
+    @Logger(value = "更新系统配置", type = LoggerType.UPDATE)
     public R<Boolean> update(@Valid @RequestBody ConfigUpdateReq req) {
         SysConfig entity = SysConfigConvert.INSTANCE.convert(req);
         return R.success(sysConfigService.updateById(entity));
@@ -105,12 +111,14 @@ public class SysConfigController {
 
     @PostMapping("/import")
     @SaCheckPermission("system-config-import")
+    @Logger(value = "导入系统配置", type = LoggerType.IMPORT)
     public void importExcel(MultipartFile file) throws IOException {
         sysConfigService.importExcel(file);
     }
 
     @GetMapping("export")
     @SaCheckPermission("system-config-export")
+    @Logger(value = "导出系统配置", type = LoggerType.EXPORT)
     public void exportExcel1(HttpServletResponse response, ConfigQueryReq req) throws IOException {
         sysConfigService.exportExcel(response, req);
     }

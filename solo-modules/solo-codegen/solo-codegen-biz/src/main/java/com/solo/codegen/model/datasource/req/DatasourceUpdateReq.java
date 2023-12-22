@@ -1,5 +1,6 @@
 package com.solo.codegen.model.datasource.req;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,6 +17,7 @@ public class DatasourceUpdateReq extends DatasourceCreateReq {
     /**
      * 数据源id
      */
+    @NotNull(message = "{datasource.required.sourceId}")
     private Long sourceId;
 
 }
