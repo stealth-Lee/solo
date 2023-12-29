@@ -1,6 +1,6 @@
 package com.solo.codegen.model.table.resp;
 
-import com.solo.codegen.api.constant.table.TplType;
+import com.solo.codegen.api.consts.table.TplType;
 import lombok.Data;
 
 /**

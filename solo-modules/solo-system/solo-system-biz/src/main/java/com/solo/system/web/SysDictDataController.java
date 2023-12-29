@@ -7,7 +7,7 @@ import com.solo.common.core.global.R;
 import com.solo.common.logger.annotation.Logger;
 import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
-import com.solo.system.api.constant.global.GlobalStatus;
+import com.solo.system.api.consts.global.GlobalStatus;
 import com.solo.system.api.entity.SysDictData;
 import com.solo.system.model.dict.data.SysDictDataConvert;
 import com.solo.system.model.dict.data.req.DictDataCreateReq;
@@ -130,7 +130,8 @@ public class SysDictDataController {
     @GetMapping("/page")
     @SaCheckPermission("system-dict-query")
     public R<Page<DictDataListResp>> page(Page<DictDataListResp> page, DictDataQueryReq req) {
-        Page<DictDataListResp> list = sysDictDataService.pageAs(page, Wrappers.buildWhere(req), DictDataListResp.class);
+        QueryWrapper wrapper = Wrappers.builder(req).orderBy(SysDictDataTable.DictSort.asc());
+        Page<DictDataListResp> list = sysDictDataService.pageAs(page, wrapper, DictDataListResp.class);
         return R.success(list);
     }
 

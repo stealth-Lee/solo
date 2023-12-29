@@ -2,7 +2,7 @@ package com.solo.system.model.dict.type.req;
 
 import com.solo.common.orm.core.query.anno.Query;
 import com.solo.common.orm.core.query.anno.Wrappers;
-import com.solo.system.api.constant.global.GlobalStatus;
+import com.solo.system.api.consts.global.GlobalStatus;
 import lombok.Data;
 
 /**

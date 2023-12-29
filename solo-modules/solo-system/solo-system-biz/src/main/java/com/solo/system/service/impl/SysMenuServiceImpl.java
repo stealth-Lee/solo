@@ -5,9 +5,9 @@ import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeUtil;
 import com.mybatisflex.core.query.QueryChain;
 import com.solo.common.core.base.service.impl.BasicServiceImpl;
-import com.solo.system.api.constant.global.GlobalStatus;
-import com.solo.system.api.constant.menu.Meta;
-import com.solo.system.api.constant.menu.Router;
+import com.solo.system.api.consts.global.GlobalStatus;
+import com.solo.system.api.consts.menu.Meta;
+import com.solo.system.api.consts.menu.Router;
 import com.solo.system.api.entity.SysMenu;
 import com.solo.system.mapper.SysMenuMapper;
 import com.solo.system.service.SysMenuService;
@@ -43,6 +43,7 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenuMapper, SysMenu>
                 .leftJoin(SysUserRoleTable).on(SysRoleMenuTable.RoleId.eq(SysUserRoleTable.RoleId))
                 .leftJoin(SysRoleTable).on(SysUserRoleTable.RoleId.eq(SysRoleTable.RoleId))
                 .leftJoin(SysUserTable).on(SysUserRoleTable.UserId.eq(SysUserTable.UserId))
+                // TODO 类型改成枚举
                 .where(SysUserTable.UserId.eq(userId)).and(SysMenuTable.Type.in("D", "M"))
                     .and(SysRoleTable.Status.eq(GlobalStatus.NORMAL))
                 .orderBy(SysMenuTable.ParentId.desc(), SysMenuTable.Sort.desc())

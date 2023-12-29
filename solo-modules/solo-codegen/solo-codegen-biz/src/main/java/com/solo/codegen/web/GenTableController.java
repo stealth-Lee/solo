@@ -120,7 +120,7 @@ public class GenTableController {
     @GetMapping("/page")
     @SaCheckPermission("codegen-table-query")
     public R<Page<TableListResp>> page(Page<TableListResp> page, TableQueryReq req) {
-        Page<TableListResp> list = genTableService.pageAs(page, Wrappers.buildWhere(req), TableListResp.class);
+        Page<TableListResp> list = genTableService.pageAs(page, Wrappers.builder(req), TableListResp.class);
         return R.success(list);
     }
 

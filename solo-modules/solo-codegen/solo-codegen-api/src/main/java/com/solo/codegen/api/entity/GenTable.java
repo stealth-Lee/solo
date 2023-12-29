@@ -3,7 +3,7 @@ package com.solo.codegen.api.entity;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
-import com.solo.codegen.api.constant.table.TplType;
+import com.solo.codegen.api.consts.table.TplType;
 import com.solo.common.core.base.entity.BasicEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

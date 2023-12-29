@@ -1,7 +1,7 @@
 package com.solo.system.model.role.resp;
 
-import com.solo.system.api.constant.global.GlobalStatus;
-import com.solo.system.api.constant.role.DataScope;
+import com.solo.system.api.consts.global.GlobalStatus;
+import com.solo.system.api.consts.role.DataScope;
 import lombok.Data;
 
 import java.time.LocalDateTime;

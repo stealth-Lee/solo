@@ -6,8 +6,6 @@ import com.solo.system.mapper.SysDictDataMapper;
 import com.solo.system.service.SysDictDataService;
 import org.springframework.stereotype.Service;
 
-import static com.solo.common.core.utils.ServiceExceptionUtil.exception;
-
 /**
  * 字典数据Service实现类
  * @author 十一

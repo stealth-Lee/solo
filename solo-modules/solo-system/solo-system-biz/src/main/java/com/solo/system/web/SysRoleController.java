@@ -2,6 +2,7 @@ package com.solo.system.web;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.solo.common.core.global.R;
 import com.solo.common.logger.annotation.Logger;
 import com.solo.common.logger.enums.LoggerType;
@@ -20,6 +21,8 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+
+import static com.solo.system.api.entity.table.SysRoleTableDef.SysRoleTable;
 
 /**
  * 系统角色控制器
@@ -105,7 +108,9 @@ public class SysRoleController {
     @GetMapping("/page")
     @SaCheckPermission("system-role-query")
     public R<Page<RoleListResp>> page(Page<RoleListResp> page, RoleQueryReq req) {
-        Page<RoleListResp> list = sysRoleService.pageAs(page, Wrappers.buildWhere(req), RoleListResp.class);
+        QueryWrapper queryWrapper = Wrappers.builder(req)
+                .orderBy(SysRoleTable.CreateTime.desc());
+        Page<RoleListResp> list = sysRoleService.pageAs(page, queryWrapper, RoleListResp.class);
         return R.success(list);
     }
 

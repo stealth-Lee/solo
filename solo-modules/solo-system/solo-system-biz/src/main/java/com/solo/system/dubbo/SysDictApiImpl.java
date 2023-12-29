@@ -2,7 +2,7 @@ package com.solo.system.dubbo;
 
 import com.mybatisflex.core.query.QueryWrapper;
 import com.solo.system.api.SysDictApi;
-import com.solo.system.api.constant.global.GlobalStatus;
+import com.solo.system.api.consts.global.GlobalStatus;
 import com.solo.system.api.entity.SysDictData;
 import com.solo.system.mapper.SysDictDataMapper;
 import jakarta.annotation.Resource;

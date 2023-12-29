@@ -2,6 +2,7 @@ package com.solo.system.web;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.solo.common.core.global.R;
 import com.solo.common.logger.annotation.Logger;
 import com.solo.common.logger.enums.LoggerType;
@@ -15,6 +16,8 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+
+import static com.solo.system.api.entity.table.SysOperateLogTableDef.SysOperateLogTable;
 
 /**
  * 操作日志控制器
@@ -61,7 +64,8 @@ public class SysOperateLogController {
     @GetMapping("/page")
     @SaCheckPermission("system-operate-log-query")
     public R<Page<OperateLogListResp>> page(Page<OperateLogListResp> page, OperateLogQueryReq req) {
-        Page<OperateLogListResp> list = sysOperateLogService.pageAs(page, Wrappers.buildWhere(req), OperateLogListResp.class);
+        QueryWrapper wrapper = Wrappers.builder(req).orderBy(SysOperateLogTable.CreateTime.desc());
+        Page<OperateLogListResp> list = sysOperateLogService.pageAs(page, wrapper, OperateLogListResp.class);
         return R.success(list);
     }
 

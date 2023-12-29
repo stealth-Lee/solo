@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
- * 部门实体转换类
+ * 用户实体转换类
  * @author 十一
  * @since 2023/09/08 10:10
  * 人生若只如初见，何事秋风悲画扇

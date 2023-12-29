@@ -1,5 +1,7 @@
 package com.solo.common.orm.core.query.anno;
 
+import com.solo.common.orm.core.query.enums.ColumnStyle;
+
 import java.lang.annotation.*;
 
 /**
@@ -14,8 +16,8 @@ import java.lang.annotation.*;
 public @interface Wrappers {
 
     /**
-     * 默认为 驼峰属性 转换为 下划线字段
+     * 列风格, 默认为 驼峰属性 转换为 下划线字段
      */
-    boolean camelToUnderline() default true;
+    ColumnStyle style() default ColumnStyle.camel_to_underline;
 
 }

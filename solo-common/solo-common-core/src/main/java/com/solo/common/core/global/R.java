@@ -1,7 +1,7 @@
 package com.solo.common.core.global;
 
-import com.solo.common.core.constant.ErrorCode;
-import com.solo.common.core.constant.enums.GlobalErrorCode;
+import com.solo.common.core.base.consts.BasicCode;
+import com.solo.common.core.consts.GlobalCode;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -49,7 +49,7 @@ public class R<T> implements Serializable {
      * @return 成功消息
      */
     public static <T> R<T> success(T data) {
-        return global(GlobalErrorCode.SUCCESS, data);
+        return global(GlobalCode.SUCCESS, data);
     }
 
     /**
@@ -57,7 +57,7 @@ public class R<T> implements Serializable {
      * @return 错误信息
      */
     public static <T> R<T> failed() {
-        return global(GlobalErrorCode.FAILED);
+        return global(GlobalCode.FAILED);
     }
 
     /**
@@ -66,7 +66,7 @@ public class R<T> implements Serializable {
      * @return 错误信息
      */
     public static <T> R<T> failed(String message) {
-        return global(GlobalErrorCode.FAILED, message);
+        return global(GlobalCode.FAILED, message);
     }
 
     /**
@@ -75,7 +75,7 @@ public class R<T> implements Serializable {
      * @return 错误信息
      */
     public static <T> R<T> failed(T data) {
-        return global(GlobalErrorCode.FAILED, data);
+        return global(GlobalCode.FAILED, data);
     }
 
     /**
@@ -85,7 +85,7 @@ public class R<T> implements Serializable {
      * @return 错误信息
      */
     public static <T> R<T> failed(T data, String message) {
-        return global(GlobalErrorCode.FAILED.code(), message, data);
+        return global(GlobalCode.FAILED.code(), message, data);
     }
 
 
@@ -102,7 +102,7 @@ public class R<T> implements Serializable {
      * @param global 错误码枚举
      * @return 响应信息主体类
      */
-    public static <T> R<T> global(ErrorCode global) {
+    public static <T> R<T> global(BasicCode global) {
         return global(global.code(), global.message(), null);
     }
 
@@ -112,7 +112,7 @@ public class R<T> implements Serializable {
      * @param message 错误消息
      * @return {@link R}<{@link T}>
      */
-    public static <T> R<T> global(ErrorCode global, String message) {
+    public static <T> R<T> global(BasicCode global, String message) {
         return global(global.code(), message, null);
     }
 
@@ -122,7 +122,7 @@ public class R<T> implements Serializable {
      * @param data   数据
      * @return {@link R}<{@link T}>
      */
-    public static <T> R<T> global(ErrorCode global, T data) {
+    public static <T> R<T> global(BasicCode global, T data) {
         return global(global.code(), global.message(), data);
     }
 

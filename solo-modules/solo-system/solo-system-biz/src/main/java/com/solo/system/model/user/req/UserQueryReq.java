@@ -1,9 +1,12 @@
 package com.solo.system.model.user.req;
 
+import com.solo.common.orm.core.query.anno.OrderBy;
 import com.solo.common.orm.core.query.anno.Query;
 import com.solo.common.orm.core.query.anno.Wrappers;
-import com.solo.system.api.constant.global.GlobalStatus;
+import com.solo.system.api.consts.global.GlobalStatus;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 @Wrappers
@@ -32,5 +35,8 @@ public class UserQueryReq {
      */
     @Query
     private GlobalStatus status;
+
+    @OrderBy
+    private Date createTime;
 
 }

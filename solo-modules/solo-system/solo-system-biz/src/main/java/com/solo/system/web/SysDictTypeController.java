@@ -2,11 +2,12 @@ package com.solo.system.web;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.solo.common.core.global.R;
 import com.solo.common.logger.annotation.Logger;
 import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
-import com.solo.system.api.constant.global.GlobalStatus;
+import com.solo.system.api.consts.global.GlobalStatus;
 import com.solo.system.api.entity.SysDictType;
 import com.solo.system.model.dict.type.SysDictTypeConvert;
 import com.solo.system.model.dict.type.req.DictTypeCreateReq;
@@ -122,7 +123,8 @@ public class SysDictTypeController {
     @GetMapping("/page")
     @SaCheckPermission("system-dict-query")
     public R<Page<DictTypeListResp>> page(Page<DictTypeListResp> page, DictTypeQueryReq req) {
-        Page<DictTypeListResp> list = sysDictTypeService.pageAs(page, Wrappers.buildWhere(req), DictTypeListResp.class);
+        QueryWrapper wrapper = Wrappers.builder(req).orderBy(SysDictTypeTable.CreateTime.desc());
+        Page<DictTypeListResp> list = sysDictTypeService.pageAs(page, wrapper, DictTypeListResp.class);
         return R.success(list);
     }
 

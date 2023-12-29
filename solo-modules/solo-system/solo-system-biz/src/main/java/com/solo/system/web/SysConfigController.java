@@ -4,7 +4,6 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
 import com.solo.common.core.aop.annotation.Runtime;
 import com.solo.common.core.global.R;
-import com.solo.common.core.utils.MessageUtils;
 import com.solo.common.logger.annotation.Logger;
 import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
@@ -105,7 +104,7 @@ public class SysConfigController {
     @GetMapping("/page")
     @SaCheckPermission("system-config-query")
     public R<Page<ConfigListResp>> page(Page<ConfigListResp> page, ConfigQueryReq req) {
-        Page<ConfigListResp> list = sysConfigService.pageAs(page, Wrappers.buildWhere(req), ConfigListResp.class);
+        Page<ConfigListResp> list = sysConfigService.pageAs(page, Wrappers.builder(req), ConfigListResp.class);
         return R.success(list);
     }
 

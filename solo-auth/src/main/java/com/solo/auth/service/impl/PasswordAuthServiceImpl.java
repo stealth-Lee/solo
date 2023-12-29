@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Set;
 
+import static com.solo.auth.consts.AuthCode.AUTH_USERNAME_PASSWORD_NOT_MATCH;
 import static com.solo.common.core.utils.ServiceExceptionUtil.exception;
 
 /**
@@ -46,7 +47,7 @@ public class PasswordAuthServiceImpl implements AuthService {
     public LoginResp login(LoginReq loginReq) {
         SysUser sysUser = sysUserApi.query(loginReq.getUsername());
         if (!BCrypt.checkpw(loginReq.getPassword(), sysUser.getPassword())) {
-            throw exception("密码错误");
+            throw exception(AUTH_USERNAME_PASSWORD_NOT_MATCH);
         }
         LoginUser loginUser = LoginConvert.INSTANCE.convert(sysUser);
         Long userId = loginUser.getUserId();

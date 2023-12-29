@@ -36,8 +36,9 @@ public class AuthController {
      * 退出登录
      */
     @DeleteMapping("/logout")
-    public void logout() {
+    public R<Boolean> logout() {
         StpUtil.logout();
+        return R.success(true);
     }
 
 }

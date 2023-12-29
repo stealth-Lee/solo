@@ -1,16 +1,15 @@
 package com.solo.common.orm.core.query;
 
+import cn.hutool.core.text.NamingCase;
 import cn.hutool.core.util.ReflectUtil;
-import com.mybatisflex.core.query.QueryColumn;
-import com.mybatisflex.core.query.QueryCondition;
-import com.mybatisflex.core.query.QueryTable;
-import com.mybatisflex.core.query.QueryWrapper;
-import com.solo.common.core.exception.NotFoundAnnoException;
+import com.mybatisflex.core.query.*;
 import com.solo.common.core.utils.AnnotationUtils;
 import com.solo.common.core.utils.ObjectUtils;
 import com.solo.common.core.utils.StringUtils;
 import com.solo.common.orm.core.query.anno.Query;
+import com.solo.common.orm.core.query.enums.ColumnStyle;
 import com.solo.common.orm.core.query.enums.Connector;
+import com.solo.common.orm.exception.NotFoundAnnoException;
 
 import java.lang.reflect.Field;
 
@@ -27,7 +26,7 @@ public class Wrappers {
      * @param entity 查询实体
      * @return 查询条件包装器
      */
-    public static QueryWrapper buildWhere(Object entity) {
+    public static QueryWrapper builder(Object entity) {
         QueryWrapper queryWrapper = QueryWrapper.create();
         Class<?> clas = entity.getClass();
         com.solo.common.orm.core.query.anno.Wrappers wrappers = AnnotationUtils.getAnnotation(clas, com.solo.common.orm.core.query.anno.Wrappers.class);
@@ -36,12 +35,17 @@ public class Wrappers {
         }
         Field[] fields = ReflectUtil.getFields(clas);
         for (Field field : fields) {
+            // 排序方式
+//            OrderBy orderBy = AnnotationUtils.getAnnotation(field, OrderBy.class);
+//            if (ObjectUtils.isNotNull(orderBy)) {
+//                queryWrapper.orderBy(columnName, orderBy.value().equals(Order.ASC));
+//            }
             Object fieldValue = ReflectUtil.getFieldValue(entity, field);
             Query query = AnnotationUtils.getAnnotation(field, Query.class);
             if (ObjectUtils.isEmpty(fieldValue) || ObjectUtils.isNull(query)) continue;
-            String value = StringUtils.isNotBlank(query.value()) ? query.value() :
-                    (wrappers.camelToUnderline() ? StringUtils.toUnderlineCase(field.getName()) : field.getName());
-            QueryColumn column = new QueryColumn(value);
+            // 如果指定了@Query注解的value,则直接使用value作为列名，否则默认使用字段名转@Wrappers style风格作为列名
+            String columnName = StringUtils.isNotBlank(query.value()) ? query.value() : toColumnName(field.getName(), wrappers.style());
+            QueryColumn column = new QueryColumn(columnName);
             String alias = query.alias();
             if (StringUtils.isNotBlank(alias)) {
                 column.setTable(new QueryTable(alias));
@@ -54,6 +58,21 @@ public class Wrappers {
             }
         }
         return queryWrapper;
+    }
+
+    /**
+     * 将字段名转换为指定风格的列名
+     * 如果需要拓展其他风格，可以在这里添加，并在 {@link ColumnStyle} 中添加枚举值
+     * @param fieldName 字段名称
+     * @param style     风格
+     * @return {@link String}
+     */
+    private static String toColumnName(String fieldName, ColumnStyle style) {
+        return switch (style) {
+            case camel_to_underline -> NamingCase.toUnderlineCase(fieldName);
+            case PascalCase -> NamingCase.toPascalCase(fieldName);
+            default -> fieldName;
+        };
     }
 
     /**

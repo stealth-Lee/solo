@@ -1,7 +1,7 @@
 package com.solo.system.model.role.req;
 
-import com.solo.system.api.constant.global.GlobalStatus;
-import com.solo.system.api.constant.role.DataScope;
+import com.solo.system.api.consts.global.GlobalStatus;
+import com.solo.system.api.consts.role.DataScope;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

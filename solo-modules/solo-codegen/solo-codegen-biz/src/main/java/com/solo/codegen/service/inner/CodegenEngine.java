@@ -11,8 +11,8 @@ import cn.hutool.extra.template.engine.velocity.VelocityEngine;
 import com.alibaba.nacos.shaded.com.google.common.collect.Maps;
 import com.solo.codegen.api.entity.GenColumn;
 import com.solo.codegen.api.entity.GenTable;
-import com.solo.common.core.constant.FileSuffix;
-import com.solo.common.core.constant.Symbols;
+import com.solo.common.core.consts.FileSuffix;
+import com.solo.common.core.consts.Symbols;
 import com.solo.common.core.utils.BeanUtils;
 import com.solo.common.core.utils.StringUtils;
 import com.solo.in.api.TranslateApi;
@@ -223,7 +223,7 @@ public class CodegenEngine {
     @AllArgsConstructor
     private enum Template {
 
-        CONSTANT("codegen/java/constant/Constant.java.vm", "solo-{moduleName}-api", "main/java/{packageName}/api/constant/{businessName}"),
+        CONSTANT("codegen/java/consts/Constant.java.vm", "solo-{moduleName}-api", "main/java/{packageName}/api/consts/{businessName}"),
         ENTITY("codegen/java/entity/Entity.java.vm", "solo-{moduleName}-api", "main/java/{packageName}/api/entity"),
         CONVERT("codegen/java/model/Convert.java.vm", "solo-{moduleName}-biz", "main/java/{packageName}/model/{businessName}"),
         PROPERTIES("codegen/properties/message.properties.vm", "solo-{moduleName}-biz", "main/resources/i18n/{businessName}"),

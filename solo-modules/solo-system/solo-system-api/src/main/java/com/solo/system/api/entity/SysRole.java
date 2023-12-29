@@ -4,8 +4,8 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import com.solo.common.core.base.entity.BasicEntity;
-import com.solo.system.api.constant.global.GlobalStatus;
-import com.solo.system.api.constant.role.DataScope;
+import com.solo.system.api.consts.global.GlobalStatus;
+import com.solo.system.api.consts.role.DataScope;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

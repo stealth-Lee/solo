@@ -1,6 +1,6 @@
 package com.solo.system.model.dict.data.req;
 
-import com.solo.system.api.constant.global.GlobalStatus;
+import com.solo.system.api.consts.global.GlobalStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

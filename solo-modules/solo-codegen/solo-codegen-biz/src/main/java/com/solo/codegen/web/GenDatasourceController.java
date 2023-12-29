@@ -98,7 +98,7 @@ public class GenDatasourceController {
     @GetMapping("/page")
     @SaCheckPermission("codegen-datasource-query")
     public R<Page<DatasourceListResp>> page(Page<DatasourceListResp> page, DatasourceQueryReq req) {
-        Page<DatasourceListResp> list = genDatasourceService.pageAs(page, Wrappers.buildWhere(req), DatasourceListResp.class);
+        Page<DatasourceListResp> list = genDatasourceService.pageAs(page, Wrappers.builder(req), DatasourceListResp.class);
         return R.success(list);
     }
 

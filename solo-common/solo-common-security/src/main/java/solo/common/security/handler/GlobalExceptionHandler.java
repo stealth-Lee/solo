@@ -6,7 +6,7 @@ import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.exception.SameTokenInvalidException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.solo.common.core.constant.enums.GlobalErrorCode;
+import com.solo.common.core.consts.GlobalCode;
 import com.solo.common.core.exception.ServiceException;
 import com.solo.common.core.global.R;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public R<?> handleException(Exception e) {
         log.error("[Exception] {}", e.getMessage(), e);
-        return R.global(GlobalErrorCode.ERROR);
+        return R.global(GlobalCode.ERROR);
     }
 
     /**
@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ServiceException.class)
     public R<?> handleServiceException(ServiceException e) {
-        log.error("[ServiceException] {}", e.getMessage(), e);
+        log.error("[ServiceException] {}", e.getMessage());
         return R.global(e.getCode(), e.getMessage(), null);
     }
 
@@ -54,7 +54,7 @@ public class GlobalExceptionHandler {
         FieldError fieldError = e.getBindingResult().getFieldError();
         assert fieldError != null;
         log.warn("[MethodArgumentNotValidException] {} : {}", fieldError.getField(), fieldError.getDefaultMessage());
-        return R.global(GlobalErrorCode.BAD_REQUEST, String.format("%s:%s", GlobalErrorCode.BAD_REQUEST.message(), fieldError.getDefaultMessage()));
+        return R.global(GlobalCode.BAD_REQUEST, String.format("%s:%s", GlobalCode.BAD_REQUEST.message(), fieldError.getDefaultMessage()));
     }
 
     /**
@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
             String fieldName = path.getFieldName();
             erroMessage = String.format("无效参数值[%s:%s]", fieldName, value);
         }
-        return R.global(GlobalErrorCode.BAD_REQUEST, String.format("%s:%s", GlobalErrorCode.BAD_REQUEST.message(), erroMessage));
+        return R.global(GlobalCode.BAD_REQUEST, String.format("%s:%s", GlobalCode.BAD_REQUEST.message(), erroMessage));
     }
 
     /**
@@ -82,7 +82,7 @@ public class GlobalExceptionHandler {
         log.warn("[handleBindException]", ex);
         FieldError fieldError = ex.getFieldError();
         assert fieldError != null; // 断言，避免告警
-        return R.global(GlobalErrorCode.ERROR, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()));
+        return R.global(GlobalCode.ERROR, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()));
     }
 
     /**
@@ -92,7 +92,7 @@ public class GlobalExceptionHandler {
     public R<Void> handleSameTokenInvalidException(SameTokenInvalidException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("[SameTokenInvalidException] -> [请求地址:'{}', 内网认证失败: {}]", requestURI, e.getMessage());
-        return R.global(GlobalErrorCode.UNAUTHORIZED, "认证失败，无法访问系统资源");
+        return R.global(GlobalCode.UNAUTHORIZED, "认证失败，无法访问系统资源");
     }
 
     /**
@@ -102,7 +102,7 @@ public class GlobalExceptionHandler {
     public R<?> handleNotLoginException(NotLoginException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("[NotLoginException] -> [请求地址:'{}', 认证失败: {}]", requestURI, e.getMessage());
-        return R.global(GlobalErrorCode.UNAUTHORIZED, "认证失败，无法访问系统资源");
+        return R.global(GlobalCode.UNAUTHORIZED, "认证失败，无法访问系统资源");
     }
 
     /**
@@ -114,7 +114,7 @@ public class GlobalExceptionHandler {
     public R<?> handleNotRoleException(NotRoleException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("[NotRoleException] -> [请求地址:'{}', 没有访问权限: {}]", requestURI, e.getMessage());
-        return R.global(GlobalErrorCode.FORBIDDEN, "没有访问权限，请联系管理员授权");
+        return R.global(GlobalCode.FORBIDDEN, "没有访问权限，请联系管理员授权");
     }
 
     /**
@@ -124,7 +124,7 @@ public class GlobalExceptionHandler {
     public R<?> handleNotPermissionException(NotPermissionException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("[NotPermissionException] -> [请求地址:'{}', 没有访问权限: {}]", requestURI, e.getMessage());
-        return R.global(GlobalErrorCode.FORBIDDEN, "没有访问权限，请联系管理员授权");
+        return R.global(GlobalCode.FORBIDDEN, "没有访问权限，请联系管理员授权");
     }
 
 }

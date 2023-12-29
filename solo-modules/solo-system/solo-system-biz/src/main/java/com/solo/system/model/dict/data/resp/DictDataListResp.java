@@ -1,7 +1,7 @@
 package com.solo.system.model.dict.data.resp;
 
-import com.solo.system.api.constant.dict.TagType;
-import com.solo.system.api.constant.global.GlobalStatus;
+import com.solo.system.api.consts.dict.TagType;
+import com.solo.system.api.consts.global.GlobalStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import static com.solo.common.core.utils.ServiceExceptionUtil.exception;
 import static com.solo.system.api.entity.table.SysDictTypeTableDef.SysDictTypeTable;
+import static com.solo.system.api.consts.SystemCode.DICT_CODE_EXISTS;
 
 /**
  * 字典类型Service实现类
@@ -25,7 +26,7 @@ public class SysDictTypeServiceImpl extends BasicServiceImpl<SysDictTypeMapper, 
     public boolean create(SysDictType entity) {
         long count = QueryChain.of(mapper).where(SysDictTypeTable.Code.eq(entity.getCode())).count();
         if (NumberUtils.isPositiveInteger(count)) {
-            throw exception("字典编码已存在");
+            throw exception(DICT_CODE_EXISTS);
         }
         return super.save(entity);
     }
@@ -44,7 +45,7 @@ public class SysDictTypeServiceImpl extends BasicServiceImpl<SysDictTypeMapper, 
         SysDictType result = QueryChain.of(mapper).select(SysDictTypeTable.TypeId)
                 .where(SysDictTypeTable.Code.eq(entity.getCode())).one();
         if (ObjectUtils.isNotEmpty(result) && !result.getTypeId().equals(entity.getTypeId())) {
-            throw exception("字典编码已存在");
+            throw exception(DICT_CODE_EXISTS);
         }
         return super.updateById(entity);
     }

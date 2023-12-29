@@ -1,7 +1,7 @@
 package com.solo.system.model.dict.type.req;
 
-import com.solo.system.api.constant.dict.DictType;
-import com.solo.system.api.constant.global.GlobalStatus;
+import com.solo.system.api.consts.dict.DictType;
+import com.solo.system.api.consts.global.GlobalStatus;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

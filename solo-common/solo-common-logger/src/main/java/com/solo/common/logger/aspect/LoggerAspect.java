@@ -48,6 +48,7 @@ public class LoggerAspect {
         operateLog.setType(logger.type().getValue());
         operateLog.setRequestUrl(request.getRequestURI());
         operateLog.setRequestMethod(request.getMethod());
+        // TODO POST/PUT请求参数获取不到
         operateLog.setRequestData(JSON.toJSONString(ServletUtils.getParams(request)));
         String clientIP = ServletUtils.getClientIP(request);
         operateLog.setUserIp(clientIP);

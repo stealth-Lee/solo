@@ -11,6 +11,8 @@ import com.solo.common.orm.utils.DbUtils;
 import org.springframework.stereotype.Service;
 
 import static com.solo.codegen.api.entity.table.GenDatasourceTableDef.GenDatasourceTable;
+import static com.solo.codegen.api.consts.CodeGenCode.DATASOURCE_CONNECT_FAILED;
+import static com.solo.codegen.api.consts.CodeGenCode.DATASOURCE_NAME_EXISTS;
 import static com.solo.common.core.utils.ServiceExceptionUtil.exception;
 
 /**
@@ -26,7 +28,7 @@ public class GenDatasourceServiceImpl extends BasicServiceImpl<GenDatasourceMapp
     public boolean create(GenDatasource entity) {
         long count = QueryChain.of(mapper).where(GenDatasourceTable.Name.eq(entity.getName())).count();
         if (NumberUtils.isPositiveInteger(count)) {
-            throw exception("别名已存在");
+            throw exception(DATASOURCE_NAME_EXISTS);
         }
         return super.save(entity);
     }
@@ -36,7 +38,7 @@ public class GenDatasourceServiceImpl extends BasicServiceImpl<GenDatasourceMapp
         GenDatasource result = QueryChain.of(mapper).select(GenDatasourceTable.SourceId)
                 .where(GenDatasourceTable.Name.eq(entity.getName())).one();
         if (ObjectUtils.isNotEmpty(result) && !result.getSourceId().equals(entity.getSourceId())) {
-            throw exception("别名已存在");
+            throw exception(DATASOURCE_NAME_EXISTS);
         }
         return super.updateById(entity);
     }
@@ -55,7 +57,7 @@ public class GenDatasourceServiceImpl extends BasicServiceImpl<GenDatasourceMapp
     private void validateConnection(GenDatasource entity) {
         boolean success = DbUtils.isConnection(entity.getUrl(), entity.getUsername(), entity.getPassword());
         if (!success) {
-            throw exception("连接失败，请检查配置信息");
+            throw exception(DATASOURCE_CONNECT_FAILED);
         }
     }
 

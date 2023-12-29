@@ -101,7 +101,7 @@ public class SysDeptController {
     @GetMapping("/list")
     @SaCheckPermission("system-dept-query")
     public R<List<DeptListResp>> list(DeptQueryReq req) {
-        QueryWrapper queryWrapper = Wrappers.buildWhere(req);
+        QueryWrapper queryWrapper = Wrappers.builder(req);
         return R.success(sysDeptService.listAs(queryWrapper, DeptListResp.class));
     }
 

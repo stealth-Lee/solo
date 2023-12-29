@@ -6,6 +6,7 @@ import cn.dev33.satoken.reactor.filter.SaReactorFilter;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import com.alibaba.fastjson2.JSON;
+import com.solo.common.core.consts.GlobalCode;
 import com.solo.common.core.global.R;
 import com.solo.gateway.properties.IgnoreWhiteProperties;
 import com.solo.satoken.utils.LoginHelper;
@@ -63,9 +64,9 @@ public class AuthFilter {
                                 // }
                             });
                 }).setError(e -> {
-                    e.printStackTrace();
+                    log.error("[NotLoginException] -> [认证失败: {}]", e.getMessage());
                     SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
-                    return JSON.toJSONString(R.failed("认证失败，无法访问系统资源"));
+                    return JSON.toJSONString(R.global(GlobalCode.UNAUTHORIZED, "认证失败，无法访问系统资源"));
                 });
     }
 }

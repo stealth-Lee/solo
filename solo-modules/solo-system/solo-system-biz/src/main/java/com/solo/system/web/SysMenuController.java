@@ -53,6 +53,7 @@ public class SysMenuController {
     @Logger(value = "新增菜单", type = LoggerType.CREATE)
     public R<Boolean> create(@Valid @RequestBody MenuCreateReq req) {
         SysMenu entity = SysMenuConvert.INSTANCE.convert(req);
+        // TODO 如果创建的菜单的父级菜单 类型是按钮，则提示不能创建
         return R.success(sysMenuService.save(entity));
     }
 
@@ -98,11 +99,10 @@ public class SysMenuController {
      */
     @GetMapping("/list-simple")
     @SaCheckPermission("system-menu-query")
-    public R<List<MenuSimpleResp>> listSimple() {
+    public R<List<MenuSimpleResp>> listSimple(String[] type) {
         return R.success(
                 sysMenuService.queryChain()
-                 // TODO 这里的类型需要改成枚举
-                .where(SysMenuTable.Type.in("D", "M"))
+                .where(SysMenuTable.Type.in(type))
                 .listAs(MenuSimpleResp.class)
         );
     }
@@ -115,7 +115,7 @@ public class SysMenuController {
     @GetMapping("/list")
     @SaCheckPermission("system-menu-query")
     public R<List<MenuListResp>> list(MenuQueryReq req) {
-        QueryWrapper queryWrapper = Wrappers.buildWhere(req);
+        QueryWrapper queryWrapper = Wrappers.builder(req).orderBy(SysMenuTable.Sort.asc());
         return R.success(sysMenuService.listAs(queryWrapper, MenuListResp.class));
     }
 

@@ -1,7 +1,7 @@
 package com.solo.system.model.user.resp;
 
-import com.solo.system.api.constant.global.GlobalStatus;
-import com.solo.system.api.constant.user.Sex;
+import com.solo.system.api.consts.global.GlobalStatus;
+import com.solo.system.api.consts.user.Sex;
 import lombok.Data;
 
 /**

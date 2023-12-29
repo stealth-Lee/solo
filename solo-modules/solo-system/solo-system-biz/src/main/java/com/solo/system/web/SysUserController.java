@@ -102,7 +102,7 @@ public class SysUserController {
     @GetMapping("/page")
     @SaCheckPermission("system-user-query")
     public R<Page<SysUser>> page(Page<SysUser> page, UserQueryReq req) {
-        Page<SysUser> list = sysUserService.page(page, Wrappers.buildWhere(req));
+        Page<SysUser> list = sysUserService.page(page, Wrappers.builder(req));
         return R.success(list);
     }
 

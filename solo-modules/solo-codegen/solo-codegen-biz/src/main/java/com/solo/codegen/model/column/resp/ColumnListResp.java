@@ -1,8 +1,8 @@
 package com.solo.codegen.model.column.resp;
 
-import com.solo.codegen.api.constant.column.FormType;
-import com.solo.codegen.api.constant.column.JavaType;
-import com.solo.codegen.api.constant.column.QueryMode;
+import com.solo.codegen.api.consts.column.FormType;
+import com.solo.codegen.api.consts.column.JavaType;
+import com.solo.codegen.api.consts.column.QueryMode;
 import lombok.Data;
 
 /**

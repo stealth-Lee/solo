@@ -16,6 +16,7 @@ import java.util.Objects;
 
 import static com.solo.common.core.utils.ServiceExceptionUtil.exception;
 import static com.solo.system.api.entity.table.SysUserTableDef.SysUserTable;
+import static com.solo.system.api.consts.SystemCode.*;
 
 /**
  * 用户Service实现类
@@ -31,7 +32,7 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUserMapper, SysUser>
     public boolean create(SysUser entity) {
         long count = QueryChain.of(mapper).where(SysUserTable.Username.eq(entity.getUsername())).count();
         if (NumberUtils.isPositiveInteger(count)) {
-            throw exception("用户名已存在");
+            throw exception(USERNAME_EXISTS);
         }
         entity.setPassword(BCrypt.hashpw(entity.getPassword()));
         return super.save(entity);
@@ -42,7 +43,7 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUserMapper, SysUser>
     public void resetPassword(UserResetPasswordReq req) {
         SysUser sysUser = mapper.selectOneById(req.getUserId());
         if (Objects.isNull(sysUser)) {
-            throw exception("用户不存在");
+            throw exception(USERNAME_EXISTS);
         }
         String password = BCrypt.hashpw(req.getPassword());
         UpdateChain.of(SysUser.class).set(SysUserTable.Password, password)

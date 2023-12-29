@@ -1,7 +1,7 @@
 package com.solo.system.model.dict.data.resp;
 
-import com.solo.system.api.constant.dict.DictType;
-import com.solo.system.api.constant.dict.TagType;
+import com.solo.system.api.consts.dict.DictType;
+import com.solo.system.api.consts.dict.TagType;
 import lombok.Data;
 
 /**

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import static com.solo.common.core.utils.ServiceExceptionUtil.exception;
 import static com.solo.system.api.entity.table.SysDeptTableDef.SysDeptTable;
+import static com.solo.system.api.consts.SystemCode.*;
 
 /**
  * 部门Service实现类
@@ -25,7 +26,7 @@ public class SysDeptServiceImpl extends BasicServiceImpl<SysDeptMapper, SysDept>
     public boolean create(SysDept entity) {
         long count = QueryChain.of(mapper).where(SysDeptTable.Code.eq(entity.getCode())).count();
         if (NumberUtils.isPositiveInteger(count)) {
-            throw exception("部门编码已存在");
+            throw exception(DEPT_CODE_EXISTS);
         }
         return super.save(entity);
     }
@@ -34,7 +35,7 @@ public class SysDeptServiceImpl extends BasicServiceImpl<SysDeptMapper, SysDept>
     public boolean delete(Long deptId) {
         long count = QueryChain.of(mapper).where(SysDeptTable.ParentId.eq(deptId)).count();
         if (NumberUtils.isPositiveInteger(count)) {
-            throw exception("该部门下存在子部门，无法删除");
+            throw exception(DEPT_EXISTS_CHILDREN);
         }
         return super.removeById(deptId);
     }
@@ -44,7 +45,7 @@ public class SysDeptServiceImpl extends BasicServiceImpl<SysDeptMapper, SysDept>
         SysDept result = QueryChain.of(mapper).select(SysDeptTable.DeptId)
                 .where(SysDeptTable.Code.eq(entity.getCode())).one();
         if (ObjectUtils.isNotEmpty(result) && !result.getDeptId().equals(entity.getDeptId())) {
-            throw exception("部门编码已存在");
+            throw exception(DEPT_CODE_EXISTS);
         }
         return super.updateById(entity);
     }
