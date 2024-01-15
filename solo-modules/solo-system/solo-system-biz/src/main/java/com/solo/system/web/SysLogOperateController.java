@@ -7,17 +7,17 @@ import com.solo.common.core.global.R;
 import com.solo.common.logger.annotation.Logger;
 import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
-import com.solo.system.model.operate.SysOperateLogConvert;
-import com.solo.system.model.operate.req.OperateLogQueryReq;
-import com.solo.system.model.operate.resp.OperateLogGetResp;
-import com.solo.system.model.operate.resp.OperateLogListResp;
-import com.solo.system.service.SysOperateLogService;
+import com.solo.system.model.log.operate.SysLogOperateConvert;
+import com.solo.system.model.log.operate.req.LogOperateQueryReq;
+import com.solo.system.model.log.operate.resp.LogOperateGetResp;
+import com.solo.system.model.log.operate.resp.LogOperateListResp;
+import com.solo.system.service.SysLogOperateService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
-import static com.solo.system.api.entity.table.SysOperateLogTableDef.SysOperateLogTable;
+import static com.solo.system.api.entity.table.SysLogOperateTableDef.SysLogOperateTable;
 
 /**
  * 操作日志控制器
@@ -26,11 +26,11 @@ import static com.solo.system.api.entity.table.SysOperateLogTableDef.SysOperateL
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
-@RequestMapping("/system/operate-log")
-public class SysOperateLogController {
+@RequestMapping("/system/log-operate")
+public class SysLogOperateController {
 
     @Resource
-    private SysOperateLogService sysOperateLogService;
+    private SysLogOperateService sysOperateLogService;
 
     /**
      * 删除操作日志
@@ -38,7 +38,7 @@ public class SysOperateLogController {
      * @return 响应信息
      */
     @DeleteMapping("/{operateIds}")
-    @SaCheckPermission("system-operate-log-delete")
+    @SaCheckPermission("system-log-operate-delete")
     @Logger(value = "删除操作日志", type = LoggerType.DELETE)
     public R<Boolean> delete(@PathVariable Long[] operateIds) {
         return R.success(sysOperateLogService.removeByIds(Arrays.asList(operateIds)));
@@ -50,9 +50,9 @@ public class SysOperateLogController {
      * @return 响应信息
      */
     @GetMapping("/{operateId}")
-    @SaCheckPermission("system-operate-log-query")
-    public R<OperateLogGetResp> get(@PathVariable Long operateId) {
-        return R.success(SysOperateLogConvert.INSTANCE.convertGet(sysOperateLogService.getById(operateId)));
+    @SaCheckPermission("system-log-operate-query")
+    public R<LogOperateGetResp> get(@PathVariable Long operateId) {
+        return R.success(SysLogOperateConvert.INSTANCE.convertGet(sysOperateLogService.getById(operateId)));
     }
 
     /**
@@ -62,10 +62,10 @@ public class SysOperateLogController {
      * @return 响应信息
      */
     @GetMapping("/page")
-    @SaCheckPermission("system-operate-log-query")
-    public R<Page<OperateLogListResp>> page(Page<OperateLogListResp> page, OperateLogQueryReq req) {
-        QueryWrapper wrapper = Wrappers.builder(req).orderBy(SysOperateLogTable.CreateTime.desc());
-        Page<OperateLogListResp> list = sysOperateLogService.pageAs(page, wrapper, OperateLogListResp.class);
+    @SaCheckPermission("system-log-operate-query")
+    public R<Page<LogOperateListResp>> page(Page<LogOperateListResp> page, LogOperateQueryReq req) {
+        QueryWrapper wrapper = Wrappers.builder(req).orderBy(SysLogOperateTable.CreateTime.desc());
+        Page<LogOperateListResp> list = sysOperateLogService.pageAs(page, wrapper, LogOperateListResp.class);
         return R.success(list);
     }
 

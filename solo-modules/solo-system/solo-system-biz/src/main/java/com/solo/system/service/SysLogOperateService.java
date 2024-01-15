@@ -1,6 +1,6 @@
 package com.solo.system.service;
 
-import com.solo.system.api.entity.SysOperateLog;
+import com.solo.system.api.entity.SysLogOperate;
 import com.solo.common.core.base.service.BasicService;
 
 /**
@@ -9,6 +9,6 @@ import com.solo.common.core.base.service.BasicService;
  * @since 2023-12-14 15:18
  * 人生若只如初见，何事秋风悲画扇
  **/
-public interface SysOperateLogService extends BasicService<SysOperateLog> {
+public interface SysLogOperateService extends BasicService<SysLogOperate> {
 
 }

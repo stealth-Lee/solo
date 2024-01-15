@@ -2,7 +2,7 @@ package com.solo.common.orm.core.query.enums;
 
 /**
  * 数据库列风格枚举类
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/12/27 13:47
  * 人生若只如初见，何事秋风悲画扇
  **/

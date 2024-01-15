@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 
 /**
  * 日志注解
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/12/13 17:04
  * 人生若只如初见，何事秋风悲画扇
  **/

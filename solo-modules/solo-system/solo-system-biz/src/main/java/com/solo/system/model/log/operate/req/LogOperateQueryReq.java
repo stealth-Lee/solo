@@ -1,4 +1,4 @@
-package com.solo.system.model.operate.req;
+package com.solo.system.model.log.operate.req;
 
 import com.solo.common.orm.core.query.anno.Query;
 import com.solo.common.orm.core.query.anno.Wrappers;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  **/
 @Data
 @Wrappers
-public class OperateLogQueryReq {
+public class LogOperateQueryReq {
 
     /**
      * 日志标题

@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * 菜单列表精简信息 resp
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/12/13 09:18
  * 人生若只如初见，何事秋风悲画扇
  **/

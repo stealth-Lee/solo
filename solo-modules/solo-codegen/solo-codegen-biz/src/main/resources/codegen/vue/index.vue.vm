@@ -307,7 +307,12 @@ const columns: TableColumnList = [
   {
     type: "selection",
     align: "left",
-    width: 10
+    width: 40
+  },
+  {
+    label: "#",
+    type: "index",
+    width: 40
   },
 #foreach ($column in $columns)
   #if (${column.isList})
@@ -332,7 +337,7 @@ const columns: TableColumnList = [
   {
     label: t("commons.columns.action"),
     fixed: "right",
-    width: 240,
+    width: 160,
     slot: "operation"
   }
 ];

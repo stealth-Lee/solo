@@ -12,7 +12,7 @@ import static com.solo.system.api.entity.table.SysConfigTableDef.SysConfigTable;
 
 /**
  * 系统配置实现类
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/12/11 17:14
  * 人生若只如初见，何事秋风悲画扇
  **/

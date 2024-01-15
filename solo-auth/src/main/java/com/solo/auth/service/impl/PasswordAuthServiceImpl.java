@@ -7,12 +7,14 @@ import com.solo.auth.model.auth.LoginConvert;
 import com.solo.auth.model.auth.req.LoginReq;
 import com.solo.auth.model.auth.resp.LoginResp;
 import com.solo.auth.service.AuthService;
+import com.solo.auth.service.LoginService;
 import com.solo.satoken.model.LoginUser;
 import com.solo.satoken.utils.LoginHelper;
 import com.solo.system.api.SysMenuApi;
 import com.solo.system.api.SysRoleApi;
 import com.solo.system.api.SysUserApi;
 import com.solo.system.api.entity.SysUser;
+import jakarta.annotation.Resource;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,8 @@ public class PasswordAuthServiceImpl implements AuthService {
     private SysRoleApi sysRoleApi;
     @DubboReference
     private SysMenuApi sysMenuApi;
+    @Resource
+    private LoginService loginService;
 
     /**
      * 账号密码登录实现
@@ -56,6 +60,9 @@ public class PasswordAuthServiceImpl implements AuthService {
         loginUser.setRolePermissions(roles);
         loginUser.setMenuPermissions(menus);
         LoginHelper.login(loginUser);
+
+        loginService.saveLoginLog(loginReq.getUsername());
+
         LoginResp loginResp = new LoginResp();
         loginResp.setUsername(loginUser.getUsername());
         loginResp.setRoles(new ArrayList<>(roles));

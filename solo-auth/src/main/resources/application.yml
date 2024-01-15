@@ -32,18 +32,6 @@ spring:
       port: 6379
 #      password: 123456
 
-# Sa-Token配置
-sa-token:
-  # token名称 (同时也是cookie名称)
-  token-name: Authorization
-  # 开启内网服务调用鉴权(不允许越过gateway访问内网服务 保障服务安全)
-  check-same-token: true
-  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
-  is-concurrent: true
-  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
-  is-share: false
-
-
 dubbo:
   application:
     # 关闭qos端口避免单机多生产者端口冲突 如需使用自行开启

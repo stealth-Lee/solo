@@ -4,7 +4,7 @@ import com.solo.in.api.entity.UniversalTranslation;
 
 /**
  * 翻译Api
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/12/14 09:25
  * 人生若只如初见，何事秋风悲画扇
  **/

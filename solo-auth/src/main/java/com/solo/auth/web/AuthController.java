@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     @Resource
-    private AuthService loginService;
+    private AuthService authService;
 
     /**
      * 登录
@@ -29,7 +29,7 @@ public class AuthController {
      */
     @PostMapping("/login")
     public R<LoginResp> login(@Valid @RequestBody LoginReq loginReq) {
-        return R.success(loginService.login(loginReq));
+        return R.success(authService.login(loginReq));
     }
 
     /**

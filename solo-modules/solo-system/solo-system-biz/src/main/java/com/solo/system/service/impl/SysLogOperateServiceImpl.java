@@ -1,8 +1,8 @@
 package com.solo.system.service.impl;
 
-import com.solo.system.api.entity.SysOperateLog;
-import com.solo.system.mapper.SysOperateLogMapper;
-import com.solo.system.service.SysOperateLogService;
+import com.solo.system.api.entity.SysLogOperate;
+import com.solo.system.mapper.SysLogOperateMapper;
+import com.solo.system.service.SysLogOperateService;
 import com.solo.common.core.base.service.impl.BasicServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Service;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Service
-public class SysOperateLogServiceImpl extends BasicServiceImpl<SysOperateLogMapper, SysOperateLog> implements SysOperateLogService {
+public class SysLogOperateServiceImpl extends BasicServiceImpl<SysLogOperateMapper, SysLogOperate> implements SysLogOperateService {
 
 }

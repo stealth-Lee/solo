@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 /**
  * 认证中心错误码枚举类
  * 认证中心，使用 1-01-01-001 段
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/12/25 09:40
  * 人生若只如初见，何事秋风悲画扇
  **/

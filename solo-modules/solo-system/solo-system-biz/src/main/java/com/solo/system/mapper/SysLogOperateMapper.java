@@ -1,6 +1,6 @@
 package com.solo.system.mapper;
 
-import com.solo.system.api.entity.SysOperateLog;
+import com.solo.system.api.entity.SysLogOperate;
 import com.solo.common.core.base.mapper.BasicMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,6 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Mapper
-public interface SysOperateLogMapper extends BasicMapper<SysOperateLog> {
+public interface SysLogOperateMapper extends BasicMapper<SysLogOperate> {
 
 }

@@ -14,7 +14,7 @@ import java.io.IOException;
 
 /**
  * 字段校验国际化配置
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/12/20 15:05
  * 人生若只如初见，何事秋风悲画扇
  **/

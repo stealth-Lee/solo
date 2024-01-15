@@ -1,19 +1,27 @@
-package com.solo.system.model.operate.req;
+package com.solo.system.api.entity;
 
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
+import com.solo.common.core.base.entity.BasicEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
- * 操作日志修改对象 req
+ * 操作日志实体类
  * @author 十一
  * @since 2023-12-14 15:18
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Data
-public class OperateLogUpdateReq {
+@EqualsAndHashCode(callSuper = true)
+@Table("sys_log_operate")
+public class SysLogOperate extends BasicEntity {
 
     /**
      * id
      */
+    @Id(keyType = KeyType.Auto)
     private Long operateId;
 
     /**
@@ -80,10 +88,5 @@ public class OperateLogUpdateReq {
      * 执行时间(单位:毫秒)
      */
     private Integer executionTime;
-
-    /**
-     * 备注
-     */
-    private String remark;
 
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 
 /**
  * 用户重置密码请求对象
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/12/19 15:39
  * 人生若只如初见，何事秋风悲画扇
  **/

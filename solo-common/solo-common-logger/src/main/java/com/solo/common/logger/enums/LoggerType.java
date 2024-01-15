@@ -5,7 +5,7 @@ import lombok.Getter;
 
 /**
  * 日志类型枚举
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/12/18 11:04
  * 人生若只如初见，何事秋风悲画扇
  **/

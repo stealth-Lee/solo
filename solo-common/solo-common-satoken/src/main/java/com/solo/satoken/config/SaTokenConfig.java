@@ -3,6 +3,7 @@ package com.solo.satoken.config;
 import cn.dev33.satoken.jwt.StpLogicJwtForSimple;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
+import com.solo.common.core.factory.YmlPropertySourceFactory;
 import com.solo.satoken.service.SaPermissionImpl;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +16,7 @@ import org.springframework.context.annotation.PropertySource;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @AutoConfiguration
-@PropertySource(value = "classpath:common-satoken.yml", factory = org.dromara.common.core.factory.YmlPropertySourceFactory.class)
+@PropertySource(value = "classpath:common-satoken.yml", factory = YmlPropertySourceFactory .class)
 public class SaTokenConfig {
 
     /**

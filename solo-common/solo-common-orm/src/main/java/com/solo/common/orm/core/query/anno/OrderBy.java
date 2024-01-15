@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 /**
  * 排序注解, 作用于查询实体类的属性上, 用于指定排序方式
  * 优先级高于 @Query.orderBy
- * @author Gentleman.Lee
+ * @author 十一
  * @since 2023/12/27 14:49
  * 人生若只如初见，何事秋风悲画扇
  **/
