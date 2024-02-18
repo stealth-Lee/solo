@@ -1,5 +1,5 @@
 #foreach ($column in $columns)
-    #if ($column.isCreate)
+    #if ($column.isUpdate)
         #if ($column.isRequired)
             #if ($column.javaType == 'STRING')
                 #set ($importNotEmpty = 'import jakarta.validation.constraints.NotEmpty;')
