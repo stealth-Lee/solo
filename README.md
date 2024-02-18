@@ -74,3 +74,25 @@ com.solo
 
 ## 系统演示
 
+<table>
+    <tr>
+        <td><img src="https://solo-admin.oss-cn-beijing.aliyuncs.com/%E7%99%BB%E5%BD%95.png"></td>
+        <td><img src="https://solo-admin.oss-cn-beijing.aliyuncs.com/%E5%8D%95%E8%A1%A8.png"></td>
+    </tr>
+    <tr>
+        <td><img src="https://solo-admin.oss-cn-beijing.aliyuncs.com/%E6%A0%91%E8%A1%A8.png"></td>
+        <td><img src="https://solo-admin.oss-cn-beijing.aliyuncs.com/%E6%A0%91%E8%A1%A82.png"></td>
+    </tr>
+    <tr>
+        <td><img src="https://solo-admin.oss-cn-beijing.aliyuncs.com/%E5%B7%A6%E6%A0%91%E5%8F%B3%E8%A1%A8.png"></td>
+        <td><img src="https://solo-admin.oss-cn-beijing.aliyuncs.com/%E5%9B%BD%E9%99%85%E5%8C%96.png"></td>
+    </tr>
+    <tr>
+        <td><img src="https://solo-admin.oss-cn-beijing.aliyuncs.com/%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE.png"></td>
+        <td><img src="https://solo-admin.oss-cn-beijing.aliyuncs.com/%E6%96%B0%E5%A2%9E.png"></td>
+    </tr>
+    <tr>
+        <td><img src="https://solo-admin.oss-cn-beijing.aliyuncs.com/%E9%A1%B6%E9%83%A8%E6%A8%A1%E5%BC%8F.png"></td>
+        <td><img src="https://solo-admin.oss-cn-beijing.aliyuncs.com/%E6%B7%B7%E5%90%88%E6%A8%A1%E5%BC%8F.png"></td>
+    </tr>
+</table>
