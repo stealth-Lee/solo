@@ -71,3 +71,6 @@ com.solo
 | 数据库连接池    | hikaricp                                         |
 | 缓存服务      | redis                                            |
 | 前端框架      | vue 3 & Vite & Element-Plus & TypeScript & Pinia |
+
+## 系统演示
+

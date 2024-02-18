@@ -34,12 +34,16 @@ public class SoloNacosApplication {
     public static void main(String[] args) {
         if (initEnv()) {
             SpringApplication.run(SoloNacosApplication.class, args);
-            System.out.println("(੭♥□♥)☯☯☯˚  Nacos启动成功  ......   \n" +
-                    "   _____   ___   .       ___  \n" +
-                    "  (      .'   `. /     .'   `.\n" +
-                    "   `--.  |     | |     |     |\n" +
-                    "      |  |     | |     |     |\n" +
-                    " \\___.'   `.__.' /---/  `.__.'\n");
+            System.out.println(System.getProperty("project.version"));;
+            System.out.println("""
+                    (੭♥□♥)☯☯☯˚  Nacos启动成功  ......
+                       _____   ___   .       ___
+                      (      .'   `. /     .'   `.
+                       `--.  |     | |     |     |
+                          |  |     | |     |     |
+                     \\___.'   `.__.' /---/  `.__.'
+                     :: solo ::                (v2023.9.1)
+                    """);
         }
     }
 
