@@ -13,12 +13,14 @@ import com.solo.system.model.post.req.PostQueryReq;
 import com.solo.system.model.post.req.PostUpdateReq;
 import com.solo.system.model.post.resp.PostGetResp;
 import com.solo.system.model.post.resp.PostListResp;
+import com.solo.system.model.post.resp.PostSimpleResp;
 import com.solo.system.service.SysPostService;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 岗位控制器
@@ -27,11 +29,11 @@ import java.util.Arrays;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
+@AllArgsConstructor
 @RequestMapping("/system/post")
 public class SysPostController {
 
-    @Resource
-    private SysPostService sysPostService;
+    private final SysPostService sysPostService;
 
     /**
      * 新增岗位
@@ -80,6 +82,16 @@ public class SysPostController {
     @SaCheckPermission("system-post-query")
     public R<PostGetResp> get(@PathVariable Long postId) {
         return R.success(SysPostConvert.INSTANCE.convertGet(sysPostService.getById(postId)));
+    }
+
+    /**
+     * 获取精简岗位信息
+     * @return 精简岗位信息
+     */
+    @GetMapping("/list-simple")
+    @SaCheckPermission("system-post-query")
+    public R<List<PostSimpleResp>> listSimple() {
+        return R.success(sysPostService.listAs(PostSimpleResp.class));
     }
 
     /**

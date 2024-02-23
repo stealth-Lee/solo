@@ -132,8 +132,8 @@ const openDialog = async (title: string, id?: number) => {
   if (id) {
     try {
       formLoading.value = true;
-      const res = await getting(id);
-      Object.assign(formModel, res.data);
+      const { data } = await getting(id);
+      Object.assign(formModel, data);
     } finally {
       formLoading.value = false;
     }

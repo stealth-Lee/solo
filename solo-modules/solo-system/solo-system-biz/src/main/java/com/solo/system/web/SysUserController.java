@@ -2,21 +2,22 @@ package com.solo.system.web;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.solo.common.core.global.R;
 import com.solo.common.logger.annotation.Logger;
 import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
+import com.solo.satoken.utils.LoginHelper;
 import com.solo.system.api.entity.SysUser;
 import com.solo.system.model.user.SysUserConvert;
-import com.solo.system.model.user.req.UserCreateReq;
-import com.solo.system.model.user.req.UserQueryReq;
-import com.solo.system.model.user.req.UserResetPasswordReq;
-import com.solo.system.model.user.req.UserUpdateReq;
+import com.solo.system.model.user.req.*;
 import com.solo.system.model.user.resp.UserGetResp;
 import com.solo.system.service.SysUserService;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import static com.solo.system.api.entity.table.SysUserTableDef.SysUserTable;
 
 /**
  * 用户控制器
@@ -25,11 +26,11 @@ import org.springframework.web.bind.annotation.*;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
+@AllArgsConstructor
 @RequestMapping("/system/user")
 public class SysUserController {
 
-    @Resource
-    private SysUserService sysUserService;
+    private final SysUserService sysUserService;
 
     /**
      * 创建用户
@@ -40,8 +41,7 @@ public class SysUserController {
     @SaCheckPermission("system-user-create")
     @Logger(value = "创建用户", type = LoggerType.CREATE)
     public R<Boolean> create(@Valid @RequestBody UserCreateReq req) {
-        SysUser entity = SysUserConvert.INSTANCE.convert(req);
-        return R.success(sysUserService.create(entity));
+        return R.success(sysUserService.create(req));
     }
 
     /**
@@ -64,8 +64,20 @@ public class SysUserController {
     @PutMapping("/reset-password")
     @SaCheckPermission("system-user-reset-password")
     @Logger(value = "重置密码", type = LoggerType.UPDATE)
-    public R<Boolean> resetPassword(@Valid @RequestBody UserResetPasswordReq req) {
+    public R<Boolean> resetPassword(@Valid @RequestBody ResetPasswordReq req) {
         sysUserService.resetPassword(req);
+        return R.success(true);
+    }
+
+    /**
+     * 修改密码
+     * @param req 修改密码对象
+     * @return 响应信息
+     */
+    @PutMapping("/change-password")
+    @Logger(value = "修改密码", type = LoggerType.UPDATE)
+    public R<Boolean> changePassword(@Valid @RequestBody ChangePasswordReq req) {
+        sysUserService.changePassword(req);
         return R.success(true);
     }
 
@@ -78,8 +90,17 @@ public class SysUserController {
     @SaCheckPermission("system-user-update")
     @Logger(value = "更新用户", type = LoggerType.UPDATE)
     public R<Boolean> update(@Valid @RequestBody UserUpdateReq req) {
+        return R.success(sysUserService.update(req));
+    }
+
+    /**
+     * 修改个人信息
+     */
+    @PutMapping("/personal-info")
+    @Logger(value = "修改个人信息", type = LoggerType.UPDATE)
+    public R<Boolean> updatePersonalInfo(@Valid @RequestBody PersonalInfoReq req) {
         SysUser entity = SysUserConvert.INSTANCE.convert(req);
-        return R.success(sysUserService.update(entity));
+        return R.success(sysUserService.updateById(entity));
     }
 
     /**
@@ -90,7 +111,17 @@ public class SysUserController {
     @GetMapping("/{userId}")
     @SaCheckPermission("system-user-query")
     public R<UserGetResp> get(@PathVariable Long userId) {
-        return R.success(SysUserConvert.INSTANCE.convertGet(sysUserService.getById(userId)));
+        return R.success(sysUserService.queryByUserId(userId));
+    }
+
+    /**
+     * 获取当前登录用户信息
+     * @return 当前登录用户信息
+     */
+    @GetMapping("/current")
+    @SaCheckPermission("system-user-query")
+    public R<UserGetResp> current() {
+        return R.success(sysUserService.queryByUserId(LoginHelper.getUserId()));
     }
 
     /**
@@ -102,7 +133,8 @@ public class SysUserController {
     @GetMapping("/page")
     @SaCheckPermission("system-user-query")
     public R<Page<SysUser>> page(Page<SysUser> page, UserQueryReq req) {
-        Page<SysUser> list = sysUserService.page(page, Wrappers.builder(req));
+        QueryWrapper queryWrapper = Wrappers.builder(req).orderBy(SysUserTable.CreateTime.desc());
+        Page<SysUser> list = sysUserService.page(page, queryWrapper);
         return R.success(list);
     }
 

@@ -1,6 +1,5 @@
 package com.solo.system.model.user.req;
 
-import com.solo.system.api.consts.global.GlobalStatus;
 import com.solo.system.api.consts.user.Sex;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -8,35 +7,17 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import java.util.List;
-
 /**
- * 用户新增实体类
- * @author 十一
- * @since 2023/09/21 14:30
- * 人生若只如初见，何事秋风悲画扇
- **/
+ * 个人信息请求对象
+ */
 @Data
-public class UserCreateReq {
+public class PersonalInfoReq {
 
     /**
-     * 所属部门id
+     * 用户id
      */
-    private Long deptId;
-
-    /**
-     * 用户名
-     */
-    @NotBlank(message = "{user.required.username}")
-    @Size(message = "{user.size.username}", min = 4, max = 30)
-    private String username;
-
-    /**
-     * 用户密码
-     */
-    @NotBlank(message = "{user.required.password}")
-    @Size(message = "{user.size.password}", max = 64)
-    private String password;
+    @NotNull(message = "{user.required.userId}")
+    private Long userId;
 
     /**
      * 用户昵称
@@ -70,20 +51,9 @@ public class UserCreateReq {
     private String email;
 
     /**
-     * 帐号状态
+     * 头像地址
      */
-    @NotNull(message = "{user.required.status}")
-    private GlobalStatus status;
-
-    /**
-     * 备注
-     */
-    @Size(message = "{user.size.remark}", max = 512)
-    private String remark;
-
-    /**
-     * 岗位id集合
-     */
-    private List<Long> postIds;
+    @Size(message = "{user.size.avatar}", max = 512)
+    private String avatar;
 
 }

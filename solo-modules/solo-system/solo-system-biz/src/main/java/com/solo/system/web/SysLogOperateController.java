@@ -12,7 +12,7 @@ import com.solo.system.model.log.operate.req.LogOperateQueryReq;
 import com.solo.system.model.log.operate.resp.LogOperateGetResp;
 import com.solo.system.model.log.operate.resp.LogOperateListResp;
 import com.solo.system.service.SysLogOperateService;
-import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -26,11 +26,11 @@ import static com.solo.system.api.entity.table.SysLogOperateTableDef.SysLogOpera
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
+@AllArgsConstructor
 @RequestMapping("/system/log-operate")
 public class SysLogOperateController {
 
-    @Resource
-    private SysLogOperateService sysOperateLogService;
+    private final SysLogOperateService sysOperateLogService;
 
     /**
      * 删除操作日志

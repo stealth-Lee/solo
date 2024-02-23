@@ -6,8 +6,8 @@ import com.solo.common.logger.annotation.Logger;
 import com.solo.common.logger.enums.LoggerType;
 import com.solo.system.model.role.req.RoleMenuReq;
 import com.solo.system.service.SysRoleMenuService;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -19,11 +19,11 @@ import java.util.Set;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
+@AllArgsConstructor
 @RequestMapping("/system/role-menu")
 public class SysRoleMenuController {
 
-    @Resource
-    private SysRoleMenuService sysRoleMenuService;
+    private final SysRoleMenuService sysRoleMenuService;
 
     @PutMapping("/assign")
     @SaCheckPermission("system-role-menu-assign")

@@ -12,7 +12,7 @@ import com.solo.system.model.log.login.resp.LogLoginListResp;
 import com.solo.system.model.log.login.req.LogLoginQueryReq;
 import com.solo.system.model.log.login.resp.LogLoginGetResp;
 import com.solo.system.service.SysLogLoginService;
-import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -24,11 +24,11 @@ import java.util.Arrays;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
+@AllArgsConstructor
 @RequestMapping("/system/log-login")
 public class SysLogLoginController {
 
-    @Resource
-    private SysLogLoginService sysLogLoginService;
+    private final SysLogLoginService sysLogLoginService;
 
     /**
      * 删除登录日志

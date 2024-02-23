@@ -12,14 +12,14 @@ import com.solo.system.api.SysRoleApi;
 import com.solo.system.api.entity.SysMenu;
 import com.solo.system.model.menu.SysMenuConvert;
 import com.solo.system.model.menu.req.MenuCreateReq;
-import com.solo.system.model.menu.resp.MenuSimpleResp;
 import com.solo.system.model.menu.req.MenuQueryReq;
 import com.solo.system.model.menu.req.MenuUpdateReq;
 import com.solo.system.model.menu.resp.MenuGetResp;
 import com.solo.system.model.menu.resp.MenuListResp;
+import com.solo.system.model.menu.resp.MenuSimpleResp;
 import com.solo.system.service.SysMenuService;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,11 +35,11 @@ import static com.solo.system.api.entity.table.SysMenuTableDef.SysMenuTable;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
+@AllArgsConstructor
 @RequestMapping("/system/menu")
 public class SysMenuController {
 
-    @Resource
-    private SysMenuService sysMenuService;
+    private final SysMenuService sysMenuService;
     @DubboReference
     private SysRoleApi sysRoleApi;
 

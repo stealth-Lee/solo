@@ -68,6 +68,11 @@ public class SysUser extends BasicEntity {
     private String email;
 
     /**
+     * 头像地址
+     */
+    private String avatar;
+
+    /**
      * 帐号状态
      */
     private GlobalStatus status;

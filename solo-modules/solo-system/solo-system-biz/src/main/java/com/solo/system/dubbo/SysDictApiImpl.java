@@ -35,7 +35,7 @@ public class SysDictApiImpl implements SysDictApi {
      */
     public List<SysDictData> selectByCode(@PathVariable String code) {
         QueryWrapper queryWrapper = QueryWrapper.create()
-                .select(SysDictDataTable.AllColumns,
+                .select(SysDictDataTable.DefaultColumns,
                         SysDictTypeTable.Type)
                 .from(SysDictTypeTable)
                 .leftJoin(SysDictDataTable)

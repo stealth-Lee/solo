@@ -12,6 +12,7 @@ import com.solo.common.logger.enums.LoggerType;
 import com.solo.satoken.utils.LoginHelper;
 import com.solo.system.model.online.user.resp.OnlineUserResp;
 import com.solo.system.model.user.req.UserQueryReq;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.List;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
+@AllArgsConstructor
 @RequestMapping("/system/online-user")
 public class SysOnlineUserController {
 

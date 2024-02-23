@@ -15,8 +15,8 @@ import com.solo.system.model.dept.resp.DeptGetResp;
 import com.solo.system.model.dept.resp.DeptListResp;
 import com.solo.system.model.dept.resp.DeptSimpleResp;
 import com.solo.system.service.SysDeptService;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,11 +28,11 @@ import java.util.List;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
+@AllArgsConstructor
 @RequestMapping("/system/dept")
 public class SysDeptController {
 
-    @Resource
-    private SysDeptService sysDeptService;
+    private final SysDeptService sysDeptService;
 
     /**
      * 新增部门

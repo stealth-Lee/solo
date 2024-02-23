@@ -21,13 +21,12 @@ public class SoloAccessInApplication {
     public static void main(String[] args) {
         SpringApplication.run(SoloAccessInApplication.class, args);
         System.out.println("""
-            (੭♥□♥)☯☯☯˚  In模块启动成功  ......
+            (੭♥□♥)☯☯☯˚  通道服务启动成功  ......
                _____   ___   .       ___
               (      .'   `. /     .'   `.
                `--.  |     | |     |     |
                   |  |     | |     |     |
              \\___.'   `.__.' /---/  `.__.'
-             :: solo ::                (v2023.9.1)
             """);
     }
 

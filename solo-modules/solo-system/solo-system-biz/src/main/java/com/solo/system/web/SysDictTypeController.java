@@ -18,8 +18,8 @@ import com.solo.system.model.dict.type.resp.DictTypeGetResp;
 import com.solo.system.model.dict.type.resp.DictTypeListResp;
 import com.solo.system.model.dict.type.resp.DictTypeListSimpleResp;
 import com.solo.system.service.SysDictTypeService;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,11 +33,11 @@ import static com.solo.system.api.entity.table.SysDictTypeTableDef.SysDictTypeTa
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
+@AllArgsConstructor
 @RequestMapping("/system/dict-type")
 public class SysDictTypeController {
 
-    @Resource
-    private SysDictTypeService sysDictTypeService;
+    private final SysDictTypeService sysDictTypeService;
 
     /**
      * 新增字典类型

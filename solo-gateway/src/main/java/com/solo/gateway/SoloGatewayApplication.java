@@ -63,12 +63,14 @@ public class SoloGatewayApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SoloGatewayApplication.class, args);
-        System.out.println("(੭♥□♥)☯☯☯˚  网关模块启动成功  ......   \n" +
-                "   _____   ___   .       ___  \n" +
-                "  (      .'   `. /     .'   `.\n" +
-                "   `--.  |     | |     |     |\n" +
-                "      |  |     | |     |     |\n" +
-                " \\___.'   `.__.' /---/  `.__.'\n");
+        System.out.println("""
+            (੭♥□♥)☯☯☯˚  网关模块启动成功  ......
+               _____   ___   .       ___
+              (      .'   `. /     .'   `.
+               `--.  |     | |     |     |
+                  |  |     | |     |     |
+             \\___.'   `.__.' /---/  `.__.'
+            """);
     }
 
 }

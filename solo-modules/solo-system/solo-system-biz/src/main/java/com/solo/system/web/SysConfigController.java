@@ -15,9 +15,9 @@ import com.solo.system.model.config.req.ConfigUpdateReq;
 import com.solo.system.model.config.resp.ConfigGetResp;
 import com.solo.system.model.config.resp.ConfigListResp;
 import com.solo.system.service.SysConfigService;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,11 +33,11 @@ import static com.solo.system.api.entity.table.SysConfigTableDef.SysConfigTable;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
+@AllArgsConstructor
 @RequestMapping("/system/config")
 public class SysConfigController {
 
-    @Resource
-    private SysConfigService sysConfigService;
+    private final SysConfigService sysConfigService;
 
     /**
      * 新增系统配置

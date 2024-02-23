@@ -1,6 +1,7 @@
 package com.solo.system.model.user;
 
 import com.solo.system.api.entity.SysUser;
+import com.solo.system.model.user.req.PersonalInfoReq;
 import com.solo.system.model.user.req.UserCreateReq;
 import com.solo.system.model.user.req.UserUpdateReq;
 import com.solo.system.model.user.resp.UserGetResp;
@@ -21,6 +22,8 @@ public interface SysUserConvert {
     SysUser convert(UserCreateReq bean);
 
     SysUser convert(UserUpdateReq bean);
+
+    SysUser convert(PersonalInfoReq bean);
 
     UserGetResp convertGet(SysUser bean);
 

@@ -27,7 +27,6 @@ public class SoloAuthApplication {
                `--.  |     | |     |     |
                   |  |     | |     |     |
              \\___.'   `.__.' /---/  `.__.'
-             :: solo ::                (v2023.9.1)
             """);
     }
 

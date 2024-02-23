@@ -18,8 +18,8 @@ import com.solo.system.model.dict.data.resp.DictDataGetResp;
 import com.solo.system.model.dict.data.resp.DictDataListResp;
 import com.solo.system.model.dict.data.resp.DictDataListSimpleResp;
 import com.solo.system.service.SysDictDataService;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -35,11 +35,11 @@ import static com.solo.system.api.entity.table.SysDictTypeTableDef.SysDictTypeTa
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
+@AllArgsConstructor
 @RequestMapping("/system/dict-data")
 public class SysDictDataController {
 
-    @Resource
-    private SysDictDataService sysDictDataService;
+    private final SysDictDataService sysDictDataService;
 
     /**
      * 新增字典数据
@@ -100,7 +100,7 @@ public class SysDictDataController {
     @GetMapping("/code/{code}")
     public R<List<DictDataListSimpleResp>> selectByCode(@PathVariable("code") String code) {
         QueryWrapper queryWrapper = QueryWrapper.create()
-                .select(SysDictDataTable.AllColumns,
+                .select(SysDictDataTable.DefaultColumns,
                         SysDictTypeTable.Type)
                 .from(SysDictTypeTable)
                 .leftJoin(SysDictDataTable)

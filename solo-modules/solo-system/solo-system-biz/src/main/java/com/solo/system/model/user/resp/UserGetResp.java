@@ -1,8 +1,12 @@
 package com.solo.system.model.user.resp;
 
+import com.mybatisflex.annotation.RelationManyToMany;
 import com.solo.system.api.consts.global.GlobalStatus;
 import com.solo.system.api.consts.user.Sex;
+import com.solo.system.model.post.resp.PostGetResp;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * 用户详情返回实体类
@@ -67,5 +71,15 @@ public class UserGetResp {
      * 备注
      */
     private String remark;
+
+    /**
+     * 岗位列表
+     */
+    @RelationManyToMany(
+            joinTable = "sys_user_post",
+            selfField = "userId", joinSelfColumn = "user_id",
+            targetField = "postId", joinTargetColumn = "post_id", targetTable = "sys_post"
+    )
+    private List<PostGetResp> postList;
 
 }

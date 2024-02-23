@@ -16,8 +16,8 @@ import com.solo.system.model.role.req.RoleUpdateStatusReq;
 import com.solo.system.model.role.resp.RoleGetResp;
 import com.solo.system.model.role.resp.RoleListResp;
 import com.solo.system.service.SysRoleService;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -31,11 +31,11 @@ import static com.solo.system.api.entity.table.SysRoleTableDef.SysRoleTable;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @RestController
+@AllArgsConstructor
 @RequestMapping("/system/role")
 public class SysRoleController {
 
-    @Resource
-    private SysRoleService sysRoleService;
+    private final SysRoleService sysRoleService;
 
     /**
      * 新增角色
@@ -108,8 +108,7 @@ public class SysRoleController {
     @GetMapping("/page")
     @SaCheckPermission("system-role-query")
     public R<Page<RoleListResp>> page(Page<RoleListResp> page, RoleQueryReq req) {
-        QueryWrapper queryWrapper = Wrappers.builder(req)
-                .orderBy(SysRoleTable.CreateTime.desc());
+        QueryWrapper queryWrapper = Wrappers.builder(req).orderBy(SysRoleTable.CreateTime.desc());
         Page<RoleListResp> list = sysRoleService.pageAs(page, queryWrapper, RoleListResp.class);
         return R.success(list);
     }

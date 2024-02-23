@@ -11,7 +11,7 @@ import lombok.Data;
  * 人生若只如初见，何事秋风悲画扇
  **/
 @Data
-public class UserResetPasswordReq {
+public class ResetPasswordReq {
 
     /**
      * 用户id
