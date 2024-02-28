@@ -88,6 +88,11 @@ public class SysConfigController {
         return R.success(SysConfigConvert.INSTANCE.convertGet(sysConfigService.getById(configId)));
     }
 
+    /**
+     * 根据key获取系统配置
+     * @param key 系统配置key
+     * @return 响应信息
+     */
     @GetMapping("/key/{key}")
     @SaCheckPermission("system-config-query")
     public R<SysConfig> selectConfigByKey(@PathVariable String key) {
@@ -121,6 +126,5 @@ public class SysConfigController {
     public void exportExcel1(HttpServletResponse response, ConfigQueryReq req) throws IOException {
         sysConfigService.exportExcel(response, req);
     }
-
 
 }

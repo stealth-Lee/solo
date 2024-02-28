@@ -1,5 +1,6 @@
 package com.solo.system.model.user.req;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class ResetPasswordReq {
     /**
      * 新密码
      */
-    @NotNull(message = "{user.required.newPassword}")
+    @NotBlank(message = "{user.required.newPassword}")
     @Size(message = "{user.size.newPassword}", max = 64)
     private String password;
 

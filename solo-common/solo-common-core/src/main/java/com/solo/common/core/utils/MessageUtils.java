@@ -13,6 +13,11 @@ public class MessageUtils {
 
     private static final MessageSource messageSource = SpringUtil.getBean(MessageSource.class);
 
+    /**
+     * 获取国际化消息
+     * @param code 消息编码
+     * @return 国际化消息
+     */
     public static String getMessage(String code) {
         return messageSource.getMessage(code, null, LocaleContextHolder.getLocale());
     }

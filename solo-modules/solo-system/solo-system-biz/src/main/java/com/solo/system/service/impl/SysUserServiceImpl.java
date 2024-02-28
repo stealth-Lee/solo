@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 
 import static com.solo.common.core.utils.ServiceExceptionUtil.exception;
-import static com.solo.system.api.consts.SystemCode.USERNAME_EXISTS;
+import static com.solo.system.api.consts.SystemCode.*;
 import static com.solo.system.api.entity.table.SysUserPostTableDef.SysUserPostTable;
 import static com.solo.system.api.entity.table.SysUserTableDef.SysUserTable;
 
@@ -75,16 +75,16 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUserMapper, SysUser>
     public void changePassword(ChangePasswordReq req) {
         LoginUser loginUser = LoginHelper.getLoginUser();
         if (Objects.isNull(loginUser)) {
-            throw exception("用户未登录");
+            throw exception(USER_NOT_LOGIN);
         }
         if (!BCrypt.checkpw(req.getOldPassword(), loginUser.getPassword())) {
-            throw exception("原密码不正确");
+            throw exception(OLD_PASSWORD_ERROR);
         }
         if (!StringUtils.equals(req.getNewPassword(), req.getConfirmPassword())) {
-            throw exception("两次密码不一致");
+            throw exception(PASSWORD_NOT_EQUALS);
         }
         if (StringUtils.equals(req.getNewPassword(), req.getOldPassword())) {
-            throw exception("新密码与旧密码不能一样");
+            throw exception(NEW_PASSWORD_EQUALS_OLD);
         }
         // TODO 修改密码错误次数达到一定时，锁定账号
         String newPassword = BCrypt.hashpw(req.getNewPassword());

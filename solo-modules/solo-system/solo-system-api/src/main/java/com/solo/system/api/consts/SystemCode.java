@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 系统模块错误码枚举
- * 系统模块，使用 1-02-01-001 段
+ * 系统模块，使用 1-02-0X-00X 段
  * @author 十一
  * @since 2023/09/11 17:34
  * 人生若只如初见，何事秋风悲画扇
@@ -20,6 +20,10 @@ public enum SystemCode implements BasicCode {
     // 01用户模块
     USER_NOT_EXISTS(10201001, "UserNotExists"),
     USERNAME_EXISTS(10201002, "UsernameExists"),
+    USER_NOT_LOGIN(10201003, "UserNotLogin"),
+    OLD_PASSWORD_ERROR(10201004, "OldPasswordError"),
+    PASSWORD_NOT_EQUALS(10201005, "PasswordNotEquals"),
+    NEW_PASSWORD_EQUALS_OLD(10201006, "NewPasswordEqualsOld"),
 
     // 02角色模块
     ROLE_CODE_EXISTS(10202001, "RoleCodeExists"),
