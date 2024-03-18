@@ -50,11 +50,15 @@ spring:
           uri: lb://solo-system
           predicates:
             - Path=/system/**
+          filters:
+            - RewritePath=/admin-api/system/v3/api-docs, /v3/api-docs
         # 代码生成模块
         - id: solo-codegen
           uri: lb://solo-codegen
           predicates:
             - Path=/codegen/**
+          filters:
+            - RewritePath=/admin-api/codegen/v3/api-docs, /v3/api-docs
 #  config:
 #    import:
 #      - optional:nacos:application-@profiles.active@.yml
@@ -74,6 +78,18 @@ security:
     whites:
       - /auth/login
       - /auth/logout
+      - /swagger-ui.html
+      - /doc.html
+      - /v3/api-docs/**
+      - /swagger-resources/**
+      - /webjars/**
+      - /v2/**
+      - /swagger-ui.html/**
+      - /doc.html/**
+      - /error
+      - /favicon.ico
+      - /sso/auth
+      - /csrf
 
 # Sa-Token配置
 sa-token:
@@ -86,3 +102,17 @@ sa-token:
   # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
   is-share: false
 
+# 聚合swagger文档
+knife4j:
+  gateway:
+    # 是否开启使用Gateway网关聚合组件
+    enabled: true
+    # 聚合的策略，主要支持两种，分别是手动配置(manual)、服务发现(discover) 默认为manual
+    strategy: manual
+    routes:
+      - name: solo-system
+        service-name: solo-system
+        url: /admin-api/system/v3/api-docs
+      - name: solo-codegen
+        service-name: solo-codegen
+        url: /admin-api/codegen/v3/api-docs

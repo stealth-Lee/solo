@@ -72,6 +72,9 @@
 
         <sa-token.version>1.37.0</sa-token.version>
 
+        <knife4j.version>4.5.0</knife4j.version>
+        <springdoc.version>2.3.0</springdoc.version>
+
         <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
@@ -103,7 +106,7 @@
                 <!--
                   ~ scope控制 dependency 元素的使用范围
                   ~ compile(默认):如果没有指定scope,那么该元素的默认值为compile。被依赖项目需要参与到项目的编译、测试、打包、运行等阶段，打包时通常会包含被依赖项目，是比较强的依赖。
-                  ~ provided: 被依赖项目理论上可以参与到项目的编译、测试、运行等阶段，当时在打包时进行了exclude动作。应用场景：例如我们在开发一个web项目，在编译的时候我们需要依赖servlet-api.jar,但在运行时我们不需要这个jar，因为它已由应用服务器提供，这是我们就需要用provided来修饰这个依赖包。
+                  ~ provided: 被依赖项目理论上可以参与到项目的编译、测试、运行等阶段，但是在打包时进行了exclude动作。应用场景：例如我们在开发一个web项目，在编译的时候我们需要依赖servlet-api.jar,但在运行时我们不需要这个jar，因为它已由应用服务器提供，这是我们就需要用provided来修饰这个依赖包。
                   ~ runtime:顾名思义，表示该依赖项目无需参与到项目的编译，但会参与到测试与运行阶段。应用场景：例如在编译时我们不需要JDBC API的jar，但在运行时才需要JDBC的驱动包。
                   ~ test:表示该依赖项目仅会参与到项目的测试阶段。应用场景：例如，Junit 测试。
                   ~ system:与provided类似，但是被依赖项不会从maven仓库查找依赖，而是从本地系统中获取，systemPath元素用于指定依赖在系统中jar的路径
@@ -226,6 +229,23 @@
                 <version>${sa-token.version}</version>
             </dependency>
 
+            <!-- Knife4j 接口文档 -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!-- Knife4j 接口文档 网关聚合 基于此组件轻松的聚合各个子服务的OpenAPI文档 -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
 
             <!-- solo 通用工具核心包 -->
             <dependency>

@@ -13,6 +13,8 @@ import com.solo.system.model.user.SysUserConvert;
 import com.solo.system.model.user.req.*;
 import com.solo.system.model.user.resp.UserGetResp;
 import com.solo.system.service.SysUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,7 @@ import static com.solo.system.api.entity.table.SysUserTableDef.SysUserTable;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/system/user")
+@Tag(name = "管理后台 - 用户")
 public class SysUserController {
 
     private final SysUserService sysUserService;
@@ -49,6 +52,7 @@ public class SysUserController {
      * @param userId 用户id
      * @return 响应信息
      */
+    @Operation(summary = "删除用户")
     @DeleteMapping("/{userId}")
     @SaCheckPermission("system-user-delete")
     @Logger(value = "删除用户", type = LoggerType.DELETE)
