@@ -120,10 +120,10 @@ public class SysConfigController {
         sysConfigService.importExcel(file);
     }
 
-    @GetMapping("export")
+    @GetMapping("/export")
     @SaCheckPermission("system-config-export")
     @Logger(value = "导出系统配置", type = LoggerType.EXPORT)
-    public void exportExcel1(HttpServletResponse response, ConfigQueryReq req) throws IOException {
+    public void exportExcel(HttpServletResponse response, ConfigQueryReq req) throws IOException {
         sysConfigService.exportExcel(response, req);
     }
 

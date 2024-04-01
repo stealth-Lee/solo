@@ -17,12 +17,13 @@ import com.solo.common.core.utils.BeanUtils;
 import com.solo.common.core.utils.StringUtils;
 import com.solo.in.api.TranslateApi;
 import com.solo.in.api.entity.UniversalTranslation;
+import com.solo.system.api.SysConfigApi;
 import com.solo.system.api.SysDictApi;
+import com.solo.system.api.entity.SysConfig;
 import com.solo.system.api.entity.SysDictData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -35,11 +36,11 @@ public class CodegenEngine {
     /**
      * 生成语言包的默认语言列表
      */
-    @Value("${codegen.languages}")
-    private String languages;
     private final TemplateEngine templateEngine;
     @DubboReference
     private SysDictApi sysDictApi;
+    @DubboReference
+    private SysConfigApi sysConfigApi;
     @DubboReference
     private TranslateApi translateApi;
 
@@ -91,7 +92,8 @@ public class CodegenEngine {
                 }
                 case LANGUAGE, PROPERTIES -> {
                     // TODO 此处未找到语言包，需抛出异常信息
-                    List<String> languageList = StringUtils.split(languages, Symbols.COMMA);
+                    SysConfig i18NLanguages = sysConfigApi.selectConfigByKey("I18N_LANGUAGES");
+                    List<String> languageList = StringUtils.split(i18NLanguages.getValue(), Symbols.COMMA);
                     String defaultLanguage = languageList.getFirst();
                     // 如果是后台语言包，则多生成一个默认模版message.properties
                     if (template.equals(Template.PROPERTIES)) {

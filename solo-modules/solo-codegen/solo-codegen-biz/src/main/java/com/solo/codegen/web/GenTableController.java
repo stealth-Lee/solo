@@ -5,6 +5,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.ZipUtil;
 import com.mybatisflex.codegen.entity.Table;
 import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.solo.codegen.model.code.resp.CodePreviewResp;
 import com.solo.codegen.model.table.GenTableConvert;
 import com.solo.codegen.model.table.req.TableCreateReq;
@@ -28,6 +29,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.solo.codegen.api.entity.table.GenTableTableDef.GenTableTable;
 
 /**
  * 代码生成控制器
@@ -120,7 +123,8 @@ public class GenTableController {
     @GetMapping("/page")
     @SaCheckPermission("codegen-table-query")
     public R<Page<TableListResp>> page(Page<TableListResp> page, TableQueryReq req) {
-        Page<TableListResp> list = genTableService.pageAs(page, Wrappers.builder(req), TableListResp.class);
+        QueryWrapper queryWrapper = Wrappers.builder(req).orderBy(GenTableTable.CreateTime.desc());
+        Page<TableListResp> list = genTableService.pageAs(page, queryWrapper, TableListResp.class);
         return R.success(list);
     }
 

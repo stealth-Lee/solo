@@ -5,7 +5,6 @@ server:
 spring:
   config:
     import:
-      #        - optional:nacos:application-@profiles.active@.yml
       - optional:nacos:${spring.application.name}-@profiles.active@.yml
   application:
     # 应用名称
@@ -51,14 +50,19 @@ spring:
           predicates:
             - Path=/system/**
           filters:
-            - RewritePath=/admin-api/system/v3/api-docs, /v3/api-docs
+            - RewritePath=/system/v3/api-docs, /v3/api-docs
         # 代码生成模块
         - id: solo-codegen
           uri: lb://solo-codegen
           predicates:
             - Path=/codegen/**
           filters:
-            - RewritePath=/admin-api/codegen/v3/api-docs, /v3/api-docs
+            - RewritePath=/codegen/v3/api-docs, /v3/api-docs
+        # 定时任务模块
+        - id: solo-quartz
+          uri: lb://solo-quartz
+          predicates:
+            - Path=/quartz/**
 #  config:
 #    import:
 #      - optional:nacos:application-@profiles.active@.yml
@@ -112,7 +116,7 @@ knife4j:
     routes:
       - name: solo-system
         service-name: solo-system
-        url: /admin-api/system/v3/api-docs
+        url: /system/v3/api-docs
       - name: solo-codegen
         service-name: solo-codegen
-        url: /admin-api/codegen/v3/api-docs
+        url: /codegen/v3/api-docs

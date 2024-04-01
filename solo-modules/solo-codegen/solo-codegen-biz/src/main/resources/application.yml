@@ -24,7 +24,6 @@ spring:
         server-addr: 127.0.0.1:8848
   config:
     import:
-      #        - optional:nacos:application-@profiles.active@.yml
       - optional:nacos:${spring.application.name}-@profiles.active@.yml
 
   datasource:
@@ -49,15 +48,12 @@ codegen:
   author: 十一
   # 生成代码的尾巴注释
   tail: 人生若只如初见，何事秋风悲画扇
-  # 生成代码的i18n语言包,多个用逗号分隔 例如: zh-CN,en,ja, 第一个为默认语言
-  languages: zh-CN,en
 
 dubbo:
   application:
     # 关闭qos端口避免单机多生产者端口冲突 如需使用自行开启
     qos-enable: false
   protocol:
-    # 如需使用 Triple 3.0 新协议 可查看官方文档
     # 使用 dubbo 协议通信
     name: dubbo
     # dubbo 协议端口(-1表示自增端口,从20880开始)

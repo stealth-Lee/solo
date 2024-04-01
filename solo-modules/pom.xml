@@ -16,11 +16,12 @@
         <module>solo-system</module>
         <module>solo-codegen</module>
         <module>solo-access</module>
+        <module>solo-quartz</module>
     </modules>
 
     <dependencyManagement>
        <dependencies>
-           <!-- 百度api -->
+           <!-- solo 通道服务api -->
            <dependency>
                <groupId>com.solo</groupId>
                <artifactId>solo-in-api</artifactId>
@@ -37,6 +38,12 @@
            <dependency>
                <groupId>com.solo</groupId>
                <artifactId>solo-codegen-api</artifactId>
+               <version>${revision}</version>
+           </dependency>
+           <!-- solo 定时任务模块 -->
+           <dependency>
+               <groupId>com.solo</groupId>
+               <artifactId>solo-quartz-api</artifactId>
                <version>${revision}</version>
            </dependency>
        </dependencies>

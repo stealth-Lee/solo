@@ -56,9 +56,9 @@ com.solo
 
 ## 技术选型
 
-| 项目        | Star                                             |
+| 技术        | 选型                                               |
 |-----------|--------------------------------------------------|
-| Java      | jdk                                              |
+| Java      | jdk21                                            |
 | Spring全家桶 | Spring Boot 3.2 & Spring Cloud 2023              |
 | api网关     | SpringCloud Gateway                              |
 | 服务调用      | Dubbo                                            |

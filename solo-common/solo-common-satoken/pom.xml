@@ -11,6 +11,10 @@
     <description>solo 权限认证模块</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.solo</groupId>
+            <artifactId>solo-common-core</artifactId>
+        </dependency>
         <!-- Sa-Token 权限认证（core核心包） -->
         <dependency>
             <groupId>cn.dev33</groupId>
@@ -21,24 +25,10 @@
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-redis-jackson</artifactId>
         </dependency>
-
         <!-- Sa-Token 整合 jwt -->
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-jwt</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.solo</groupId>
-            <artifactId>solo-system-api</artifactId>
-            <version>${revision}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.zaxxer</groupId>
-                    <artifactId>HikariCP</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 </project>

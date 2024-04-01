@@ -5,12 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.solo</groupId>
-        <artifactId>solo-codegen</artifactId>
+        <artifactId>solo-quartz</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>solo-codegen-biz</artifactId>
-    <description>solo-codegen-api 代码生成模块</description>
+    <artifactId>solo-quartz-biz</artifactId>
 
     <dependencies>
         <dependency>
@@ -24,23 +23,20 @@
 
         <dependency>
             <groupId>com.solo</groupId>
+            <artifactId>solo-common-logger</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.solo</groupId>
             <artifactId>solo-common-orm</artifactId>
         </dependency>
         <dependency>
             <groupId>com.solo</groupId>
             <artifactId>solo-common-security</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.solo</groupId>
-            <artifactId>solo-in-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.solo</groupId>
-            <artifactId>solo-codegen-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.solo</groupId>
-            <artifactId>solo-system-api</artifactId>
+            <artifactId>solo-quartz-api</artifactId>
         </dependency>
 
         <dependency>
@@ -55,25 +51,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.mybatis-flex</groupId>
-            <artifactId>mybatis-flex-codegen</artifactId>
-        </dependency>
-
-        <!-- Hutool扩展，包括模版引擎、压缩、FTP等工具 https://doc.hutool.cn/pages/extra/ -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-extra</artifactId>
-        </dependency>
-
-        <!-- 实现代码生成 -->
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity-engine-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
     </dependencies>
 
