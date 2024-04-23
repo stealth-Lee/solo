@@ -53,14 +53,14 @@
     <properties>
         <revision>2023.9.1</revision>
 
-        <spring-boot.version>3.2.3</spring-boot.version>
-        <spring-cloud.version>2023.0.0</spring-cloud.version>
+        <spring-boot.version>3.2.4</spring-boot.version>
+        <spring-cloud.version>2023.0.1</spring-cloud.version>
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
-        <dubbo.version>3.3.0-beta.1</dubbo.version>
+        <dubbo.version>3.3.0-beta.2</dubbo.version>
         <mysql.version>8.1.0</mysql.version>
         <hikaricp.version>5.0.1</hikaricp.version>
 
-        <mybatis-flex.version>1.8.4</mybatis-flex.version>
+        <mybatis-flex.version>1.8.8</mybatis-flex.version>
 
         <velocity.version>2.3</velocity.version>
 
@@ -74,6 +74,8 @@
 
         <knife4j.version>4.5.0</knife4j.version>
         <springdoc.version>2.3.0</springdoc.version>
+
+        <screw-core.version>1.0.5</screw-core.version>
 
         <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
@@ -252,6 +254,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-quartz</artifactId>
                 <version>${spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.smallbun.screw</groupId>
+                <artifactId>screw-core</artifactId>
+                <version>${screw-core.version}</version>
             </dependency>
 
             <!-- solo 通用工具核心包 -->

@@ -30,7 +30,6 @@ spring:
         server-addr: 127.0.0.1:8848
   config:
     import:
-      #        - optional:nacos:application-@profiles.active@.yml
       - optional:nacos:${spring.application.name}-@profiles.active@.yml
 
   datasource:
