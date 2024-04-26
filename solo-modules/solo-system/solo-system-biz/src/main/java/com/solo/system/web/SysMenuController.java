@@ -8,7 +8,6 @@ import com.solo.common.logger.annotation.Logger;
 import com.solo.common.logger.enums.LoggerType;
 import com.solo.common.orm.core.query.Wrappers;
 import com.solo.satoken.utils.LoginHelper;
-import com.solo.system.api.SysRoleApi;
 import com.solo.system.api.entity.SysMenu;
 import com.solo.system.model.menu.SysMenuConvert;
 import com.solo.system.model.menu.req.MenuCreateReq;
@@ -20,7 +19,6 @@ import com.solo.system.model.menu.resp.MenuSimpleResp;
 import com.solo.system.service.SysMenuService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -40,8 +38,6 @@ import static com.solo.system.api.entity.table.SysMenuTableDef.SysMenuTable;
 public class SysMenuController {
 
     private final SysMenuService sysMenuService;
-    @DubboReference
-    private SysRoleApi sysRoleApi;
 
     /**
      * 新增菜单

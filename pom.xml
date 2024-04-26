@@ -56,7 +56,7 @@
         <spring-boot.version>3.2.4</spring-boot.version>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
-        <dubbo.version>3.3.0-beta.2</dubbo.version>
+        <dubbo.version>3.3.0-beta.1</dubbo.version>
         <mysql.version>8.1.0</mysql.version>
         <hikaricp.version>5.0.1</hikaricp.version>
 
@@ -256,11 +256,11 @@
                 <version>${spring-boot.version}</version>
             </dependency>
 
-            <dependency>
+            <!--<dependency>
                 <groupId>cn.smallbun.screw</groupId>
                 <artifactId>screw-core</artifactId>
                 <version>${screw-core.version}</version>
-            </dependency>
+            </dependency>-->
 
             <!-- solo 通用工具核心包 -->
             <dependency>

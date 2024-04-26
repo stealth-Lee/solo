@@ -43,8 +43,9 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenuMapper, SysMenu>
                 .leftJoin(SysUserRoleTable).on(SysRoleMenuTable.RoleId.eq(SysUserRoleTable.RoleId))
                 .leftJoin(SysRoleTable).on(SysUserRoleTable.RoleId.eq(SysRoleTable.RoleId))
                 .leftJoin(SysUserTable).on(SysUserRoleTable.UserId.eq(SysUserTable.UserId))
-                // TODO 类型改成枚举
-                .where(SysUserTable.UserId.eq(userId)).and(SysMenuTable.Type.in("D", "M"))
+                .where(SysUserTable.UserId.eq(userId))
+                    // TODO 类型改成枚举
+                    .and(SysMenuTable.Type.in("D", "M"))
                     .and(SysRoleTable.Status.eq(GlobalStatus.NORMAL))
                 .orderBy(SysMenuTable.ParentId.desc(), SysMenuTable.Sort.desc())
                 .list();
